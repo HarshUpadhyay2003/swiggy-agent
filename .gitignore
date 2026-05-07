@@ -1,0 +1,138 @@
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+MANIFEST
+
+# ========================
+# Virtual Environments
+# ========================
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# ========================
+# Environment Variables & Secrets
+# ========================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+secrets.yaml
+secrets.yml
+
+# ========================
+# FastAPI / Uvicorn
+# ========================
+*.log
+uvicorn.log
+access.log
+error.log
+
+# ========================
+# Database
+# ========================
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+alembic/versions/*.pyc
+dump.rdb
+
+# ========================
+# Testing
+# ========================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+nosetests.xml
+test-results/
+*.cover
+.hypothesis/
+
+# ========================
+# Type Checking & Linting
+# ========================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pytype/
+
+# ========================
+# IDEs & Editors
+# ========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================
+# Docker
+# ========================
+.dockerignore
+docker-compose.override.yml
+
+# ========================
+# Dependency Management
+# ========================
+poetry.lock
+Pipfile.lock
+# Uncomment below if you don't want to commit requirements.txt
+# requirements.txt
+
+# ========================
+# Uploads & Static Files
+# ========================
+uploads/
+media/
+staticfiles/
+
+# ========================
+# Celery (if used)
+# ========================
+celerybeat-schedule
+celerybeat.pid
+
+# ========================
+# Jupyter (if used)
+# ========================
+.ipynb_checkpoints/
+*.ipynb
+
+# ========================
+# Misc
+# ========================
+*.bak
+*.tmp
+*.orig
+.cache/

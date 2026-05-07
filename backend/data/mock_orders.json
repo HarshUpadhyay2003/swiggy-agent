@@ -1,0 +1,77 @@
+[
+  {
+    "item_name": "Chicken Biryani",
+    "price": 350,
+    "timestamp": "2026-04-28T21:30:00"
+  },
+  {
+    "item_name": "Margherita Pizza",
+    "price": 450,
+    "timestamp": "2026-04-27T23:15:00"
+  },
+  {
+    "item_name": "Veggie Burger",
+    "price": 220,
+    "timestamp": "2026-04-26T22:45:00"
+  },
+  {
+    "item_name": "Chicken Fried Rice",
+    "price": 280,
+    "timestamp": "2026-04-25T19:00:00"
+  },
+  {
+    "item_name": "French Fries",
+    "price": 150,
+    "timestamp": "2026-04-24T23:30:00"
+  },
+  {
+    "item_name": "Paneer Tikka",
+    "price": 320,
+    "timestamp": "2026-04-23T20:30:00"
+  },
+  {
+    "item_name": "Momos",
+    "price": 120,
+    "timestamp": "2026-04-22T22:00:00"
+  },
+  {
+    "item_name": "Grilled Chicken Salad",
+    "price": 380,
+    "timestamp": "2026-04-21T18:15:00"
+  },
+  {
+    "item_name": "Cheese Burger",
+    "price": 250,
+    "timestamp": "2026-04-20T23:45:00"
+  },
+  {
+    "item_name": "Dal Makhani with Rice",
+    "price": 290,
+    "timestamp": "2026-04-19T19:30:00"
+  },
+  {
+    "item_name": "Pepperoni Pizza",
+    "price": 520,
+    "timestamp": "2026-04-18T22:30:00"
+  },
+  {
+    "item_name": "Vegetable Chowmein",
+    "price": 180,
+    "timestamp": "2026-04-17T21:00:00"
+  },
+  {
+    "item_name": "Chicken Wings",
+    "price": 340,
+    "timestamp": "2026-04-16T23:00:00"
+  },
+  {
+    "item_name": "Fruit Juice",
+    "price": 120,
+    "timestamp": "2026-04-15T17:00:00"
+  },
+  {
+    "item_name": "Samosa (4 pcs)",
+    "price": 80,
+    "timestamp": "2026-04-14T22:15:00"
+  }
+]
