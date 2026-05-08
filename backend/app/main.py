@@ -6,6 +6,7 @@ Entry point for the Swiggy AI Agent backend.
 
 from fastapi import FastAPI
 
+from app.routes.chat import router as chat_router
 from app.routes.context import router as context_router
 from app.routes.order import router as order_router
 from app.routes.plan import router as planner_router
@@ -23,6 +24,7 @@ app.include_router(router, prefix="/profile", tags=["profile"])
 app.include_router(planner_router, prefix="/planner", tags=["planner"])
 app.include_router(order_router, prefix="/order", tags=["order"])
 app.include_router(context_router, prefix="/context", tags=["context"])
+app.include_router(chat_router, prefix="/chat", tags=["chat"])
 
 
 @app.get("/")
