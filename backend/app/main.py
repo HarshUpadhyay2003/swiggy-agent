@@ -6,6 +6,7 @@ Entry point for the Swiggy AI Agent backend.
 
 from fastapi import FastAPI
 
+from app.routes.order import router as order_router
 from app.routes.plan import router as planner_router
 from app.routes.profile import router
 
@@ -19,6 +20,7 @@ app = FastAPI(
 
 app.include_router(router, prefix="/profile", tags=["profile"])
 app.include_router(planner_router, prefix="/planner", tags=["planner"])
+app.include_router(order_router, prefix="/order", tags=["order"])
 
 
 @app.get("/")
