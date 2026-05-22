@@ -31,7 +31,7 @@ router = APIRouter()
 orchestrator = ChatOrchestrator()
 
 
-@router.post("/")
+@router.post("")
 async def chat(request: ChatRequest) -> Dict[str, Any]:
     """
     Main chat endpoint for conversational AI orchestration.

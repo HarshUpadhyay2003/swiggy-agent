@@ -1,3 +1,4 @@
+```gitignore
 # ========================
 # Python
 # ========================
@@ -130,9 +131,74 @@ celerybeat.pid
 *.ipynb
 
 # ========================
+# React / Frontend
+# ========================
+
+# Node modules
+node_modules/
+
+# Production build
+build/
+dist/
+.next/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Package managers
+.pnpm-store/
+.npm/
+.yarn/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Vite
+vite.svg
+
+# Parcel
+.cache/
+.parcel-cache/
+
+# TurboRepo
+.turbo/
+
+# Coverage
+coverage/
+
+# Storybook
+storybook-static/
+
+# React env files
+frontend/.env
+frontend/.env.*
+client/.env
+client/.env.*
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint cache
+.eslintcache
+
+# Sass cache
+.sass-cache/
+
+# Temporary files
+tmp/
+temp/
+
+# ========================
 # Misc
 # ========================
 *.bak
 *.tmp
 *.orig
 .cache/
+```
