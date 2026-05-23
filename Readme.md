@@ -17,8 +17,12 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 ## 🌐 Live Demo
 
-**Frontend:** Coming Soon  
-**Backend API:** Coming Soon
+| Service | URL |
+|---|---|
+| Frontend App | https://swiggy-agent.vercel.app/ |
+| Backend API | https://swiggy-agent.onrender.com |
+
+⚠️ Backend is hosted on Render free tier and may take a few seconds to wake up after inactivity.
 
 ---
 
