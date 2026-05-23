@@ -76,6 +76,7 @@ swiggy-agent/
 │   │   │   ├── api.js       # Core API client
 │   │   │   └── chatApi.js   # Chat specific API integration
 │   │   └── App.jsx
+│   ├── vercel.json          # Vercel deployment & routing config
 │   └── package.json
 └── backend/
     ├── app/
@@ -94,6 +95,7 @@ swiggy-agent/
     │       ├── history_analyzer.py
     │       └── order_service.py
     └── requirements.txt
+    └── render.yaml          # Render Blueprint for automated deployment
 ```
 
 ---

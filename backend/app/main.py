@@ -7,6 +7,7 @@ Entry point for the Swiggy AI Agent backend.
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+import os
 import logging
 
 from app.routes.chat import router as chat_router, chat as chat_handler, ChatRequest
@@ -28,13 +29,13 @@ app = FastAPI(
 logger = logging.getLogger("swiggy_agent")
 logger.setLevel(logging.INFO)
 
+# Load allowed origins from environment variable
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
+
 # CORS: allow frontend origins and preflight handling
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
