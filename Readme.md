@@ -15,6 +15,13 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 ---
 
+## 🌐 Live Demo
+
+**Frontend:** Coming Soon  
+**Backend API:** Coming Soon
+
+---
+
 ## ✨ Features
 
 - 💬 **Conversational Food Ordering**: Order food using natural language instead of clicking through menus.
@@ -31,7 +38,7 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 ## 🏗️ Architecture
 
-![Swiggy Agent Architecture](public/swiggy_agent_arch.png)
+![Swiggy Agent Architecture](assets/swiggy_agent_arch.png)
 
 ### 💻 Tech Stack
 
@@ -44,12 +51,23 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 ---
 
+## 🧠 System Design Principles
+
+- Deterministic business logic
+- LLM-assisted conversational understanding
+- Shared global frontend state
+- Modular backend services
+- Context-aware orchestration
+- Separation between AI reasoning and transactional logic
+
+---
+
 ## 📂 Folder Structure
 
 ```text
 swiggy-agent/
 ├── frontend/
-│   ├── public/              # Static assets (images, icons)
+│   ├── assets/              # Static assets (images, icons)
 │   ├── src/
 │   │   ├── components/      # UI Components (Chat UI, Recommendation Cards, Planner)
 │   │   ├── store/
@@ -172,27 +190,9 @@ Try pasting these into the chat:
 
 | Chat Interface | Recommendations |
 | :---: | :---: |
-| ![Chat Interface](public/conversation.png) | ![Recommendations](public/recommendations.png) |
+| ![Chat Interface](assets/conversation.png) | ![Recommendations](assets/recommendations.png) |
 | **Meal Planner** | **Cart Management** |
-| ![Meal Planner 1](public/week_planner_1.png)<br>![Meal Planner 2](public/week_planner_2.png) | ![Cart Management](public/cart.png) |
-
----
-
-## 🌍 Deployment
-
-### Frontend (Vercel)
-1. Push your repository to GitHub.
-2. Import the project into Vercel.
-3. Set the Root Directory to `frontend`.
-4. Ensure the Build Command is `npm run build` and Output Directory is `dist`.
-5. Add `VITE_API_BASE_URL` to the Environment Variables pointing to your Render backend URL.
-
-### Backend (Render)
-1. Create a new Web Service on Render connected to your repository.
-2. Set the Root Directory to `backend`.
-3. Set the Build Command to `pip install -r requirements.txt`.
-4. Set the Start Command to `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-5. Add your `GROQ_API_KEY` to the Environment Variables.
+| ![Meal Planner 1](assets/week_planner_1.png)<br>![Meal Planner 2](assets/week_planner_2.png) | ![Cart Management](assets/cart.png) |
 
 ---
 
@@ -215,5 +215,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Built with ❤️ by **[Your Name/Handle]**
 
-[!GitHub](https://github.com/yourusername)
-[!LinkedIn](https://linkedin.com/in/yourusername)
+[!GitHub](https://github.com/HarshUpadhyay2003)
+[!LinkedIn](https://www.linkedin.com/in/harshadhyay2003/)
