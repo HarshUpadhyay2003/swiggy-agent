@@ -13,6 +13,7 @@ try:
     from app.services.cart_service import CartService
     from app.services.conversational_classifier import ConversationalClassifier, ConversationMemory
     from app.services.conversational_response_generator import ConversationalResponseGenerator
+    from app.services.action_executor import ActionExecutor
 except ImportError:
     from .catalog_service import CatalogService
     from .context_engine import ContextEngine
@@ -24,6 +25,7 @@ except ImportError:
     from .cart_service import CartService
     from .conversational_classifier import ConversationalClassifier, ConversationMemory
     from .conversational_response_generator import ConversationalResponseGenerator
+    from .action_executor import ActionExecutor
 
 
 class ChatOrchestrator:
@@ -51,6 +53,7 @@ class ChatOrchestrator:
         # NEW: Conversational intelligence components
         self.classifier = ConversationalClassifier()
         self.response_generator = ConversationalResponseGenerator()
+        self.action_executor = ActionExecutor(self.cart_service, self.catalog_service, self.meal_planner)
         
         # Per-session conversation memory for context tracking
         self.conversation_memories: Dict[str, ConversationMemory] = {}
@@ -87,53 +90,62 @@ class ChatOrchestrator:
             "data": {},
         }
 
-    def _handle_multi_action_intent(
+    def _handle_action_graph(
         self,
         message: str,
         classification: Dict[str, Any],
         user_context: Dict[str, Any],
+        session_context: Dict[str, Any],
+        session_state: Any = None,
     ) -> Dict[str, Any]:
-        """Handle requests with multiple intents (e.g., remove + add)."""
+        """Handle action graph execution for multiple operations."""
         primary_intent = classification.get("intent")
-        sub_intents = classification.get("sub_intents", [])
+        actions = classification.get("actions", [])
         
-        results = []
-        combined_response_parts = []
-        combined_data = {}
+        session_id = user_context.get("session_id")
+        user_prefs = session_state.user_preferences if session_state else {}
+
+        # Execute all actions transactionally
+        exec_results = self.action_executor.execute_batch(
+            session_id=session_id,
+            session_state=session_state,
+            actions=actions,
+            message=message,
+            user_preferences=user_prefs
+        )
+
+        actions_executed = exec_results.get("actions_executed", [])
+        combined_data = {
+            "actions_executed": actions_executed,
+            "cart": exec_results.get("cart"),
+            "meal_plan": exec_results.get("meal_plan"),
+        }
         
-        # Process each sub-intent
-        for sub_intent in sub_intents:
-            if sub_intent == "remove_from_cart":
-                result = self.handle_remove_from_cart(message, user_context)
-                results.append(result)
-                combined_response_parts.append("removed items")
-                combined_data.update(result.get("data", {}))
-                
-            elif sub_intent == "add_to_cart":
-                result = self.handle_add_to_cart(message, user_context)
-                results.append(result)
-                combined_response_parts.append("added items")
-                combined_data.update(result.get("data", {}))
-        
-        # Generate combined natural response
-        action_summary = " and ".join(combined_response_parts)
+        if session_state and exec_results.get("meal_plan"):
+            session_state.planner_state.active_plan = exec_results["meal_plan"]
+            session_state.switch_domain("planner")
+        elif session_state and exec_results.get("cart"):
+            session_state.active_cart = exec_results["cart"]
+            session_state.switch_domain("cart")
+
         tone = classification.get("tone", "casual")
-        
+        action_summary = ", ".join(actions_executed)
+
         combined_response = self.response_generator.generate_response(
             primary_intent or "multi_action",
             combined_data,
             tone=tone,
+            original_response=action_summary
         )
-        
-        # If response doesn't mention the actions, add them
-        if not any(part in combined_response.lower() for part in combined_response_parts):
-            combined_response = f"Done! I've {action_summary}. {combined_response}"
         
         return {
             "intent": primary_intent or "multi_action",
-            "sub_intents": sub_intents,
+            "actions_executed": actions_executed,
             "response": combined_response,
             "data": combined_data,
+            "active_domain": session_state.active_domain if session_state else "general",
+            "cart": exec_results.get("cart"),
+            "meal_plan": exec_results.get("meal_plan")
         }
 
     def _handle_context_aware_followup(
@@ -142,15 +154,33 @@ class ChatOrchestrator:
         classification: Dict[str, Any],
         user_context: Dict[str, Any],
         session_context: Dict[str, Any],
+        session_state: Any = None,
     ) -> Dict[str, Any]:
         """Handle follow-ups intelligently using conversation context."""
         current_intent = classification.get("intent")
         entities = classification.get("entities", {})
         last_intent = session_context.get("last_intent")
         last_entities = session_context.get("last_entities", {})
+        active_domain = session_state.active_domain if session_state else "general"
+
+        print(f"[DEBUG] Follow-up resolution | Domain: {active_domain} | Intent: {current_intent}")
+
+        # Planner Continuity Override
+        if active_domain == "planner":
+            if current_intent in ["remove_from_cart", "modify_previous_request", "casual_chat"]:
+                classification["intent"] = "modify_meal_plan"
+                return self.handle_modify_meal_plan(message, user_context, session_context, classification, session_state)
+            elif current_intent == "meal_planning":
+                return self.handle_meal_planning(message, user_context, classification, session_state)
+
+        # Cart Continuity Override
+        if active_domain == "cart":
+            if current_intent in ["modify_meal_plan", "modify_previous_request"]:
+                classification["intent"] = "remove_from_cart"
+                return self.handle_remove_from_cart(message, user_context, classification)
         
         # If user previously got recommendations and asks for cheaper/healthier version
-        if last_intent in ["food_recommendation", "healthy_suggestions"]:
+        if last_intent in ["food_recommendation", "healthy_suggestions"] or active_domain == "recommendations":
             # Merge contexts - keep last recommendation context, update with new filters
             merged_context = dict(user_context)
             merged_context.update(last_entities)
@@ -177,13 +207,15 @@ class ChatOrchestrator:
             return self.handle_meal_planning(message, merged_context)
         
         # Default: handle as regular core intent
-        return self._handle_core_intent(message, classification, user_context)
+        return self._handle_core_intent(message, classification, user_context, session_context, session_state)
 
     def _handle_core_intent(
         self,
         message: str,
         classification: Dict[str, Any],
         user_context: Dict[str, Any],
+        session_context: Optional[Dict[str, Any]] = None,
+        session_state: Any = None,
     ) -> Dict[str, Any]:
         """Handle main business intents (orders, recommendations, cart, etc.)."""
         intent = classification.get("intent", "casual_chat")
@@ -192,11 +224,17 @@ class ChatOrchestrator:
         if intent == "food_recommendation":
             result = self.handle_food_recommendation(message, user_context)
         elif intent == "meal_planning":
-            result = self.handle_meal_planning(message, user_context)
+            result = self.handle_meal_planning(message, user_context, classification, session_state)
+        elif intent == "modify_meal_plan":
+            result = self.handle_modify_meal_plan(message, user_context, session_context, classification, session_state)
+        elif intent == "show_meal_plan":
+            result = self.handle_show_meal_plan(message, user_context, session_context, session_state)
         elif intent == "add_to_cart":
-            result = self.handle_add_to_cart(message, user_context)
+            result = self.handle_add_to_cart(message, user_context, classification)
+        elif intent == "cart_action":
+            result = self._handle_action_graph(message, classification, user_context, session_context, session_state)
         elif intent == "remove_from_cart":
-            result = self.handle_remove_from_cart(message, user_context)
+            result = self.handle_remove_from_cart(message, user_context, classification)
         elif intent == "view_cart":
             result = self.handle_view_cart(message, user_context)
         elif intent == "checkout_cart":
@@ -237,7 +275,7 @@ class ChatOrchestrator:
         ]
         remove_phrases = ["remove", "delete", "drop", "cancel", "take out"]
         view_phrases = ["show my cart", "view cart", "my cart", "show cart", "what's in my cart"]
-        order_intent_words = ["order", "place", "buy", "get", "need", "want", "would like", "can you get me", "send me", "bring me", "add", "also", "too", "more"]
+        order_intent_words = ["can you get me", "send me", "bring me", "add", "also", "too", "more"]
         quantity_words = ["one", "two", "three", "four", "five", "extra", "double"]
         food_entities = [
             "burger",
@@ -296,34 +334,58 @@ class ChatOrchestrator:
         """Main orchestration method that routes to appropriate handlers."""
         session_id = user_context.get("session_id")
         
+        session_state = self.session_manager.create_session(session_id) if session_id else None
+
         # Initialize or get session conversation memory
         if session_id and session_id not in self.conversation_memories:
             self.conversation_memories[session_id] = ConversationMemory()
         
         conversation_memory = self.conversation_memories.get(session_id)
-        session_context = conversation_memory.get_session_context() if conversation_memory else None
+        session_context = conversation_memory.get_session_context() if conversation_memory else {}
         
+        # Sync active domain state down into the AI classifier context
+        if session_state:
+            session_context["active_domain"] = session_state.active_domain
+            session_context["planner_state"] = session_state.planner_state.model_dump() if session_state.planner_state else {}
+            print(f"[DEBUG] Active Domain: {session_state.active_domain} | Message: {message}")
+
         # NEW: Use conversational classifier for intelligent understanding
         classification = self.classifier.classify_user_message(message, session_context)
         
-        # Handle conversational intents (greeting, gratitude, etc.)
-        if self._is_conversational_intent(classification.get("intent")):
+        intent = classification.get("intent", "casual_chat")
+        msg_lower = message.lower()
+        
+        # Planner Override Logic: Ensure explicit planner prompts don't get lost in conversational flows
+        if any(w in msg_lower for w in ["show my planner", "my weekly planner", "display meal plan", "show meal plan"]):
+            classification["intent"] = "show_meal_plan"
+            
+        planner_keywords = ["plan", "planner", "weekly meal", "meal prep"]
+        if any(w in msg_lower for w in planner_keywords) and self._is_conversational_intent(intent):
+            classification["intent"] = "meal_planning"
+
+        intent = classification.get("intent")
+
+        # Route to appropriate handler
+        if intent in ["meal_planning", "modify_meal_plan", "show_meal_plan"]:
+            # Always prioritize planner core execution
+            result = self._handle_core_intent(message, classification, user_context, session_context, session_state)
+        elif self._is_conversational_intent(intent):
             result = self._handle_conversational_intent(
                 message, classification, user_context
             )
-        # Handle multi-action intents (remove + add, etc.)
-        elif classification.get("sub_intents"):
-            result = self._handle_multi_action_intent(
-                message, classification, user_context
+        # Handle multi-action intents (actions array > 0)
+        elif classification.get("actions"):
+            result = self._handle_action_graph(
+                message, classification, user_context, session_context, session_state
             )
         # Handle follow-ups with context awareness
         elif classification.get("is_followup") and session_context:
             result = self._handle_context_aware_followup(
-                message, classification, user_context, session_context
+                message, classification, user_context, session_context, session_state
             )
         # Handle core intents (orders, recommendations, etc.)
         else:
-            result = self._handle_core_intent(message, classification, user_context)
+            result = self._handle_core_intent(message, classification, user_context, session_context, session_state)
         
         # Update conversation memory with this interaction
         if conversation_memory:
@@ -341,6 +403,8 @@ class ChatOrchestrator:
                 result.get("intent", "fallback_chat"),
                 result,
             )
+            # Post-execution logs
+            print(f"[DEBUG] Post-Execution Domain: {self.session_manager.get_session_context(session_id).active_domain}")
 
         return self.format_response(result)
 
@@ -362,15 +426,103 @@ class ChatOrchestrator:
             "data": {"recommendations": result.get("recommendations", [])},
         }
 
-    def handle_meal_planning(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+    def handle_meal_planning(self, message: str, user_context: Dict[str, Any], classification: Optional[Dict[str, Any]] = None, session_state: Any = None) -> Dict[str, Any]:
         """Handle meal planning requests."""
-        plan_input = self._extract_planning_context(message, user_context)
+        plan_input = self._extract_planning_context(message, user_context, classification)
+        
+        # Merge with persistent session preferences
+        if session_state:
+            if not plan_input.get("budget") and session_state.user_preferences.get("budget"):
+                plan_input["budget"] = session_state.user_preferences["budget"]
+            if not plan_input.get("preferences") and session_state.user_preferences.get("preference"):
+                plan_input["preferences"] = session_state.user_preferences["preference"]
+                
+        # Incomplete Constraint detection (Stop asking unnecessary questions unless really generic)
+        has_budget = bool(classification and classification.get("entities", {}).get("budget_max"))
+        has_pref = bool(classification and classification.get("entities", {}).get("preference"))
+        message_words = len(message.split())
+        
+        if not has_budget and not has_pref and message_words < 4:
+            return {
+                "intent": "meal_planning",
+                "response": "I'd love to plan your weekly meals! What cuisine or budget would you prefer?",
+                "meal_plan": None,
+                "data": {}
+            }
+
+        # Persist extracted constraints
+        if session_state and classification and "entities" in classification:
+            entities = classification["entities"]
+            if entities.get("budget_max"):
+                session_state.user_preferences["budget"] = entities["budget_max"]
+            if entities.get("preference"):
+                session_state.user_preferences["preference"] = entities["preference"]
+
+        print(f"[DEBUG] Generating planner | Detected Constraints: {plan_input}")
+        
         plan = self.meal_planner.generate_meal_plan(plan_input)
         response = self.generate_chat_response("meal_planning", plan)
+        
+        if session_state:
+            session_state.planner_state.active_plan = plan
+            session_state.last_meal_plan = plan
+            session_state.switch_domain("planner")
+            print(f"[DEBUG] Planner Persistence Status: Saved to SessionState")
+            
         return {
             "intent": "meal_planning",
             "response": response,
             "meal_plan": plan,
+            "data": {"meal_plan": plan},
+        }
+
+    def handle_modify_meal_plan(self, message: str, user_context: Dict[str, Any], session_context: Optional[Dict[str, Any]], classification: Dict[str, Any], session_state: Any = None) -> Dict[str, Any]:
+        """Handle surgical conversational modifications to the active meal plan."""
+        existing_plan = session_state.planner_state.active_plan if (session_state and session_state.planner_state.active_plan) else (session_context.get("last_meal_plan") if session_context else None)
+        
+        if not existing_plan:
+            # Treat as a new plan if no prior plan exists
+            return self.handle_meal_planning(message, user_context, classification, session_state)
+            
+        entities = classification.get("entities", {})
+        print(f"[DEBUG] Modifying planner | Extracted Entities: {entities}")
+        
+        user_preferences = session_state.user_preferences if session_state else {}
+        modified_plan = self.meal_planner.modify_existing_plan(existing_plan, entities, message, user_preferences)
+        response = self.response_generator.generate_response("modify_meal_plan", {"meal_plan": modified_plan}, tone=classification.get("tone", "casual"))
+        
+        if session_state:
+            session_state.planner_state.active_plan = modified_plan
+            session_state.last_meal_plan = modified_plan
+            session_state.switch_domain("planner")
+            
+        return {
+            "intent": "meal_planning",
+            "response": response,
+            "meal_plan": modified_plan,
+            "data": {"meal_plan": modified_plan},
+        }
+
+    def handle_show_meal_plan(self, message: str, user_context: Dict[str, Any], session_context: Optional[Dict[str, Any]], session_state: Any = None) -> Dict[str, Any]:
+        """Handle viewing the existing meal plan."""
+        existing_plan = session_state.planner_state.active_plan if (session_state and session_state.planner_state.active_plan) else (session_context.get("last_meal_plan") if session_context else None)
+        if not existing_plan:
+            return {
+                "intent": "show_meal_plan",
+                "response": "You don't have an active meal plan yet. Shall I create a weekly meal plan for you?",
+                "meal_plan": None,
+                "data": {}
+            }
+        
+        if session_state:
+            session_state.switch_domain("planner")
+            
+        response = self.response_generator.generate_response("show_meal_plan", {"meal_plan": existing_plan}, tone="casual")
+        return {
+            "intent": "show_meal_plan",
+            "response": response,
+            "meal_plan": existing_plan,
+            "data": {"meal_plan": existing_plan}
         }
 
     def handle_order_request(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
@@ -449,7 +601,7 @@ class ChatOrchestrator:
                 "status": None,
             }
 
-    def handle_add_to_cart(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+    def handle_add_to_cart(self, message: str, user_context: Dict[str, Any], classification: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Handle adding items into the user's cart."""
         session_id = user_context.get("session_id")
         if not session_id:
@@ -459,7 +611,7 @@ class ChatOrchestrator:
                 "cart": None,
             }
 
-        item_ids = self._extract_order_items(message)
+        item_ids = self._extract_order_items(message, classification)
         if not item_ids:
             return {
                 "intent": "add_to_cart",
@@ -482,6 +634,7 @@ class ChatOrchestrator:
                 "intent": "add_to_cart",
                 "response": "None of those items are available right now. Try adding something else.",
                 "cart": self.cart_service.get_cart(session_id),
+                "active_cart": self.cart_service.get_cart(service.get_cart(session_id)),
                 "active_cart": self.cart_service.get_cart(session_id),
                 "last_cart_action": "add",
             }
@@ -496,7 +649,7 @@ class ChatOrchestrator:
             "last_cart_action": "add",
         }
 
-    def handle_remove_from_cart(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+    def handle_remove_from_cart(self, message: str, user_context: Dict[str, Any], classification: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Handle cart item removal."""
         session_id = user_context.get("session_id")
         if not session_id:
@@ -506,7 +659,7 @@ class ChatOrchestrator:
                 "cart": None,
             }
 
-        item_ids = self._extract_order_items(message)
+        item_ids = self._extract_order_items(message, classification)
         if not item_ids:
             return {
                 "intent": "remove_from_cart",
@@ -677,12 +830,15 @@ class ChatOrchestrator:
             data["meal_plan"] = result["meal_plan"]
         if "status" in result and result["status"]:
             data["status"] = result["status"]
+        if "actions_executed" in result:
+            data["actions_executed"] = result["actions_executed"]
 
         return {
             "status": "success",
             "intent": result.get("intent", "unknown"),
             "response": result.get("response", ""),
             "data": data,
+            "active_domain": result.get("active_domain", "general"),
             "timestamp": self._current_timestamp(),
         }
 
@@ -730,9 +886,9 @@ class ChatOrchestrator:
 
         intent = self.detect_intent(message)
         if intent == "add_to_cart":
-            return self.handle_add_to_cart(message, user_context)
+            return self.handle_add_to_cart(message, user_context, None)
         if intent == "remove_from_cart":
-            return self.handle_remove_from_cart(message, user_context)
+            return self.handle_remove_from_cart(message, user_context, None)
         if intent == "view_cart":
             return self.handle_view_cart(message, user_context)
         if intent == "checkout_cart":
@@ -804,8 +960,6 @@ class ChatOrchestrator:
         """Extract context for recommendations - now enhanced with LLM-based entity extraction."""
         context = dict(user_context)
         message_lower = message.lower()
-
-        # Try to get entities from the classifier for better understanding
         try:
             classification = self.classifier.classify_user_message(message)
             classified_entities = classification.get("entities", {})
@@ -827,10 +981,22 @@ class ChatOrchestrator:
                 context["spicy"] = classified_entities["spicy"]
             if "protein_rich" in classified_entities and classified_entities["protein_rich"]:
                 context["protein_rich"] = True
+            if "vegan" in classified_entities and classified_entities["vegan"]:
+                context["vegan"] = True
+            if "low_calorie" in classified_entities and classified_entities["low_calorie"]:
+                context["low_calorie"] = True
                 
         except Exception:
             # Fallback to regex-based extraction if classifier fails
             pass
+
+        # Fallback regex extraction for new tags
+        if "vegan" in message_lower:
+            context["vegan"] = True
+        if "gluten free" in message_lower or "gluten-free" in message_lower:
+            context["gluten_free"] = True
+        if "diet" in message_lower or "low calorie" in message_lower:
+            context["low_calorie"] = True
 
         # Fallback regex extraction for items not caught by classifier
         # Extract mood
@@ -902,42 +1068,63 @@ class ChatOrchestrator:
 
         return context
 
-    def _extract_planning_context(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+    def _extract_planning_context(self, message: str, user_context: Dict[str, Any], classification: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Extract context for meal planning."""
         goal = "General health and wellness"
-        if "weight" in message.lower():
-            goal = "Weight management"
-        elif "muscle" in message.lower():
-            goal = "Muscle building"
-
         budget = user_context.get("budget_left", 2000)
-        budget_match = re.search(r"(?:budget|under|below|less than|above|over|more than|greater than|minimum|min|max|maximum)\s*₹?\s*(\d{2,4})", message.lower())
-        if budget_match:
-            try:
-                budget = int(budget_match.group(1))
-            except ValueError:
-                pass
-
-        if "max_budget" in user_context:
-            budget = user_context.get("max_budget")
-        elif "min_budget" in user_context:
-            budget = user_context.get("min_budget")
-
         preferences = user_context.get("preference", "veg")
+        
+        # Override from classification if available
+        if classification and "entities" in classification:
+            entities = classification["entities"]
+            if entities.get("budget_max"):
+                budget = entities["budget_max"]
+            if entities.get("preference"):
+                preferences = entities["preference"]
+            
+            if entities.get("health_goal"):
+                goal = "Healthy and nutritious"
+            elif entities.get("protein_rich"):
+                goal = "High protein and muscle building"
+            elif "weight" in message.lower():
+                goal = "Weight management"
+        
+        # Build constraints
+        constraints = [message] # raw message has natural language
+        if classification and "entities" in classification:
+            entities = classification["entities"]
+            if entities.get("cuisine"):
+                constraints.append(f"Cuisine: {entities.get('cuisine')}")
+            if entities.get("excluded_items"):
+                constraints.append(f"Exclude: {', '.join(entities.get('excluded_items'))}")
+            if entities.get("included_items"):
+                constraints.append(f"Include: {', '.join(entities.get('included_items'))}")
+                
         return {
             "goal": goal,
             "budget": budget,
             "preferences": preferences,
+            "constraints": " | ".join(constraints),
         }
 
-    def _extract_order_items(self, message: str) -> list[int]:
+    def _extract_order_items(self, message: str, classification: Optional[Dict[str, Any]] = None) -> list[int]:
         """Extract item IDs from order message using smart keyword extraction."""
-        keywords = self.extract_order_keywords(message)
         item_ids = []
-        for keyword in keywords:
-            item = self.resolve_catalog_item(keyword)
-            if item and item["item_id"] not in item_ids:
-                item_ids.append(item["item_id"])
+        
+        if classification and "entities" in classification:
+            item_names = classification["entities"].get("item_names", [])
+            for name in item_names:
+                item = self.resolve_catalog_item(name)
+                if item and item["item_id"] not in item_ids:
+                    item_ids.append(item["item_id"])
+                    
+        if not item_ids:
+            keywords = self.extract_order_keywords(message)
+            for keyword in keywords:
+                item = self.resolve_catalog_item(keyword)
+                if item and item["item_id"] not in item_ids:
+                    item_ids.append(item["item_id"])
+                    
         return item_ids[:5]
 
     def _generate_recommendation_response(self, result: Dict[str, Any], context: Dict[str, Any]) -> str:
@@ -1073,10 +1260,3 @@ if __name__ == "__main__":
         print(f"\nUSER: {message}")
         result = orchestrator.handle_message(message, user_context)
         print(json.dumps(result, indent=2))
-
-
-
-
-
-
-

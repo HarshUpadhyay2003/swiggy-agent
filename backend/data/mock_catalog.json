@@ -15,7 +15,9 @@
         "price": 260,
         "available": true,
         "healthy": false,
-        "meal_type": "dinner"
+        "meal_type": "dinner",
+        "spicy": true,
+        "high_protein": true
       },
       {
         "item_id": 102,
@@ -24,7 +26,8 @@
         "price": 70,
         "available": true,
         "healthy": true,
-        "meal_type": "lunch"
+        "meal_type": "lunch",
+        "vegan": true
       },
       {
         "item_id": 103,
@@ -33,16 +36,19 @@
         "price": 380,
         "available": true,
         "healthy": false,
-        "meal_type": "dinner"
+        "meal_type": "dinner",
+        "spicy": true,
+        "high_protein": true
       },
       {
         "item_id": 104,
-        "name": "Mixed Vegetable Thali",
+        "name": "North Indian Thali Combo",
         "category": "veg",
         "price": 220,
         "available": true,
         "healthy": true,
-        "meal_type": "lunch"
+        "meal_type": "lunch",
+        "high_protein": false
       },
       {
         "item_id": 105,
@@ -51,7 +57,18 @@
         "price": 120,
         "available": false,
         "healthy": false,
-        "meal_type": "snacks"
+        "meal_type": "dessert",
+        "spicy": false
+      },
+      {
+        "item_id": 106,
+        "name": "Family Mughlai Combo Box",
+        "category": "non-veg",
+        "price": 850,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true
       }
     ]
   },
@@ -71,16 +88,18 @@
         "price": 140,
         "available": true,
         "healthy": true,
-        "meal_type": "breakfast"
+        "meal_type": "breakfast",
+        "vegan": true
       },
       {
         "item_id": 202,
-        "name": "Meen Curry with Rice",
+        "name": "South Indian Meal Box",
         "category": "non-veg",
         "price": 280,
         "available": true,
         "healthy": false,
-        "meal_type": "lunch"
+        "meal_type": "lunch",
+        "spicy": true
       },
       {
         "item_id": 203,
@@ -89,25 +108,28 @@
         "price": 110,
         "available": true,
         "healthy": true,
-        "meal_type": "breakfast"
+        "meal_type": "breakfast",
+        "vegan": true,
+        "low_calorie": true
       },
       {
         "item_id": 204,
-        "name": "Egg Roast",
-        "category": "non-veg",
-        "price": 180,
-        "available": false,
-        "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 205,
         "name": "Filter Coffee",
         "category": "veg",
         "price": 60,
         "available": true,
         "healthy": false,
-        "meal_type": "snacks"
+        "meal_type": "beverages"
+      },
+      {
+        "item_id": 205,
+        "name": "Upma",
+        "category": "veg",
+        "price": 90,
+        "available": true,
+        "healthy": true,
+        "meal_type": "breakfast",
+        "low_calorie": true
       }
     ]
   },
@@ -127,7 +149,8 @@
         "price": 190,
         "available": true,
         "healthy": false,
-        "meal_type": "dinner"
+        "meal_type": "dinner",
+        "vegan": true
       },
       {
         "item_id": 302,
@@ -136,34 +159,19 @@
         "price": 310,
         "available": true,
         "healthy": false,
-        "meal_type": "lunch"
+        "meal_type": "lunch",
+        "spicy": true,
+        "high_protein": true
       },
       {
         "item_id": 303,
-        "name": "Schezuan Paneer",
-        "category": "veg",
-        "price": 240,
-        "available": true,
-        "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 304,
-        "name": "Steamed Vegetable Momos (6pcs)",
-        "category": "veg",
-        "price": 170,
-        "available": false,
-        "healthy": true,
-        "meal_type": "snacks"
-      },
-      {
-        "item_id": 305,
-        "name": "Chicken Manchurian Bowl",
+        "name": "Chicken Manchurian Rice Bowl",
         "category": "non-veg",
         "price": 320,
         "available": true,
         "healthy": false,
-        "meal_type": "lunch"
+        "meal_type": "dinner",
+        "high_protein": true
       }
     ]
   },
@@ -183,7 +191,10 @@
         "price": 320,
         "available": true,
         "healthy": true,
-        "meal_type": "lunch"
+        "meal_type": "lunch",
+        "vegan": true,
+        "gluten_free": true,
+        "low_calorie": true
       },
       {
         "item_id": 402,
@@ -192,258 +203,602 @@
         "price": 380,
         "available": true,
         "healthy": true,
-        "meal_type": "dinner"
+        "meal_type": "dinner",
+        "high_protein": true
       },
       {
         "item_id": 403,
-        "name": "Avocado Toast",
-        "category": "veg",
-        "price": 280,
-        "available": true,
-        "healthy": true,
-        "meal_type": "breakfast"
-      },
-      {
-        "item_id": 404,
-        "name": "Protein Pancakes",
+        "name": "Protein Pancake Stack",
         "category": "veg",
         "price": 300,
         "available": true,
         "healthy": true,
-        "meal_type": "breakfast"
+        "meal_type": "breakfast",
+        "high_protein": true
       },
       {
-        "item_id": 405,
+        "item_id": 404,
         "name": "Kale and Berry Smoothie",
         "category": "veg",
         "price": 180,
-        "available": false,
+        "available": true,
         "healthy": true,
-        "meal_type": "snacks"
+        "meal_type": "beverages",
+        "vegan": true
       }
     ]
   },
   {
     "restaurant_id": 5,
-    "name": "Chennai Express",
-    "cuisine": "South Indian",
+    "name": "Urban Burger Hub",
+    "cuisine": "Fast Food",
     "rating": 4.4,
     "delivery_time": 32,
-    "price_range": "medium",
+    "price_range": "budget",
     "location": "Bangalore",
     "menu": [
       {
         "item_id": 501,
-        "name": "Rava Idli with Coconut Chutney",
+        "name": "Classic Veg Burger Combo",
         "category": "veg",
-        "price": 130,
-        "available": true,
-        "healthy": true,
-        "meal_type": "breakfast"
-      },
-      {
-        "item_id": 502,
-        "name": "Chettinad Chicken",
-        "category": "non-veg",
-        "price": 330,
-        "available": true,
-        "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 503,
-        "name": "Prawn Masala Dosa",
-        "category": "non-veg",
-        "price": 260,
-        "available": false,
-        "healthy": false,
-        "meal_type": "lunch"
-      },
-      {
-        "item_id": 504,
-        "name": "Idiyappam with Egg Curry",
-        "category": "non-veg",
         "price": 220,
         "available": true,
         "healthy": false,
-        "meal_type": "breakfast"
+        "meal_type": "lunch",
+        "vegan": false
       },
       {
-        "item_id": 505,
-        "name": "Rasam and Steamed Rice",
+        "item_id": 502,
+        "name": "Double Crispy Chicken Burger",
+        "category": "non-veg",
+        "price": 260,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true
+      },
+      {
+        "item_id": 503,
+        "name": "Peri Peri French Fries",
+        "category": "veg",
+        "price": 110,
+        "available": true,
+        "healthy": false,
+        "meal_type": "snacks",
+        "spicy": true,
+        "vegan": true
+      },
+      {
+        "item_id": 504,
+        "name": "Chocolate Thick Shake",
         "category": "veg",
         "price": 140,
         "available": true,
-        "healthy": true,
-        "meal_type": "lunch"
+        "healthy": false,
+        "meal_type": "beverages"
       }
     ]
   },
   {
     "restaurant_id": 6,
-    "name": "Urban Burger Hub",
-    "cuisine": "Fast Food",
-    "rating": 4.1,
-    "delivery_time": 22,
+    "name": "Delhi Dhaba",
+    "cuisine": "North Indian",
+    "rating": 4.6,
+    "delivery_time": 34,
     "price_range": "budget",
     "location": "Bangalore",
     "menu": [
       {
         "item_id": 601,
-        "name": "Classic Veg Burger",
-        "category": "veg",
-        "price": 120,
-        "available": true,
-        "healthy": false,
-        "meal_type": "lunch"
-      },
-      {
-        "item_id": 602,
-        "name": "Grilled Chicken Burger",
-        "category": "non-veg",
-        "price": 170,
-        "available": true,
-        "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 603,
-        "name": "French Fries",
-        "category": "veg",
-        "price": 90,
-        "available": true,
-        "healthy": false,
-        "meal_type": "snacks"
-      },
-      {
-        "item_id": 604,
-        "name": "Paneer Tikka Burger",
-        "category": "veg",
-        "price": 180,
-        "available": false,
-        "healthy": false,
-        "meal_type": "lunch"
-      },
-      {
-        "item_id": 605,
-        "name": "Protein Salad Bowl",
-        "category": "veg",
-        "price": 220,
-        "available": true,
-        "healthy": true,
-        "meal_type": "dinner"
-      }
-    ]
-  },
-  {
-    "restaurant_id": 7,
-    "name": "Delhi Dhaba",
-    "cuisine": "North Indian",
-    "rating": 4.6,
-    "delivery_time": 34,
-    "price_range": "medium",
-    "location": "Bangalore",
-    "menu": [
-      {
-        "item_id": 701,
-        "name": "Dal Makhani",
-        "category": "veg",
-        "price": 220,
-        "available": true,
-        "healthy": true,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 702,
-        "name": "Butter Chicken",
-        "category": "non-veg",
-        "price": 390,
-        "available": true,
-        "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 703,
         "name": "Aloo Paratha with Curd",
         "category": "veg",
-        "price": 180,
+        "price": 150,
         "available": true,
         "healthy": false,
         "meal_type": "breakfast"
       },
       {
-        "item_id": 704,
-        "name": "Chole Bhature",
+        "item_id": 602,
+        "name": "Dal Makhani Meal Box",
         "category": "veg",
-        "price": 200,
-        "available": false,
-        "healthy": false,
-        "meal_type": "lunch"
-      },
-      {
-        "item_id": 705,
-        "name": "Mixed Salad",
-        "category": "veg",
-        "price": 140,
+        "price": 220,
         "available": true,
         "healthy": true,
-        "meal_type": "snacks"
+        "meal_type": "dinner",
+        "high_protein": true
+      },
+      {
+        "item_id": 603,
+        "name": "Butter Chicken with Naan",
+        "category": "non-veg",
+        "price": 380,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true
+      },
+      {
+        "item_id": 604,
+        "name": "Sweet Lassi",
+        "category": "veg",
+        "price": 90,
+        "available": true,
+        "healthy": false,
+        "meal_type": "beverages"
+      }
+    ]
+  },
+  {
+    "restaurant_id": 7,
+    "name": "Noodle Nook",
+    "cuisine": "Street Food",
+    "rating": 4.0,
+    "delivery_time": 25,
+    "price_range": "budget",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 701,
+        "name": "Steamed Chicken Momos (8pcs)",
+        "category": "non-veg",
+        "price": 160,
+        "available": true,
+        "healthy": true,
+        "meal_type": "snacks",
+        "high_protein": true,
+        "low_calorie": true
+      },
+      {
+        "item_id": 702,
+        "name": "Veg Spring Rolls",
+        "category": "veg",
+        "price": 120,
+        "available": true,
+        "healthy": false,
+        "meal_type": "snacks",
+        "vegan": true
+      },
+      {
+        "item_id": 703,
+        "name": "Spicy Ramen Bowl",
+        "category": "veg",
+        "price": 280,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "spicy": true
+      },
+      {
+        "item_id": 704,
+        "name": "Chicken Thukpa",
+        "category": "non-veg",
+        "price": 250,
+        "available": true,
+        "healthy": true,
+        "meal_type": "lunch",
+        "high_protein": true
       }
     ]
   },
   {
     "restaurant_id": 8,
-    "name": "Noodle Nook",
-    "cuisine": "Chinese",
-    "rating": 4.0,
-    "delivery_time": 27,
-    "price_range": "budget",
+    "name": "Luigi's Pizzeria",
+    "cuisine": "Italian",
+    "rating": 4.5,
+    "delivery_time": 40,
+    "price_range": "medium",
     "location": "Bangalore",
     "menu": [
       {
         "item_id": 801,
-        "name": "Veg Schezwan Noodles",
+        "name": "Margherita Pizza (Medium)",
+        "category": "veg",
+        "price": 290,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "vegan": false
+      },
+      {
+        "item_id": 802,
+        "name": "Family Meat Feast Pizza Combo",
+        "category": "non-veg",
+        "price": 850,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true
+      },
+      {
+        "item_id": 803,
+        "name": "Garlic Bread with Cheese",
         "category": "veg",
         "price": 150,
         "available": true,
         "healthy": false,
-        "meal_type": "dinner"
-      },
-      {
-        "item_id": 802,
-        "name": "Honey Chilli Potato",
-        "category": "veg",
-        "price": 160,
-        "available": true,
-        "healthy": false,
         "meal_type": "snacks"
-      },
-      {
-        "item_id": 803,
-        "name": "Chicken Fried Rice",
-        "category": "non-veg",
-        "price": 200,
-        "available": true,
-        "healthy": false,
-        "meal_type": "lunch"
       },
       {
         "item_id": 804,
-        "name": "Steamed Chicken Momos (6pcs)",
+        "name": "Penne Alfredo Pasta",
+        "category": "veg",
+        "price": 320,
+        "available": true,
+        "healthy": false,
+        "meal_type": "lunch"
+      }
+    ]
+  },
+  {
+    "restaurant_id": 9,
+    "name": "Taco Fiesta",
+    "cuisine": "Mexican",
+    "rating": 4.6,
+    "delivery_time": 30,
+    "price_range": "medium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 901,
+        "name": "Spicy Chicken Burrito Bowl",
         "category": "non-veg",
-        "price": 220,
-        "available": false,
+        "price": 350,
+        "available": true,
         "healthy": true,
-        "meal_type": "snacks"
+        "meal_type": "lunch",
+        "spicy": true,
+        "high_protein": true,
+        "gluten_free": true
       },
       {
-        "item_id": 805,
-        "name": "Vegetable Spring Rolls (4pcs)",
+        "item_id": 902,
+        "name": "Loaded Veggie Nachos",
         "category": "veg",
-        "price": 140,
+        "price": 280,
         "available": true,
         "healthy": false,
         "meal_type": "snacks"
+      },
+      {
+        "item_id": 903,
+        "name": "Crispy Fish Tacos (3pcs)",
+        "category": "non-veg",
+        "price": 390,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true
+      }
+    ]
+  },
+  {
+    "restaurant_id": 10,
+    "name": "Chatpata Corner",
+    "cuisine": "Street Food",
+    "rating": 4.1,
+    "delivery_time": 20,
+    "price_range": "budget",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1001,
+        "name": "Punjabi Samosa (2pcs)",
+        "category": "veg",
+        "price": 50,
+        "available": true,
+        "healthy": false,
+        "meal_type": "snacks",
+        "vegan": true
+      },
+      {
+        "item_id": 1002,
+        "name": "Pani Puri Plate",
+        "category": "veg",
+        "price": 70,
+        "available": true,
+        "healthy": false,
+        "meal_type": "snacks",
+        "vegan": true
+      },
+      {
+        "item_id": 1003,
+        "name": "Masala Chai",
+        "category": "veg",
+        "price": 40,
+        "available": true,
+        "healthy": false,
+        "meal_type": "beverages"
+      }
+    ]
+  },
+  {
+    "restaurant_id": 11,
+    "name": "The Grand Grill",
+    "cuisine": "Continental",
+    "rating": 4.8,
+    "delivery_time": 45,
+    "price_range": "premium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1101,
+        "name": "Grilled Salmon Steak",
+        "category": "non-veg",
+        "price": 850,
+        "available": true,
+        "healthy": true,
+        "meal_type": "dinner",
+        "high_protein": true,
+        "low_calorie": true,
+        "gluten_free": true
+      },
+      {
+        "item_id": 1102,
+        "name": "Herb Roasted Chicken Breast",
+        "category": "non-veg",
+        "price": 550,
+        "available": true,
+        "healthy": true,
+        "meal_type": "lunch",
+        "high_protein": true,
+        "low_calorie": true
+      },
+      {
+        "item_id": 1103,
+        "name": "Premium Mushroom Risotto",
+        "category": "veg",
+        "price": 480,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner"
+      }
+    ]
+  },
+  {
+    "restaurant_id": 12,
+    "name": "Sweet Cravings",
+    "cuisine": "Desserts",
+    "rating": 4.9,
+    "delivery_time": 25,
+    "price_range": "medium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1201,
+        "name": "New York Cheesecake",
+        "category": "veg",
+        "price": 220,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dessert"
+      },
+      {
+        "item_id": 1202,
+        "name": "Warm Chocolate Fudge Brownie",
+        "category": "veg",
+        "price": 180,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dessert"
+      },
+      {
+        "item_id": 1203,
+        "name": "Vegan Oat Cookies (Pack of 4)",
+        "category": "veg",
+        "price": 250,
+        "available": true,
+        "healthy": true,
+        "meal_type": "dessert",
+        "vegan": true
+      }
+    ]
+  },
+  {
+    "restaurant_id": 13,
+    "name": "Brew & Blend",
+    "cuisine": "Beverages",
+    "rating": 4.6,
+    "delivery_time": 20,
+    "price_range": "medium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1301,
+        "name": "Iced Hazelnut Latte",
+        "category": "veg",
+        "price": 200,
+        "available": true,
+        "healthy": false,
+        "meal_type": "beverages"
+      },
+      {
+        "item_id": 1302,
+        "name": "Whey Protein Shake (Chocolate)",
+        "category": "veg",
+        "price": 250,
+        "available": true,
+        "healthy": true,
+        "meal_type": "beverages",
+        "high_protein": true
+      },
+      {
+        "item_id": 1303,
+        "name": "Fresh Orange Juice",
+        "category": "veg",
+        "price": 150,
+        "available": true,
+        "healthy": true,
+        "meal_type": "beverages",
+        "vegan": true,
+        "low_calorie": true
+      }
+    ]
+  },
+  {
+    "restaurant_id": 14,
+    "name": "Seoul to Tokyo",
+    "cuisine": "Japanese",
+    "rating": 4.7,
+    "delivery_time": 40,
+    "price_range": "premium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1401,
+        "name": "Spicy Tuna Sushi Roll (8pcs)",
+        "category": "non-veg",
+        "price": 650,
+        "available": true,
+        "healthy": true,
+        "meal_type": "dinner",
+        "high_protein": true,
+        "spicy": true
+      },
+      {
+        "item_id": 1402,
+        "name": "Chicken Bibimbap Bowl",
+        "category": "non-veg",
+        "price": 520,
+        "available": true,
+        "healthy": true,
+        "meal_type": "lunch",
+        "high_protein": true
+      },
+      {
+        "item_id": 1403,
+        "name": "Miso Soup",
+        "category": "veg",
+        "price": 180,
+        "available": true,
+        "healthy": true,
+        "meal_type": "snacks",
+        "low_calorie": true
+      }
+    ]
+  },
+  {
+    "restaurant_id": 15,
+    "name": "Royal Darbar",
+    "cuisine": "Mughlai",
+    "rating": 4.4,
+    "delivery_time": 45,
+    "price_range": "premium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1501,
+        "name": "Mutton Dum Biryani (Family Pack)",
+        "category": "non-veg",
+        "price": 950,
+        "available": true,
+        "healthy": false,
+        "meal_type": "dinner",
+        "high_protein": true,
+        "spicy": true
+      },
+      {
+        "item_id": 1502,
+        "name": "Chicken Seekh Kebab",
+        "category": "non-veg",
+        "price": 380,
+        "available": true,
+        "healthy": true,
+        "meal_type": "snacks",
+        "high_protein": true,
+        "low_calorie": true
+      },
+      {
+        "item_id": 1503,
+        "name": "Paneer Shawarma Roll",
+        "category": "veg",
+        "price": 220,
+        "available": true,
+        "healthy": false,
+        "meal_type": "lunch"
+      }
+    ]
+  },
+  {
+    "restaurant_id": 16,
+    "name": "Fit Foodie",
+    "cuisine": "Healthy Food",
+    "rating": 4.9,
+    "delivery_time": 25,
+    "price_range": "medium",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1601,
+        "name": "Lean Chicken Breast Diet Box",
+        "category": "non-veg",
+        "price": 320,
+        "available": true,
+        "healthy": true,
+        "meal_type": "lunch",
+        "high_protein": true,
+        "low_calorie": true,
+        "gluten_free": true
+      },
+      {
+        "item_id": 1602,
+        "name": "Tofu & Broccoli Salad",
+        "category": "veg",
+        "price": 280,
+        "available": true,
+        "healthy": true,
+        "meal_type": "dinner",
+        "high_protein": true,
+        "vegan": true,
+        "low_calorie": true
+      },
+      {
+        "item_id": 1603,
+        "name": "Boiled Eggs (4pcs)",
+        "category": "non-veg",
+        "price": 80,
+        "available": true,
+        "healthy": true,
+        "meal_type": "breakfast",
+        "high_protein": true,
+        "low_calorie": true
+      }
+    ]
+  },
+  {
+    "restaurant_id": 17,
+    "name": "Midnight Munchies",
+    "cuisine": "Fast Food",
+    "rating": 4.2,
+    "delivery_time": 35,
+    "price_range": "budget",
+    "location": "Bangalore",
+    "menu": [
+      {
+        "item_id": 1701,
+        "name": "Cheese Maggi",
+        "category": "veg",
+        "price": 120,
+        "available": true,
+        "healthy": false,
+        "meal_type": "late night"
+      },
+      {
+        "item_id": 1702,
+        "name": "Late Night Chicken Nuggets (10pcs)",
+        "category": "non-veg",
+        "price": 190,
+        "available": true,
+        "healthy": false,
+        "meal_type": "late night"
+      },
+      {
+        "item_id": 1703,
+        "name": "Red Bull Energy Drink",
+        "category": "veg",
+        "price": 150,
+        "available": true,
+        "healthy": false,
+        "meal_type": "beverages"
       }
     ]
   }

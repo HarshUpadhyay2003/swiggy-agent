@@ -35,6 +35,7 @@ class ConversationalResponseGenerator:
         tone: str = "casual",
         session_context: Optional[Dict[str, Any]] = None,
         add_followup: bool = True,
+        original_response: Optional[str] = None,
     ) -> str:
         """
         Generate a natural response for the given intent and data.
@@ -45,6 +46,7 @@ class ConversationalResponseGenerator:
             tone: User's tone (casual, formal, excited, neutral)
             session_context: Previous conversation context
             add_followup: Whether to include follow-up suggestions
+            original_response: The deterministic business logic response to preserve
 
         Returns:
             Natural conversational response string
@@ -52,13 +54,18 @@ class ConversationalResponseGenerator:
         try:
             # Try LLM-powered response generation
             response = self._generate_with_llm(
-                intent, data, tone, session_context, add_followup
+                intent,
+                data,
+                tone,
+                session_context,
+                add_followup,
+                original_response
             )
             return response
 
         except Exception as e:
             # Fallback to template-based generation
-            return self._generate_template_response(intent, data, tone)
+            return self._generate_template_response(intent, data, tone, original_response)
 
     def _generate_with_llm(
         self,
@@ -67,6 +74,7 @@ class ConversationalResponseGenerator:
         tone: str,
         session_context: Optional[Dict[str, Any]] = None,
         add_followup: bool = True,
+        original_response: Optional[str] = None,
     ) -> str:
         """Generate response using LLM."""
         
@@ -81,12 +89,16 @@ Recent messages: {', '.join(session_context.get('recent_messages', [])[:2])}
         if add_followup:
             followup_instruction = "\nInclude a natural follow-up suggestion at the end (not as a separate line)."
 
+        system_action_info = ""
+        if original_response:
+            system_action_info = f"\nSystem Action Taken: \"{original_response}\"\n(CRITICAL: You MUST preserve the exact facts, item names, prices, and quantities from this system action in your response. Do not overwrite business facts with generic text.)"
+
         data_str = self._format_data_for_prompt(intent, data)
 
         response_prompt = f"""Generate a natural, conversational response for a Swiggy food ordering AI assistant.
 
 User tone: {tone}
-Intent: {intent}{context_info}
+Intent: {intent}{context_info}{system_action_info}
 
 Business data:
 {data_str}
@@ -139,10 +151,18 @@ Just respond naturally as a helpful food ordering assistant would."""
             order_id = data.get("order_id", "")
             return f"Order ID: {order_id}\nStatus: {status}"
 
-        elif intent == "meal_planning":
+        elif intent == "meal_planning" or intent == "modify_meal_plan" or intent == "show_meal_plan":
             plan = data.get("meal_plan", {})
+            if not plan:
+                return "No meal plan found."
             days = list(plan.keys())[:3]
-            return f"7-day meal plan created with {len(plan)} days planned."
+            if intent == "modify_meal_plan":
+                action = "updated"
+            elif intent == "show_meal_plan":
+                action = "retrieved"
+            else:
+                action = "created"
+            return f"7-day meal plan {action} with {len(plan)} days planned."
 
         elif intent in ["greeting", "gratitude", "affirmation", "rejection"]:
             return ""
@@ -150,9 +170,18 @@ Just respond naturally as a helpful food ordering assistant would."""
         else:
             return str(data)
 
-    def _generate_template_response(self, intent: str, data: Dict[str, Any], tone: str = "casual") -> str:
+    def _generate_template_response(
+        self, 
+        intent: str, 
+        data: Dict[str, Any], 
+        tone: str = "casual", 
+        original_response: Optional[str] = None
+    ) -> str:
         """Fallback template-based response generation."""
         
+        if original_response:
+            return original_response  # Preserve exact business logic facts on LLM failure
+
         if intent == "greeting":
             return self._template_greeting(tone)
 
@@ -188,6 +217,12 @@ Just respond naturally as a helpful food ordering assistant would."""
 
         elif intent == "meal_planning":
             return self._template_meal_plan(data, tone)
+            
+        elif intent == "modify_meal_plan":
+            return "I've successfully updated your meal plan based on your request!"
+            
+        elif intent == "show_meal_plan":
+            return "Here is your current meal plan!"
 
         else:
             return "How can I help you with your order?"

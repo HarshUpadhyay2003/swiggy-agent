@@ -32,9 +32,12 @@ class ConversationalClassifier:
         "food_recommendation",
         "add_to_cart",
         "remove_from_cart",
+        "cart_action",
         "view_cart",
         "checkout_cart",
         "meal_planning",
+        "modify_meal_plan",
+        "show_meal_plan",
         "order_status",
     ]
 
@@ -71,7 +74,7 @@ class ConversationalClassifier:
         Classification structure:
         {
             "intent": "primary intent",
-            "sub_intents": ["additional intents if multi-action"],
+            "actions": [{"type": "...", "item": "...", "quantity": 1}],
             "confidence": 0.0-1.0,
             "entities": {
                 "meal_type": "dinner",
@@ -106,7 +109,7 @@ class ConversationalClassifier:
 
             return {
                 "intent": validated.get("intent", "casual_chat"),
-                "sub_intents": validated.get("sub_intents", []),
+                "actions": validated.get("actions", []),
                 "confidence": validated.get("confidence", 0.7),
                 "entities": entities,
                 "tone": tone,
@@ -127,9 +130,12 @@ class ConversationalClassifier:
         """Use LLM to classify message into structured intent."""
         
         session_info = ""
+        active_domain = "general"
         if session_context:
             last_intent = session_context.get("last_intent", "unknown")
+            active_domain = session_context.get("active_domain", "general")
             session_info = f"\n\nPrevious intent in this conversation: {last_intent}"
+            session_info += f"\nActive Domain: {active_domain}"
 
         classification_prompt = f"""Analyze this user message and classify it into a structured intent classification.
 
@@ -138,8 +144,16 @@ User message: "{message}"{session_info}
 Respond with ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {{
-  "intent": "primary intent (one of: food_recommendation, add_to_cart, remove_from_cart, view_cart, checkout_cart, meal_planning, order_status, greeting, gratitude, affirmation, rejection, clarification, casual_chat, modify_previous_request, preference_update)",
-  "sub_intents": ["list of secondary intents if this is a multi-action request, empty array if single"],
+  "intent": "primary intent (one of: food_recommendation, cart_action, view_cart, checkout_cart, meal_planning, modify_meal_plan, show_meal_plan, order_status, greeting, gratitude, affirmation, rejection, clarification, casual_chat, modify_previous_request, preference_update)",
+  "actions": [
+    {{
+      "type": "cart_add|cart_remove|planner_modify|planner_create|other",
+      "item": "name of item to add/remove or replace",
+      "quantity": 1,
+      "target_day": "day_2",
+      "target_meal": "dinner"
+    }}
+  ],
   "confidence": confidence score from 0 to 1,
   "reasoning": "brief reason for this classification"
 }}
@@ -149,17 +163,23 @@ Classification rules:
 - If user says "yes", "ok", "sure", "cool" → affirmation
 - If user says "no", "nope", "don't want" → rejection
 - If user says "hi", "hello", "hey" → greeting
-- If user mentions food items to add → add_to_cart
-- If user wants to remove items → remove_from_cart
+- If user mentions food items to add → cart_action + action "cart_add"
+- If user wants to remove items → cart_action + action "cart_remove"
 - If user asks about cart contents → view_cart
 - If user wants to pay/complete → checkout_cart
 - If user mentions dietary preferences, budget, or wants suggestions → food_recommendation
-- If user wants a meal plan → meal_planning
+- If user wants to create a NEW weekly meal plan → meal_planning
+- If user wants to change, edit, replace, or update an existing meal plan → modify_meal_plan
+- If user asks to show, view, or display their meal plan → show_meal_plan
 - If user asks about their order status → order_status
 - If user modifies previous request → modify_previous_request
 - If user updates preferences → preference_update
 - If "something cheaper" after recommendations → modify_previous_request with food_recommendation sub_intent
-- If "remove fries and add burger" → remove_from_cart + add_to_cart sub_intents
+- If "remove fries and add burger" → cart_action + actions: [{"type": "cart_remove", "item": "fries"}, {"type": "cart_add", "item": "burger"}]
+
+CRITICAL DOMAIN RULES:
+- If Active Domain is "planner" and user says "make it healthier", "cheaper", "remove X", or "replace Y" → MUST BE modify_meal_plan
+- If Active Domain is "cart" and user says "remove X" → MUST BE cart_action
 """
 
         response = self.llm_service.generate_json_response(classification_prompt)
@@ -174,16 +194,14 @@ Classification rules:
         if intent not in all_intents:
             intent = "casual_chat"
 
-        sub_intents = classification.get("sub_intents", [])
-        sub_intents = [s.lower() for s in sub_intents if isinstance(s, str)]
-        sub_intents = [s for s in sub_intents if s in all_intents]
+        actions = classification.get("actions", [])
 
         confidence = float(classification.get("confidence", 0.7))
         confidence = max(0.0, min(1.0, confidence))
 
         return {
             "intent": intent,
-            "sub_intents": sub_intents,
+            "actions": actions if isinstance(actions, list) else [],
             "confidence": confidence,
             "reasoning": classification.get("reasoning", ""),
         }
@@ -224,7 +242,11 @@ Respond with ONLY valid JSON:
   "health_goal": true or false,
   "spicy": true or false or null (null = no spice preference mentioned),
   "protein_rich": true or false,
+  "cuisine": "specific cuisine mentioned (e.g. south indian, italian) or null",
   "mood": "comfort|light|healthy|expensive|budget|late_night|null",
+  "target_day": "day_1|day_2|day_3|day_4|day_5|day_6|day_7|null",
+  "target_meal": "breakfast|lunch|dinner|null",
+  "replacement_request": "specific food requested for replacement or null",
   "excluded_items": ["list of items to exclude"],
   "included_items": ["list of items to include"],
   "quantity": null or number,
@@ -235,6 +257,7 @@ Rules:
 - Extract budget as numeric value only
 - null means not mentioned in message
 - Look for keywords like "lighter", "protein", "spicy", "cheap", "expensive"
+- Map terms like "day 1", "monday" to "day_1", "day 2" to "day_2", etc.
 - Extract specific item names mentioned
 - "non veg" should be "non-veg"
 """
@@ -342,28 +365,34 @@ Rules:
         elif any(word in message_lower for word in ["no", "nope", "don't", "dont", "not"]):
             intent = "rejection"
         elif any(word in message_lower for word in ["add", "order", "get", "want", "send"]):
-            intent = "add_to_cart"
+            intent = "cart_action"
         elif any(word in message_lower for word in ["remove", "delete", "drop", "cancel"]):
-            intent = "remove_from_cart"
+            intent = "cart_action"
         elif any(word in message_lower for word in ["cart", "show", "view"]):
             intent = "view_cart"
         elif any(word in message_lower for word in ["checkout", "pay", "complete", "place order"]):
             intent = "checkout_cart"
-        elif any(word in message_lower for word in ["plan", "weekly", "schedule"]):
+        elif any(word in message_lower for word in ["show planner", "my planner", "display meal plan", "show meal plan"]):
+            intent = "show_meal_plan"
+        elif any(word in message_lower for word in ["replace", "update planner", "remove breakfast", "remove dinner", "make it healthy", "make it healthier"]):
+            intent = "modify_meal_plan"
+        elif any(word in message_lower for word in ["plan", "weekly", "schedule", "planner"]):
             intent = "meal_planning"
         elif any(word in message_lower for word in ["recommend", "suggest", "cheap", "healthy"]):
             intent = "food_recommendation"
         elif any(word in message_lower for word in ["status", "track", "where"]):
             intent = "order_status"
 
+        actions = []
         # Detect multi-action
         if "and" in message_lower or "also" in message_lower:
             if "remove" in message_lower and "add" in message_lower:
-                sub_intents = ["remove_from_cart", "add_to_cart"]
+                intent = "cart_action"
+                actions = [{"type": "cart_remove"}, {"type": "cart_add"}]
 
         return {
             "intent": intent,
-            "sub_intents": sub_intents,
+            "actions": actions,
             "confidence": 0.5,
             "entities": {},
             "tone": "neutral",
@@ -386,6 +415,7 @@ class ConversationMemory:
         self.last_intent: Optional[str] = None
         self.last_entities: Dict[str, Any] = {}
         self.last_recommendation_context: Dict[str, Any] = {}
+        self.last_meal_plan: Optional[Dict[str, Any]] = None
 
     def add_interaction(
         self,
@@ -414,6 +444,9 @@ class ConversationMemory:
 
         if classification.get("intent") == "food_recommendation":
             self.last_recommendation_context = self.last_entities.copy()
+            
+        if "meal_plan" in data and data["meal_plan"]:
+            self.last_meal_plan = data["meal_plan"]
 
     def get_session_context(self) -> Dict[str, Any]:
         """Get current session context for follow-up processing."""
@@ -421,6 +454,7 @@ class ConversationMemory:
             "last_intent": self.last_intent,
             "last_entities": self.last_entities,
             "last_recommendation_context": self.last_recommendation_context,
+            "last_meal_plan": self.last_meal_plan,
             "history_length": len(self.messages),
             "recent_messages": [m.get("user_message") for m in self.messages[-3:]],
         }

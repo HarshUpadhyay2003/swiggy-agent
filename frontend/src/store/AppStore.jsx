@@ -117,7 +117,8 @@ const reducer = (state, action) => {
     case 'CLEAR_CART':
       return { ...state, cart: DEFAULT_CART }
     case 'SET_PLANNER':
-      return { ...state, planner: action.payload || {} }
+      // Deep clone to force React to drop stale closures and completely re-render the Planner Panel
+      return { ...state, planner: action.payload ? JSON.parse(JSON.stringify(action.payload)) : {} }
     case 'SET_ORDER':
       return { ...state, orderStatus: action.payload || null }
     case 'SET_CHECKOUT_STATUS':
@@ -216,7 +217,8 @@ export function AppProvider({ children }) {
     }
 
     const wantsRecommendations = /recommend|menu|suggest|meal|dish|food/i.test(text)
-    const wantsPlanner = /plan|weekly|meal plan|breakfast|lunch|dinner/i.test(text)
+    const wantsPlanner = /plan|weekly|meal plan|breakfast|lunch|dinner|replace|healthier|cheaper/i.test(text)
+    const wantsCart = /cart|add|remove|checkout|buy/i.test(text)
 
     dispatch({ type: 'SET_ERROR', payload: null })
     dispatch({ type: 'ADD_MESSAGE', payload: userMessage })
@@ -224,6 +226,7 @@ export function AppProvider({ children }) {
     dispatch({ type: 'SET_TYPING', payload: true })
     if (wantsRecommendations) setLoadingState('recommendations', true)
     if (wantsPlanner) setLoadingState('planner', true)
+    if (wantsCart) setLoadingState('cart', true)
     setLoadingState('chat', true)
 
     try {
@@ -232,10 +235,11 @@ export function AppProvider({ children }) {
       const data = getData(response)
       const intent = response?.intent ?? payload?.intent
 
+      // 1. Instantly Sync Core States (Server is the Absolute Source of Truth)
       if (data.cart) {
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Cart updated' } })
-      } else if (['add_to_cart', 'remove_from_cart', 'view_cart', 'checkout_cart'].includes(intent)) {
+      } else if (['add_to_cart', 'remove_from_cart', 'view_cart', 'checkout_cart', 'cart_action', 'multi_action'].includes(intent)) {
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'syncing', message: 'Syncing cart…' } })
         sendTelemetry('missing_cart_in_response', { intent: response.intent, session_id: state.sessionId, response })
         await syncCart()
@@ -253,6 +257,11 @@ export function AppProvider({ children }) {
         dispatch({ type: 'SET_ORDER', payload: data.order })
       }
 
+      // 2. Clear UI loading states instantly so panels update immediately
+      setLoadingState('recommendations', false)
+      setLoadingState('planner', false)
+      setLoadingState('cart', false)
+
       const assistantMessage = {
         id: `assistant-${Date.now()}`,
         author: 'assistant',
@@ -261,6 +270,7 @@ export function AppProvider({ children }) {
         timestamp: new Date().toISOString(),
       }
 
+      // 3. Fake typing delay ONLY for the conversational message bubble (Prevents delayed UI syncs)
       await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 700))
       dispatch({ type: 'ADD_MESSAGE', payload: assistantMessage })
       return response
@@ -282,8 +292,6 @@ export function AppProvider({ children }) {
       dispatch({ type: 'SET_TYPING', payload: false })
       dispatch({ type: 'SET_LOADING', payload: false })
       setLoadingState('chat', false)
-      setLoadingState('recommendations', false)
-      setLoadingState('planner', false)
     }
   }
 
@@ -306,6 +314,9 @@ export function AppProvider({ children }) {
       if (data.cart) {
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Item added' } })
+      } else {
+        // Enforce server truth fallback
+        await syncCart()
       }
 
       dispatch({
@@ -349,6 +360,9 @@ export function AppProvider({ children }) {
       if (data.cart) {
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Item removed' } })
+      } else {
+        // Enforce server truth fallback
+        await syncCart()
       }
 
       dispatch({

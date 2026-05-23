@@ -152,6 +152,24 @@ class ContextEngine:
             if min_budget is not None and price >= min_budget:
                 score += 5
 
+        # New dietary & feature scorings
+        if context.get("protein_rich") and item.get("high_protein"):
+            score += 20
+            
+        if context.get("spicy") is True and item.get("spicy"):
+            score += 15
+        elif context.get("spicy") is False and not item.get("spicy"):
+            score += 15
+            
+        if context.get("vegan") and item.get("vegan"):
+            score += 20
+            
+        if context.get("low_calorie") and item.get("low_calorie"):
+            score += 20
+            
+        if context.get("gluten_free") and item.get("gluten_free"):
+            score += 20
+
         return score
 
     def generate_reason(self, item: Dict[str, Any], context: Dict[str, Any]) -> str:
@@ -188,6 +206,17 @@ class ContextEngine:
             parts.append("healthy choice")
         elif health_goal and not item.get("healthy"):
             parts.append("a tasty treat")
+
+        if context.get("protein_rich") and item.get("high_protein"):
+            parts.append("high in protein")
+            
+        if context.get("vegan") and item.get("vegan"):
+            parts.append("100% vegan")
+            
+        if context.get("spicy") is True and item.get("spicy"):
+            parts.append("packs a spicy kick")
+        elif context.get("spicy") is False and not item.get("spicy"):
+            parts.append("mildly spiced")
 
         if mood:
             normalized_mood = self._normalize_str(mood)
@@ -256,11 +285,11 @@ class ContextEngine:
 
         if not recommendations:
             fallback_used = True
-            suggestions = self.filter_by_budget(available_items, min_budget, max_budget)
-            if health_goal:
-                suggestions = self.filter_by_healthy(suggestions, True)
+            # Drop health_goal if needed, but MUST KEEP preference and budget
+            suggestions = self.filter_by_preference(available_items, preference)
+            suggestions = self.filter_by_budget(suggestions, min_budget, max_budget)
             recommendations = suggestions
-            print("FILTERED ITEMS (without preference):", len(recommendations), [item["name"] for item in recommendations[:10]])
+            print("FILTERED ITEMS (without health_goal):", len(recommendations), [item["name"] for item in recommendations[:10]])
 
         if not recommendations:
             fallback_used = True

@@ -1,6 +1,6 @@
 """Lightweight in-memory cart service for conversational commerce."""
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 try:
     from app.services.catalog_service import CatalogService
@@ -85,6 +85,56 @@ class CartService:
         for item in cart["items"]:
             item_ids.extend([item["item_id"]] * item["quantity"])
         return item_ids
+
+    def batch_update_cart(self, session_id: str, operations: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], List[str]]:
+        """
+        Process multiple cart operations transactionally and update totals once.
+        Operations format: [{"type": "cart_add", "item": "burger", "quantity": 2}, {"type": "cart_remove", "item": "fries"}]
+        """
+        cart = self.create_cart(session_id)
+        executed = []
+
+        for op in operations:
+            action = op.get("type")
+            item_name = op.get("item", "")
+            qty = op.get("quantity", 1) or 1
+
+            if action == "cart_add" and item_name:
+                catalog_item = self._find_best_match(item_name)
+                if catalog_item and catalog_item.get("available"):
+                    existing_item = next((entry for entry in cart["items"] if entry["item_id"] == catalog_item["item_id"]), None)
+                    if existing_item:
+                        existing_item["quantity"] += qty
+                    else:
+                        cart["items"].append({
+                            "item_id": catalog_item["item_id"],
+                            "name": catalog_item["name"],
+                            "price": int(catalog_item["price"]),
+                            "restaurant_name": catalog_item.get("restaurant_name", ""),
+                            "cuisine": catalog_item.get("cuisine", ""),
+                            "quantity": qty,
+                        })
+                    executed.append(f"Added {qty}x {catalog_item['name']}")
+            
+            elif action == "cart_remove" and item_name:
+                # Find fuzzy match in cart
+                cart_item = next((entry for entry in cart["items"] if item_name.lower() in entry["name"].lower()), None)
+                if cart_item:
+                    cart["items"].remove(cart_item)
+                    executed.append(f"Removed {cart_item['name']}")
+            
+            elif action == "cart_clear":
+                cart["items"] = []
+                executed.append("Cleared cart")
+
+        self._refresh_totals(cart)
+        return cart, executed
+
+    def _find_best_match(self, item_name: str) -> Optional[Dict[str, Any]]:
+        available_items = self.catalog_service.get_available_items()
+        item_name_lower = item_name.lower().strip()
+        matches = [item for item in available_items if item_name_lower in item["name"].lower()]
+        return matches[0] if matches else None
 
     def _refresh_totals(self, cart: Dict[str, Any]) -> None:
         items: List[Dict[str, Any]] = []
