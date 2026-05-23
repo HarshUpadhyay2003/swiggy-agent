@@ -213,7 +213,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 👨‍💻 Author
 
-Built with ❤️ by **[Harsh Upadhyay]**
+Built with ❤️ by **Harsh Upadhyay**
 
 [!GitHub](https://github.com/HarshUpadhyay2003)
 [!LinkedIn](https://www.linkedin.com/in/harshadhyay2003/)
