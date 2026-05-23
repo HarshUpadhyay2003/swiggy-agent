@@ -172,7 +172,7 @@ Try pasting these into the chat:
 
 | Chat Interface | Recommendations |
 | :---: | :---: |
-| ![Chat Interface](public/chat.png) | ![Recommendations](public/recommendations.png) |
+| ![Chat Interface](public/conversation.png) | ![Recommendations](public/recommendations.png) |
 | **Meal Planner** | **Cart Management** |
 | ![Meal Planner 1](public/week_planner_1.png)<br>![Meal Planner 2](public/week_planner_2.png) | ![Cart Management](public/cart.png) |
 
