@@ -51,6 +51,11 @@ class ConversationalResponseGenerator:
         Returns:
             Natural conversational response string
         """
+        # ISSUE 4 FIX: Ensure conversational formatting NEVER removes business logic actions
+        transactional_intents = ["add_to_cart", "remove_from_cart", "checkout_cart", "cart_action", "multi_action", "place_order", "reorder_action"]
+        if original_response and intent in transactional_intents:
+            return original_response
+
         try:
             # Try LLM-powered response generation
             response = self._generate_with_llm(

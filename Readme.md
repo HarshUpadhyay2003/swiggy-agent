@@ -26,6 +26,15 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 ---
 
+## 🎥 Demo Video
+
+Watch the complete walkthrough here:
+
+[Demo Video Link](PASTE_LINK_HERE)
+
+---
+
+
 ## ✨ Features
 
 - 💬 **Conversational Food Ordering**: Order food using natural language instead of clicking through menus.
@@ -39,6 +48,22 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 - 🎨 **Swiggy-Inspired UI**: Beautiful, responsive layout with a built-in Dark/Light mode.
 
 ---
+
+## 🎯 Why This Project
+
+Modern food ordering platforms are still heavily click-driven and fragmented.
+
+This project explores the future of conversational commerce where users interact naturally with an AI assistant for:
+- food discovery
+- contextual recommendations
+- meal planning
+- conversational cart management
+- intelligent order flows
+
+The goal was to combine deterministic commerce operations with natural language AI interactions in a production-style architecture.
+
+---
+
 
 ## 🏗️ Architecture
 
@@ -129,6 +154,18 @@ The frontend is a snappy Vite + React application styled with TailwindCSS.
 
 ---
 
+## 🔄 End-to-End Flow
+
+User Prompt  
+→ Conversational Classifier  
+→ Chat Orchestrator  
+→ Business Services (Cart / Planner / Recommendations)  
+→ Conversational Response Generator  
+→ Frontend State Synchronization  
+→ Dynamic UI Rendering
+
+---
+
 ## 🚀 Setup Instructions
 
 ### 1. Backend Setup
@@ -204,11 +241,16 @@ Try pasting these into the chat:
 
 ## 🔮 Future Improvements
 
-- [ ] **Voice Ordering:** Integrate Web Speech API for hands-free ordering.
-- [ ] **Payment Gateway Integration:** Mock Stripe/Razorpay integration for realistic checkouts.
-- [ ] **Personalized User Profiles:** Save past orders and preferences in a PostgreSQL database.
-- [ ] **Agentic Proactivity:** The assistant suggests re-ordering your favorite Friday night meal automatically.
-
+- [ ] Stateful conversational planner mutations
+- [ ] Multi-action conversational execution graphs
+- [ ] Persistent cross-session memory
+- [ ] Voice-based conversational ordering
+- [ ] Real payment gateway integration
+- [ ] Personalized recommendation engine
+- [ ] PostgreSQL-backed persistent user profiles
+- [ ] Real-time order tracking workflows
+- [ ] Dynamic AI nutrition optimization
+- [ ] Agentic proactive meal recommendations
 ---
 
 ## 📄 License
@@ -221,5 +263,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 Built with ❤️ by **Harsh Upadhyay**
 
-[!GitHub](https://github.com/HarshUpadhyay2003)
-[!LinkedIn](https://www.linkedin.com/in/harshadhyay2003/)
+- GitHub: https://github.com/HarshUpadhyay2003
+- LinkedIn: https://www.linkedin.com/in/harshadhyay2003/

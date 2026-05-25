@@ -1,10 +1,17 @@
 import axios from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+console.log("ENV:", import.meta.env);
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+console.log("BASE_URL:", BASE_URL);
+
+if (!BASE_URL) {
+  console.warn("⚠️ VITE_API_BASE_URL is undefined. Requests will fail! Check your .env or .env.production file.");
+}
 
 const api = axios.create({
   baseURL: BASE_URL,
-  timeout: 10000,
+  timeout: 60000, // Increased to 60s to handle Render free tier cold starts
   headers: {
     'Content-Type': 'application/json'
   }

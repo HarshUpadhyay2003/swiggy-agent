@@ -23,6 +23,10 @@ class SessionState(BaseModel):
     last_recommendations: List[Dict[str, Any]] = Field(default_factory=list)
     last_meal_plan: Optional[Dict[str, Any]] = None
     last_cart_action: Optional[str] = None
+    last_cart_items: List[Dict[str, Any]] = Field(default_factory=list)
+    last_checkout: Optional[Dict[str, Any]] = None
+    favorite_items: List[str] = Field(default_factory=list)
+    frequently_ordered: List[str] = Field(default_factory=list)
 
     def switch_domain(self, domain: str) -> None:
         if domain in ["general", "planner", "cart", "recommendations"]:
@@ -67,9 +71,19 @@ class SessionManager:
         session.last_action = intent
 
         # Active Domain Switching
-        if intent in ("place_order", "checkout_cart", "add_to_cart", "remove_from_cart", "view_cart"):
+        if intent in ("place_order", "checkout_cart", "add_to_cart", "remove_from_cart", "view_cart", "reorder_action"):
             session.switch_domain("cart")
-            session.last_order = data.get("order") or session.last_order
+            if data.get("order"):
+                session.last_order = data["order"]
+                if intent in ("place_order", "checkout_cart"):
+                    session.last_checkout = data["order"]
+                for item in data["order"].get("items", []):
+                    name = item.get("name")
+                    if name and name not in session.frequently_ordered:
+                        session.frequently_ordered.append(name)
+                        session.favorite_items.append(name)
+            if data.get("cart") and data["cart"].get("items"):
+                session.last_cart_items = data["cart"]["items"]
         elif intent in ("food_recommendation", "healthy_suggestions"):
             session.switch_domain("recommendations")
             session.last_recommendations = data.get("recommendations", [])

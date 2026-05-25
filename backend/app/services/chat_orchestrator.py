@@ -1,5 +1,6 @@
 import json
 import re
+import logging
 from typing import Any, Dict, Optional
 
 try:
@@ -26,6 +27,8 @@ except ImportError:
     from .conversational_classifier import ConversationalClassifier, ConversationMemory
     from .conversational_response_generator import ConversationalResponseGenerator
     from .action_executor import ActionExecutor
+
+logger = logging.getLogger(__name__)
 
 
 class ChatOrchestrator:
@@ -129,7 +132,8 @@ class ChatOrchestrator:
             session_state.switch_domain("cart")
 
         tone = classification.get("tone", "casual")
-        action_summary = ", ".join(actions_executed)
+        # PHASE 7 & 12: Ensure action summary is robust and safely defaults
+        action_summary = ", ".join(actions_executed) if actions_executed else "I encountered an issue executing those actions."
 
         combined_response = self.response_generator.generate_response(
             primary_intent or "multi_action",
@@ -163,50 +167,49 @@ class ChatOrchestrator:
         last_entities = session_context.get("last_entities", {})
         active_domain = session_state.active_domain if session_state else "general"
 
-        print(f"[DEBUG] Follow-up resolution | Domain: {active_domain} | Intent: {current_intent}")
+        # PHASE 3: FIX FOLLOW-UP RESOLUTION & SCOPING
+        
+        logger.info(f"[FOLLOWUP] Evaluating followup. Last intent: {last_intent}, Current intent: {current_intent}, Domain: {active_domain}")
 
-        # Planner Continuity Override
-        if active_domain == "planner":
-            if current_intent in ["remove_from_cart", "modify_previous_request", "casual_chat"]:
+        # 1. Planner Scoping
+        if active_domain == "planner" or last_intent == "meal_planning":
+            if self._is_planner_followup(message.lower()) or current_intent == "modify_previous_request":
+                logger.info("[DOMAIN] Planner followup accepted")
                 classification["intent"] = "modify_meal_plan"
                 return self.handle_modify_meal_plan(message, user_context, session_context, classification, session_state)
-            elif current_intent == "meal_planning":
-                return self.handle_meal_planning(message, user_context, classification, session_state)
-
-        # Cart Continuity Override
-        if active_domain == "cart":
-            if current_intent in ["modify_meal_plan", "modify_previous_request"]:
+            logger.info("[DOMAIN] Planner override bypassed")
+        
+        # 2. Cart Continuity Override
+        if active_domain == "cart" or last_intent in ["add_to_cart", "remove_from_cart"]:
+            if self._is_cart_followup(message.lower()) or (current_intent == "modify_previous_request" and "remove" in message.lower()):
+                logger.info("[DOMAIN] Cart followup accepted")
                 classification["intent"] = "remove_from_cart"
                 return self.handle_remove_from_cart(message, user_context, classification)
         
-        # If user previously got recommendations and asks for cheaper/healthier version
-        if last_intent in ["food_recommendation", "healthy_suggestions"] or active_domain == "recommendations":
-            # Merge contexts - keep last recommendation context, update with new filters
-            merged_context = dict(user_context)
-            merged_context.update(last_entities)
-            merged_context.update(entities)
-            
-            # Apply modifications
-            if "budget_max" in entities and "budget_max" in last_entities:
-                if entities["budget_max"] < last_entities["budget_max"]:
-                    merged_context["budget_max"] = entities["budget_max"]
-            
-            if "health_goal" in entities:
-                merged_context["health_goal"] = entities["health_goal"]
-            
-            if "preference" in entities:
-                merged_context["preference"] = entities["preference"]
-            
-            return self.handle_food_recommendation(message, merged_context)
-        
-        # If user previously got a meal plan and asks for modifications
-        if last_intent == "meal_planning":
-            merged_context = dict(user_context)
-            merged_context.update(last_entities)
-            merged_context.update(entities)
-            return self.handle_meal_planning(message, merged_context)
-        
-        # Default: handle as regular core intent
+        # 3. Recommendation Scoping
+        if active_domain == "recommendations" or last_intent in ["food_recommendation", "healthy_suggestions"]:
+            is_rec_followup = bool(re.search(r'\b(cheaper|healthier|spicy|more|another|instead)\b', message.lower()))
+            if is_rec_followup or current_intent in ["modify_previous_request", "food_recommendation"]:
+                logger.info("[DOMAIN] Recommendation followup accepted")
+                merged_context = dict(user_context)
+                merged_context.update(last_entities)
+                merged_context.update(entities)
+                
+                # Apply modifications
+                if "budget_max" in entities and "budget_max" in last_entities:
+                    if entities["budget_max"] < last_entities["budget_max"]:
+                        merged_context["budget_max"] = entities["budget_max"]
+                
+                if "health_goal" in entities:
+                    merged_context["health_goal"] = entities["health_goal"]
+                
+                if "preference" in entities:
+                    merged_context["preference"] = entities["preference"]
+                
+                return self.handle_food_recommendation(message, merged_context)
+
+        # Default fallback
+        logger.info("[FOLLOWUP] No specific domain followup matched. Falling back to core intent.")
         return self._handle_core_intent(message, classification, user_context, session_context, session_state)
 
     def _handle_core_intent(
@@ -240,7 +243,15 @@ class ChatOrchestrator:
         elif intent == "checkout_cart":
             result = self.handle_checkout_cart(message, user_context)
         elif intent == "order_status":
-            result = self.handle_order_status(message, user_context)
+            session_order_id = None
+            if session_state and session_state.last_order:
+                session_order_id = session_state.last_order.get("order_id")
+            elif session_context and session_context.get("last_order"):
+                session_order_id = session_context.get("last_order", {}).get("order_id")
+                
+            result = self.handle_order_status(message, user_context, session_order_id=session_order_id)
+        elif intent == "reorder_action":
+            result = self.handle_reorder_action(message, user_context, session_context, session_state)
         else:
             result = self.fallback_response(message)
         
@@ -252,12 +263,16 @@ class ChatOrchestrator:
                     intent,
                     result.get("data", {}),
                     tone=tone,
+                    original_response=result.get("response")
                 )
                 if improved_response:
                     result["response"] = improved_response
             except Exception:
                 # Keep original response if generation fails
                 pass
+        
+        # ISSUE 5 FIX: Debugging executed actions and final cart state
+        logger.info(f"[Orchestrator] Executed Action: {result.get('intent')} | Final Cart State: {result.get('cart')}")
         
         return result
 
@@ -330,6 +345,24 @@ class ChatOrchestrator:
 
         return "fallback_chat"
 
+    def _is_checkout_action(self, message: str) -> bool:
+        return bool(re.search(r'\b(checkout|place order|pay now|finish order|buy now)\b', message.lower()))
+
+    def _is_reorder_action(self, message: str) -> bool:
+        return bool(re.search(r'\b(repeat last order|same as before|order previous|reorder|same as last time|add my usual|previous order|last order|repeat my last order|add previous items again|what did i order before|add previous cart again)\b', message.lower()))
+
+    def _is_recommendation_request(self, message: str) -> bool:
+        return bool(re.search(r'\b(suggest|recommend|lunch ideas|dinner ideas|healthy food|cheap meals|veg lunch|non veg dinner|options)\b', message.lower()))
+
+    def _is_explicit_meal_plan_request(self, message: str) -> bool:
+        return bool(re.search(r'\b(meal plan|weekly plan|diet plan|7 day plan|full plan)\b', message.lower()))
+
+    def _is_planner_followup(self, message: str) -> bool:
+        return bool(re.search(r'\b(replace|change|swap|instead|remove|day|make it)\b', message.lower()))
+
+    def _is_cart_followup(self, message: str) -> bool:
+        return bool(re.search(r'\b(remove|delete|change|update|quantity)\b', message.lower()))
+
     def handle_message(self, message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
         """Main orchestration method that routes to appropriate handlers."""
         session_id = user_context.get("session_id")
@@ -352,16 +385,86 @@ class ChatOrchestrator:
         # NEW: Use conversational classifier for intelligent understanding
         classification = self.classifier.classify_user_message(message, session_context)
         
-        intent = classification.get("intent", "casual_chat")
+        # ISSUE 5 FIX: Debugging classified intent and entities
+        logger.info(f"[Orchestrator] Initial LLM Classification: {classification.get('intent')} | Entities: {classification.get('entities')}")
+
         msg_lower = message.lower()
         
-        # Planner Override Logic: Ensure explicit planner prompts don't get lost in conversational flows
-        if any(w in msg_lower for w in ["show my planner", "my weekly planner", "display meal plan", "show meal plan"]):
-            classification["intent"] = "show_meal_plan"
+        # PHASE 1 & 6: STRICT DETERMINISTIC ROUTING (Regex word boundaries to prevent overlap)
+        is_checkout = self._is_checkout_action(msg_lower)
+        is_reorder = self._is_reorder_action(msg_lower)
+        is_add = bool(re.search(r'\b(add|put|include|get me|bring me)\b', msg_lower))
+        is_remove = bool(re.search(r'\b(remove|delete|discard|take out)\b', msg_lower))
+        is_replace = bool(re.search(r'\b(replace|swap)\b', msg_lower))
+        is_view_cart = bool(re.search(r'\b(show cart|view cart|my cart|what\'s in my cart)\b', msg_lower))
+        is_order_status = bool(re.search(r'\b(track|status|where is my order|track order)\b', msg_lower))
+        
+        # STRICT Planner definition
+        is_planner = self._is_explicit_meal_plan_request(msg_lower)
+        
+        # STRICT Recommendation definition
+        is_recommendation = self._is_recommendation_request(msg_lower)
+
+        deterministic_intent = None
+        actions = []
+
+        # Priority 1: Checkout
+        if is_checkout:
+            deterministic_intent = "checkout_cart"
+        # Priority 1.5: Reorder
+        elif is_reorder:
+            deterministic_intent = "reorder_action"
+        # Priority 2: Cart Actions (Batch/Multi)
+        elif is_replace or (is_add and is_remove):
+            deterministic_intent = "cart_action"
+            actions = [{"type": "cart_remove"}, {"type": "cart_add"}]
+        elif is_remove:
+            deterministic_intent = "remove_from_cart"
+        elif is_add:
+            deterministic_intent = "add_to_cart"
+        # Priority 3: View Cart
+        elif is_view_cart:
+            deterministic_intent = "view_cart"
+        # Priority 3.5: Order Status
+        elif is_order_status:
+            deterministic_intent = "order_status"
+        # Priority 4: Explicit Meal Planning
+        elif is_planner:
+            deterministic_intent = "meal_planning"
+        # Priority 5: Recommendation
+        elif is_recommendation:
+            deterministic_intent = "food_recommendation"
             
-        planner_keywords = ["plan", "planner", "weekly meal", "meal prep"]
-        if any(w in msg_lower for w in planner_keywords) and self._is_conversational_intent(intent):
-            classification["intent"] = "meal_planning"
+        if deterministic_intent:
+            logger.info(f"[ROUTER] Explicit deterministic intent detected: {deterministic_intent} (Overriding LLM: {classification.get('intent')})")
+            classification["intent"] = deterministic_intent
+            classification["is_followup"] = False  # CRITICAL: Prevent active_domain hijacking
+            if actions:
+                classification["actions"] = actions
+            else:
+                classification["actions"] = []
+
+        intent = classification.get("intent", "casual_chat")
+        
+        # PHASE 2 & 8: FIX ACTIVE DOMAIN HIJACKING & DOMAIN STICKINESS
+        if session_state:
+            active_domain = session_state.active_domain
+            logger.info(f"[DOMAIN] Current Active Domain: {active_domain}")
+            
+            if active_domain == "planner":
+                # Only keep planner if explicitly modifying
+                planner_followup = bool(re.search(r'\b(replace|change|swap|instead|remove|day|make it)\b', msg_lower))
+                if not planner_followup and intent not in ["meal_planning", "modify_meal_plan", "show_meal_plan", "casual_chat"]:
+                    logger.info("[DOMAIN] Resetting Planner -> General due to unrelated intent")
+                    session_state.switch_domain("general")
+            
+            elif active_domain == "recommendations":
+                rec_followup = bool(re.search(r'\b(cheaper|healthier|spicy|more|another|instead)\b', msg_lower))
+                if not rec_followup and intent not in ["food_recommendation", "add_to_cart"]:
+                    logger.info("[DOMAIN] Resetting Recommendations -> General")
+                    session_state.switch_domain("general")
+
+        logger.info(f"[ROUTER] Final Routed Intent: {intent}")
 
         intent = classification.get("intent")
 
@@ -373,8 +476,8 @@ class ChatOrchestrator:
             result = self._handle_conversational_intent(
                 message, classification, user_context
             )
-        # Handle multi-action intents (actions array > 0)
-        elif classification.get("actions"):
+        # Handle multi-action intents safely (actions array > 0 AND intent is cart-related)
+        elif classification.get("actions") and intent in ["cart_action", "add_to_cart", "remove_from_cart", "multi_action"]:
             result = self._handle_action_graph(
                 message, classification, user_context, session_context, session_state
             )
@@ -593,6 +696,7 @@ class ChatOrchestrator:
                 "intent": "order_status",
                 "response": response,
                 "status": status,
+                "order": {"order_id": order_id, "status": status}
             }
         except ValueError:
             return {
@@ -600,6 +704,52 @@ class ChatOrchestrator:
                 "response": f"I couldn't find an order with ID {order_id}.",
                 "status": None,
             }
+
+    def handle_reorder_action(self, message: str, user_context: Dict[str, Any], session_context: Dict[str, Any], session_state: Any = None) -> Dict[str, Any]:
+        """Handle conversational reorder requests by restoring previous order to cart."""
+        session_id = user_context.get("session_id")
+        last_order = session_state.last_order if session_state else session_context.get("last_order")
+
+        if not last_order or not last_order.get("items"):
+            response = "I couldn't find a previous order yet. Try adding a few items to your cart first."
+            return {
+                "intent": "reorder_action",
+                "response": response,
+                "cart": self.cart_service.get_cart(session_id) if session_id else None,
+                "data": {}
+            }
+
+        # Add items back to cart
+        added_names = []
+        for item in last_order["items"]:
+            try:
+                catalog_item = self.catalog_service.get_item_by_id(item["item_id"])
+                if catalog_item and catalog_item.get("available"):
+                    qty = item.get("quantity", 1)
+                    self.cart_service.add_to_cart(session_id, catalog_item, qty)
+                    added_names.append(catalog_item["name"])
+            except ValueError:
+                pass
+
+        if not added_names:
+            return {
+                "intent": "reorder_action",
+                "response": "Your previous order items are no longer available.",
+                "cart": self.cart_service.get_cart(session_id) if session_id else None,
+                "data": {}
+            }
+
+        items_bulleted = "\n".join([f"• {name}" for name in added_names])
+        response = f"I've added your previous order items back into the cart:\n{items_bulleted}"
+        cart = self.cart_service.get_cart(session_id)
+        
+        return {
+            "intent": "reorder_action",
+            "response": response,
+            "cart": cart,
+            "active_cart": cart,
+            "data": {"cart": cart, "reordered_items": added_names}
+        }
 
     def handle_add_to_cart(self, message: str, user_context: Dict[str, Any], classification: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Handle adding items into the user's cart."""
@@ -634,7 +784,6 @@ class ChatOrchestrator:
                 "intent": "add_to_cart",
                 "response": "None of those items are available right now. Try adding something else.",
                 "cart": self.cart_service.get_cart(session_id),
-                "active_cart": self.cart_service.get_cart(service.get_cart(session_id)),
                 "active_cart": self.cart_service.get_cart(session_id),
                 "last_cart_action": "add",
             }
@@ -832,6 +981,8 @@ class ChatOrchestrator:
             data["status"] = result["status"]
         if "actions_executed" in result:
             data["actions_executed"] = result["actions_executed"]
+
+        logger.info(f"[PAYLOAD] Returning {result.get('intent')} response to frontend.")
 
         return {
             "status": "success",
@@ -1111,6 +1262,7 @@ class ChatOrchestrator:
         """Extract item IDs from order message using smart keyword extraction."""
         item_ids = []
         
+        # 1. High-priority LLM entity extraction (Context-aware)
         if classification and "entities" in classification:
             item_names = classification["entities"].get("item_names", [])
             for name in item_names:
@@ -1118,13 +1270,21 @@ class ChatOrchestrator:
                 if item and item["item_id"] not in item_ids:
                     item_ids.append(item["item_id"])
                     
+        # 2. Strict Deterministic Fallback if LLM missed items
         if not item_ids:
-            keywords = self.extract_order_keywords(message)
-            for keyword in keywords:
-                item = self.resolve_catalog_item(keyword)
-                if item and item["item_id"] not in item_ids:
-                    item_ids.append(item["item_id"])
-                    
+            message_lower = message.lower()
+            parts = re.split(r",|\s+and\s+|\s+with\s+", message_lower)
+            
+            for part in parts:
+                part = part.strip()
+                if not part:
+                    continue
+                keywords = self.extract_order_keywords(part)
+                for keyword in keywords:
+                    item = self.resolve_catalog_item(keyword)
+                    if item and item["item_id"] not in item_ids:
+                        item_ids.append(item["item_id"])
+                        
         return item_ids[:5]
 
     def _generate_recommendation_response(self, result: Dict[str, Any], context: Dict[str, Any]) -> str:

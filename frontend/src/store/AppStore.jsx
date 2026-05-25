@@ -113,7 +113,8 @@ const reducer = (state, action) => {
         }),
       }
     case 'SET_CART':
-      return { ...state, cart: buildCart(action.payload || {}) }
+      // ISSUE 3 FIX: Replace optimistic incremental updates with FULL cart replacement.
+      return { ...state, cart: buildCart(JSON.parse(JSON.stringify(action.payload || {}))) }
     case 'CLEAR_CART':
       return { ...state, cart: DEFAULT_CART }
     case 'SET_PLANNER':

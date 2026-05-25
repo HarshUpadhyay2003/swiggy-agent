@@ -12,15 +12,14 @@ import ErrorBoundary from '../components/Shared/ErrorBoundary'
 import { useAppActions, useAppState } from '../store/AppStore'
 
 const quickOptions = [
-  'Healthy lunch',
-  'Cheap comfort food',
-  'High protein meals',
-  'Weekly meal plan',
+  'Repeat my last order',
+  'Suggest healthy lunch ideas under ₹300',
+  'Create a 7 day meal plan',
+  'Track my order status',
   'Show my cart',
-  'Checkout',
-  'Track order',
-  'Veg dinner',
-  'Non-veg under 200',
+  'Checkout my order',
+  'Recommend high-protein non veg dinner',
+  'Show me some cheap comfort food options'
 ]
 
 function Home() {

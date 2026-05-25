@@ -6,12 +6,15 @@ Classifies user messages into intents, extracts entities, and understands conver
 """
 
 import json
+import logging
 from typing import Any, Dict, List, Optional
 
 try:
     from app.services.llm_service import GroqService
 except ImportError:
     from .llm_service import GroqService
+
+logger = logging.getLogger(__name__)
 
 
 class ConversationalClassifier:
@@ -106,6 +109,10 @@ class ConversationalClassifier:
 
             # Check if needs context from session
             needs_context = self._needs_context(validated)
+            
+            # ISSUE 5 FIX: Add structured logging
+            logger.info(f"[Classifier] Classified Intent: {validated.get('intent')}")
+            logger.info(f"[Classifier] Extracted Entities: {entities}")
 
             return {
                 "intent": validated.get("intent", "casual_chat"),
