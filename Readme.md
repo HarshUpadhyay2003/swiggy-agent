@@ -30,7 +30,7 @@ Inspired by Swiggy-style conversational commerce workflows, this project bridges
 
 Watch the complete walkthrough here:
 
-[Demo Video Link](PASTE_LINK_HERE)
+Demo Video Link | https://drive.google.com/file/d/1TSCiWIzWpY_sC_9GeQckDjXtYE3zHPo2/view?usp=sharing
 
 ---
 
