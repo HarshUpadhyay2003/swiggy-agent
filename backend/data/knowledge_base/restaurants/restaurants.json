@@ -1,0 +1,623 @@
+[
+  {
+    "restaurant_id": 1,
+    "restaurant_code": "MCD",
+    "name": "McDonald's",
+    "brand_name": "Connaught Plaza Restaurants Pvt Ltd / McDonald's India",
+    "primary_cuisine": "Fast Food",
+    "secondary_cuisines": [
+      "Burgers",
+      "Beverages",
+      "Desserts",
+      "Breakfast",
+      "McCafe"
+    ],
+    "rating": 4.5,
+    "rating_count": 12500,
+    "price_tier": "budget",
+    "delivery_time_mins": 25,
+    "city": "Bangalore",
+    "location_area": "Indiranagar",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "07:00",
+      "close_time": "23:59"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 99.5,
+    "health_index": 5.8,
+    "intelligence": {
+      "specialties": [
+        "McAloo Tikki Burger",
+        "McChicken Burger",
+        "McSpicy Chicken Burger",
+        "World Famous Fries",
+        "McFlurry Oreo",
+        "McCaffe Cappuccino"
+      ],
+      "healthy_percentage": 32.0,
+      "vegetarian_percentage": 52.0,
+      "high_protein_percentage": 42.0,
+      "avg_meal_calories": 425,
+      "avg_meal_cost": 185,
+      "peak_hours": [
+        "12:30-14:30",
+        "19:00-22:30"
+      ],
+      "avg_wait_time_mins": 10,
+      "student_friendly": true,
+      "family_friendly": true,
+      "late_night_active": true,
+      "business_lunch_suitable": false,
+      "romantic_ambiance": false,
+      "is_cloud_kitchen": false,
+      "has_outdoor_seating": true,
+      "is_premium_dining": false,
+      "cuisine_strengths": [
+        "Iconic burgers",
+        "Crispy fries",
+        "Breakfast McMuffins",
+        "McCafe gourmet coffee",
+        "Indulgent desserts"
+      ],
+      "restaurant_personality": "World famous quick service burger restaurant known for iconic burgers, crispy fries, McCafe coffee, and affordable family combo meals."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Aggregated customer ratings from official Swiggy partner store listing",
+        "source": "Swiggy Store Analytics API",
+        "calculation_method": "Weighted Average Rating Engine"
+      },
+      "popularity_score": {
+        "score": 0.95,
+        "type": "computed",
+        "reason": "Calculated from historical order volume percentile across fast-food outlets",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Order Frequency Percentile Ranking"
+      },
+      "healthy_percentage": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Percentage of catalog menu items with overall_health_score >= 6.0",
+        "source": "Knowledge Base Health Analyzer",
+        "calculation_method": "Catalog Item Health Score Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.9,
+        "type": "computed",
+        "reason": "Mean price of main burger/muffin + side + beverage combos",
+        "source": "Catalog Pricing Engine",
+        "calculation_method": "Meal Combo Mean Price Calculation"
+      },
+      "health_index": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Catalog-wide average overall_health_score across all items",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Mean Item Health Score Aggregation"
+      }
+    }
+  },
+  {
+    "restaurant_id": 2,
+    "restaurant_code": "KFC",
+    "name": "KFC",
+    "brand_name": "Yum! Brands / KFC India",
+    "primary_cuisine": "American Fast Food",
+    "secondary_cuisines": [
+      "Fried Chicken",
+      "Burgers",
+      "Rice Bowls",
+      "Beverages"
+    ],
+    "rating": 4.4,
+    "rating_count": 14200,
+    "price_tier": "medium",
+    "delivery_time_mins": 30,
+    "city": "Bangalore",
+    "location_area": "Indiranagar",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "11:00",
+      "close_time": "23:00"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 98.8,
+    "health_index": 5.4,
+    "intelligence": {
+      "specialties": [
+        "Hot & Crispy Chicken Bucket",
+        "Classic Zinger Burger",
+        "Chicken Popcorn",
+        "Popcorn Chicken Rice Bowl",
+        "Choco Lava Cake"
+      ],
+      "healthy_percentage": 25.0,
+      "vegetarian_percentage": 30.0,
+      "high_protein_percentage": 65.0,
+      "avg_meal_calories": 520,
+      "avg_meal_cost": 250,
+      "peak_hours": [
+        "13:00-15:00",
+        "19:30-22:30"
+      ],
+      "avg_wait_time_mins": 15,
+      "student_friendly": true,
+      "family_friendly": true,
+      "late_night_active": true,
+      "business_lunch_suitable": false,
+      "romantic_ambiance": false,
+      "is_cloud_kitchen": false,
+      "has_outdoor_seating": false,
+      "is_premium_dining": false,
+      "cuisine_strengths": [
+        "Secret 11 herbs & spices fried chicken",
+        "Crispy Zingers",
+        "Chicken Popcorn",
+        "Value Buckets"
+      ],
+      "restaurant_personality": "World-famous fried chicken joint renowned for Colonel Sanders' secret 11 herbs & spices recipe, crispy zingers, and sharing buckets."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Aggregated customer ratings from official Swiggy partner store listing",
+        "source": "Swiggy Store Analytics API",
+        "calculation_method": "Weighted Average Rating Engine"
+      },
+      "popularity_score": {
+        "score": 0.95,
+        "type": "computed",
+        "reason": "Calculated from historical order volume percentile across fried chicken outlets",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Order Frequency Percentile Ranking"
+      },
+      "healthy_percentage": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Percentage of catalog menu items with overall_health_score >= 6.0",
+        "source": "Knowledge Base Health Analyzer",
+        "calculation_method": "Catalog Item Health Score Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.9,
+        "type": "computed",
+        "reason": "Mean price of Zinger / Bucket + side + Pepsi combos",
+        "source": "Catalog Pricing Engine",
+        "calculation_method": "Meal Combo Mean Price Calculation"
+      },
+      "health_index": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Catalog-wide average overall_health_score across all items",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Mean Item Health Score Aggregation"
+      }
+    }
+  },
+  {
+    "restaurant_id": 3,
+    "restaurant_code": "DOMINOS",
+    "name": "Domino's Pizza",
+    "brand_name": "Jubilant FoodWorks / Domino's Pizza India",
+    "primary_cuisine": "Italian Fast Food",
+    "secondary_cuisines": [
+      "Pizzas",
+      "Pastas",
+      "Garlic Bread",
+      "Desserts"
+    ],
+    "rating": 4.6,
+    "rating_count": 28000,
+    "price_tier": "medium",
+    "delivery_time_mins": 20,
+    "city": "Bangalore",
+    "location_area": "Indiranagar",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "10:00",
+      "close_time": "23:59"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 99.8,
+    "health_index": 5.2,
+    "intelligence": {
+      "specialties": [
+        "Margherita Pizza",
+        "Peppy Paneer",
+        "Farm House",
+        "Chicken Dominator",
+        "Stuffed Garlic Breadsticks",
+        "Choco Lava Cake"
+      ],
+      "healthy_percentage": 20.0,
+      "vegetarian_percentage": 55.0,
+      "high_protein_percentage": 45.0,
+      "avg_meal_calories": 580,
+      "avg_meal_cost": 320,
+      "peak_hours": [
+        "13:00-15:00",
+        "19:00-23:00"
+      ],
+      "avg_wait_time_mins": 20,
+      "student_friendly": true,
+      "family_friendly": true,
+      "late_night_active": true,
+      "business_lunch_suitable": false,
+      "romantic_ambiance": false,
+      "is_cloud_kitchen": false,
+      "has_outdoor_seating": false,
+      "is_premium_dining": false,
+      "cuisine_strengths": [
+        "30-minute delivery guarantee",
+        "Hand-tossed pizzas",
+        "Cheese Burst crusts",
+        "Garlic Breadsticks"
+      ],
+      "restaurant_personality": "India's favorite pizza delivery chain famous for hot 30-minute pizza delivery, Cheese Burst crusts, and Cheesy Garlic Bread."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Swiggy store rating",
+        "source": "Swiggy API",
+        "calculation_method": "Weighted Rating"
+      },
+      "popularity_score": {
+        "score": 0.98,
+        "type": "computed",
+        "reason": "Order volume percentile",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Volume Percentile"
+      },
+      "healthy_percentage": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Healthy item ratio",
+        "source": "Health Analyzer",
+        "calculation_method": "Health Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.9,
+        "type": "computed",
+        "reason": "Mean pizza meal price",
+        "source": "Pricing Engine",
+        "calculation_method": "Mean Price"
+      },
+      "health_index": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Catalog mean health score",
+        "source": "Health Engine",
+        "calculation_method": "Catalog Mean"
+      }
+    }
+  },
+  {
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "name": "EatFit",
+    "brand_name": "Curefoods India Pvt Ltd / EatFit Healthy Foods",
+    "primary_cuisine": "Healthy & Clean Eating",
+    "secondary_cuisines": [
+      "Healthy Bowls",
+      "Weight Loss Meals",
+      "Gluten Free",
+      "Keto"
+    ],
+    "rating": 4.6,
+    "rating_count": 9400,
+    "price_tier": "medium",
+    "delivery_time_mins": 25,
+    "city": "Bangalore",
+    "location_area": "Indiranagar",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "08:00",
+      "close_time": "23:00"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 94.2,
+    "health_index": 8.8,
+    "intelligence": {
+      "specialties": [
+        "Ancient Grain Bowl",
+        "Indian Chickpea Masala",
+        "Fit Chicken",
+        "Teriyaki Salmon",
+        "Turkey Meatball Zoodles"
+      ],
+      "healthy_percentage": 95.0,
+      "vegetarian_percentage": 50.0,
+      "high_protein_percentage": 85.0,
+      "avg_meal_calories": 380,
+      "avg_meal_cost": 220,
+      "peak_hours": [
+        "12:00-14:00",
+        "19:00-21:30"
+      ],
+      "avg_wait_time_mins": 15,
+      "student_friendly": true,
+      "family_friendly": false,
+      "late_night_active": false,
+      "business_lunch_suitable": true,
+      "romantic_ambiance": false,
+      "is_cloud_kitchen": true,
+      "has_outdoor_seating": false,
+      "is_premium_dining": false,
+      "cuisine_strengths": [
+        "Zero refined sugar",
+        "Macronutrient disclosure",
+        "Clean cooking oils",
+        "Portion control"
+      ],
+      "restaurant_personality": "Clean eating, calorie-counted, high-protein healthy food brand designed for weight loss, fitness, and daily healthy living."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Swiggy store rating",
+        "source": "Swiggy API",
+        "calculation_method": "Weighted Rating"
+      },
+      "popularity_score": {
+        "score": 0.94,
+        "type": "computed",
+        "reason": "Order volume percentile",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Volume Percentile"
+      },
+      "healthy_percentage": {
+        "score": 0.95,
+        "type": "heuristic",
+        "reason": "Healthy item ratio",
+        "source": "Health Analyzer",
+        "calculation_method": "Health Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.9,
+        "type": "computed",
+        "reason": "Mean meal price",
+        "source": "Pricing Engine",
+        "calculation_method": "Mean Price"
+      },
+      "health_index": {
+        "score": 0.92,
+        "type": "heuristic",
+        "reason": "Catalog mean health score",
+        "source": "Health Engine",
+        "calculation_method": "Catalog Mean"
+      }
+    }
+  },
+  {
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "name": "Shamiana - Taj Hotel",
+    "brand_name": "The Taj Mahal Palace / IHCL Fine Dining",
+    "primary_cuisine": "Luxury Indian & International Fine Dining",
+    "secondary_cuisines": [
+      "Bombay Heritage",
+      "North Indian",
+      "Gourmet Grills",
+      "Artisanal Desserts"
+    ],
+    "rating": 4.8,
+    "rating_count": 3200,
+    "price_tier": "premium",
+    "delivery_time_mins": 45,
+    "city": "Mumbai",
+    "location_area": "Vikhroli / Colaba",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "07:00",
+      "close_time": "23:59"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 96.5,
+    "health_index": 7.5,
+    "intelligence": {
+      "specialties": [
+        "Jaituni Mirch Paneer Tikka",
+        "Berry Pulao",
+        "Makhan Murgh",
+        "Murgh Dum Biryani",
+        "Deconstructed Banoffee Pie"
+      ],
+      "healthy_percentage": 55.0,
+      "vegetarian_percentage": 50.0,
+      "high_protein_percentage": 60.0,
+      "avg_meal_calories": 620,
+      "avg_meal_cost": 1400,
+      "peak_hours": [
+        "13:00-15:30",
+        "20:00-23:00"
+      ],
+      "avg_wait_time_mins": 30,
+      "student_friendly": false,
+      "family_friendly": true,
+      "late_night_active": true,
+      "business_lunch_suitable": true,
+      "romantic_ambiance": true,
+      "is_cloud_kitchen": false,
+      "has_outdoor_seating": true,
+      "is_premium_dining": true,
+      "cuisine_strengths": [
+        "Taj culinary heritage",
+        "Bombay cafe classics",
+        "Artisanal plating",
+        "High-grade ingredients"
+      ],
+      "restaurant_personality": "Iconic Taj 24-hour luxury bistro and all-day dining restaurant serving timeless Bombay heritage dishes and world classics."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Swiggy store rating",
+        "source": "Swiggy API",
+        "calculation_method": "Weighted Rating"
+      },
+      "popularity_score": {
+        "score": 0.96,
+        "type": "computed",
+        "reason": "Order volume percentile",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Volume Percentile"
+      },
+      "healthy_percentage": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Healthy item ratio",
+        "source": "Health Analyzer",
+        "calculation_method": "Health Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.95,
+        "type": "computed",
+        "reason": "Mean meal price",
+        "source": "Pricing Engine",
+        "calculation_method": "Mean Price"
+      },
+      "health_index": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Catalog mean health score",
+        "source": "Health Engine",
+        "calculation_method": "Catalog Mean"
+      }
+    }
+  },
+  {
+    "restaurant_id": 6,
+    "restaurant_code": "SUVARNA",
+    "name": "Suvarna Mahal - Rambagh Palace",
+    "brand_name": "Rambagh Palace Jaipur / IHCL Royal Dining",
+    "primary_cuisine": "Royal Rajputana Fine Dining",
+    "secondary_cuisines": [
+      "Rajasthani Royal",
+      "Awadhi Nawab",
+      "Hyderabadi Nizam",
+      "Punjabi Repast"
+    ],
+    "rating": 4.9,
+    "rating_count": 1800,
+    "price_tier": "premium",
+    "delivery_time_mins": 50,
+    "city": "Jaipur",
+    "location_area": "Rambagh Palace",
+    "is_active": true,
+    "operating_hours": {
+      "open_time": "12:30",
+      "close_time": "23:00"
+    },
+    "dietary_support": {
+      "serves_veg": true,
+      "serves_non_veg": true,
+      "is_pure_veg": false,
+      "halal_certified": true
+    },
+    "popularity_score": 97.8,
+    "health_index": 7.2,
+    "intelligence": {
+      "specialties": [
+        "Laal Maas",
+        "Dal Baati Churma",
+        "Awadhi Murgh Korma",
+        "Dum Ki Nalli",
+        "Malpua Rabdi"
+      ],
+      "healthy_percentage": 45.0,
+      "vegetarian_percentage": 50.0,
+      "high_protein_percentage": 65.0,
+      "avg_meal_calories": 680,
+      "avg_meal_cost": 2200,
+      "peak_hours": [
+        "13:00-15:30",
+        "19:30-22:30"
+      ],
+      "avg_wait_time_mins": 35,
+      "student_friendly": false,
+      "family_friendly": true,
+      "late_night_active": false,
+      "business_lunch_suitable": true,
+      "romantic_ambiance": true,
+      "is_cloud_kitchen": false,
+      "has_outdoor_seating": true,
+      "is_premium_dining": true,
+      "cuisine_strengths": [
+        "Royal Rajput palace recipes",
+        "Desi ghee gold-standard gravies",
+        "Slow-cooked handi curries"
+      ],
+      "restaurant_personality": "Grand golden palace dining hall at Rambagh Palace serving authentic royal recipes from the Rajputana princely states."
+    },
+    "confidence": {
+      "rating": {
+        "score": 1.0,
+        "type": "official",
+        "reason": "Swiggy store rating",
+        "source": "Swiggy API",
+        "calculation_method": "Weighted Rating"
+      },
+      "popularity_score": {
+        "score": 0.97,
+        "type": "computed",
+        "reason": "Order volume percentile",
+        "source": "Swiggy Analytics",
+        "calculation_method": "Volume Percentile"
+      },
+      "healthy_percentage": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Healthy item ratio",
+        "source": "Health Analyzer",
+        "calculation_method": "Health Ratio"
+      },
+      "avg_meal_cost": {
+        "score": 0.95,
+        "type": "computed",
+        "reason": "Mean meal price",
+        "source": "Pricing Engine",
+        "calculation_method": "Mean Price"
+      },
+      "health_index": {
+        "score": 0.85,
+        "type": "heuristic",
+        "reason": "Catalog mean health score",
+        "source": "Health Engine",
+        "calculation_method": "Catalog Mean"
+      }
+    }
+  }
+]

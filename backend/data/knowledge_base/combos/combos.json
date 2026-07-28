@@ -1,0 +1,97 @@
+[
+  {
+    "combo_id": 2001,
+    "combo_code": "KFC_COMBO_001",
+    "restaurant_id": 2,
+    "restaurant_code": "KFC",
+    "combo_name": "Classic Zinger Box",
+    "description": "1 Classic Zinger Burger + 2 Hot Wings + 1 Regular Fries + 1 Regular Pepsi",
+    "item_ids": [
+      203,
+      210,
+      215
+    ],
+    "official_combo": true,
+    "is_ai_generated": false,
+    "price": 320,
+    "discounted_price": 280,
+    "savings_amount": 40,
+    "confidence": {
+      "score": 1.0,
+      "reason": "Official combo bundle listed in KFC Nutrition & Allergen Information Booklet (Page 19)",
+      "source": "kfc_nutrition values.pdf (Page 19)",
+      "calculation_method": "Official Restaurant Deal Pricing"
+    }
+  },
+  {
+    "combo_id": 2002,
+    "combo_code": "KFC_COMBO_002",
+    "restaurant_id": 2,
+    "restaurant_code": "KFC",
+    "combo_name": "Veg Zinger Box",
+    "description": "1 Veg Zinger Burger + 1 Veg Rice Bowl + 1 Regular Fries + 1 Regular Pepsi",
+    "item_ids": [
+      204,
+      210,
+      215
+    ],
+    "official_combo": true,
+    "is_ai_generated": false,
+    "price": 310,
+    "discounted_price": 270,
+    "savings_amount": 40,
+    "confidence": {
+      "score": 1.0,
+      "reason": "Official combo bundle listed in KFC Nutrition & Allergen Information Booklet (Page 19)",
+      "source": "kfc_nutrition values.pdf (Page 19)",
+      "calculation_method": "Official Restaurant Deal Pricing"
+    }
+  },
+  {
+    "combo_id": 3001,
+    "combo_code": "DOMINOS_COMBO_001",
+    "restaurant_id": 3,
+    "restaurant_code": "DOMINOS",
+    "combo_name": "Margherita & Stuffed Garlic Bread Combo",
+    "description": "1 Medium Margherita Pizza + 1 Stuffed Garlic Breadsticks + 1 Medium Pepsi",
+    "item_ids": [
+      301,
+      310,
+      312
+    ],
+    "official_combo": true,
+    "is_ai_generated": false,
+    "price": 480,
+    "discounted_price": 420,
+    "savings_amount": 60,
+    "confidence": {
+      "score": 1.0,
+      "reason": "Official Domino's Meal Deal Bundle",
+      "source": "domino_pdf.pdf",
+      "calculation_method": "Official Deal Pricing"
+    }
+  },
+  {
+    "combo_id": 4001,
+    "combo_code": "EATFIT_COMBO_001",
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "combo_name": "Fit Chicken & Grain Combo",
+    "description": "1 Fit Chicken Bowl + 1 Ancient Grain Bowl",
+    "item_ids": [
+      402,
+      401
+    ],
+    "official_combo": true,
+    "is_ai_generated": false,
+    "price": 460,
+    "discounted_price": 410,
+    "savings_amount": 50,
+    "confidence": {
+      "score": 1.0,
+      "reason": "Official EatFit High Protein Duo Bundle",
+      "source": "eat-fit-go-meal-guide.pdf",
+      "calculation_method": "Official Bundle Discount"
+    }
+  }
+]

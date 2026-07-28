@@ -1,0 +1,122 @@
+[
+  {
+    "category_id": "CAT_BURGERS_VEG",
+    "display_name": "Vegetarian Burgers",
+    "description": "Crispy and flavorful vegetarian burgers featuring fresh ingredients and iconic spices.",
+    "parent_category": "Burgers",
+    "display_order": 1,
+    "icon_name": "icon_burger_veg"
+  },
+  {
+    "category_id": "CAT_BURGERS_NONVEG",
+    "display_name": "Non-Vegetarian Burgers",
+    "description": "Juicy, tender chicken and fish burgers seasoned with signature McDonald's spices.",
+    "parent_category": "Burgers",
+    "display_order": 2,
+    "icon_name": "icon_burger_nonveg"
+  },
+  {
+    "category_id": "CAT_BREAKFAST",
+    "display_name": "Breakfast McMuffins & Sides",
+    "description": "Warm toasted English McMuffins, steamed eggs, hotcakes, and crispy hash browns.",
+    "parent_category": "Breakfast",
+    "display_order": 3,
+    "icon_name": "icon_breakfast"
+  },
+  {
+    "category_id": "CAT_SIDES",
+    "display_name": "Sides & Snacks",
+    "description": "World Famous Fries, McNuggets, wraps, and savory puffs.",
+    "parent_category": "Sides & Snacks",
+    "display_order": 4,
+    "icon_name": "icon_fries"
+  },
+  {
+    "category_id": "CAT_DESSERTS",
+    "display_name": "Desserts & Soft Serve",
+    "description": "100% dairy soft serve cones, McSwirls, sundaes, and Oreo McFlurrys.",
+    "parent_category": "Desserts",
+    "display_order": 5,
+    "icon_name": "icon_soft_serve"
+  },
+  {
+    "category_id": "CAT_BEVERAGES",
+    "display_name": "Beverages & Drinks",
+    "description": "Chilled sodas, Coke Zero, fruit juices, and cold beverages.",
+    "parent_category": "Beverages",
+    "display_order": 6,
+    "icon_name": "icon_soda"
+  },
+  {
+    "category_id": "CAT_MCCAFE",
+    "display_name": "McCaf\u00e9 Gourmet Coffee",
+    "description": "100% Arabica bean espresso coffees, cappuccinos, and lattes.",
+    "parent_category": "Beverages",
+    "display_order": 7,
+    "icon_name": "icon_mccafe"
+  },
+  {
+    "category_id": "CAT_CHICKEN_BUCKETS",
+    "display_name": "Chicken Buckets & Pieces",
+    "description": "Iconic KFC Hot & Crispy chicken buckets, wings, strips, and leg pieces.",
+    "parent_category": "Chicken",
+    "display_order": 8,
+    "icon_name": "icon_bucket"
+  },
+  {
+    "category_id": "CAT_RICE_BOWLS",
+    "display_name": "Rice Bowls & Rolls",
+    "description": "Flavorful chicken & veg rice bowls served with signature gravies and rolls.",
+    "parent_category": "Meals",
+    "display_order": 9,
+    "icon_name": "icon_rice"
+  },
+  {
+    "category_id": "CAT_PIZZA_VEG",
+    "display_name": "Vegetarian Pizzas",
+    "description": "Hand-tossed vegetarian pizzas made with mozzarella cheese and fresh garden toppings.",
+    "parent_category": "Pizzas",
+    "display_order": 10,
+    "icon_name": "icon_pizza_veg"
+  },
+  {
+    "category_id": "CAT_PIZZA_NONVEG",
+    "display_name": "Non-Vegetarian Pizzas",
+    "description": "Loaded non-vegetarian pizzas topped with barbecue chicken, pepperoni, and sausage.",
+    "parent_category": "Pizzas",
+    "display_order": 11,
+    "icon_name": "icon_pizza_nonveg"
+  },
+  {
+    "category_id": "CAT_HEALTHY_MEALS",
+    "display_name": "Healthy & Wellness Bowls",
+    "description": "Nutritious low-calorie, high-protein bowls and portion-controlled wellness meals.",
+    "parent_category": "Healthy",
+    "display_order": 12,
+    "icon_name": "icon_healthy"
+  },
+  {
+    "category_id": "CAT_LUXURY_INDIAN",
+    "display_name": "Taj & Royal Luxury Indian",
+    "description": "Artisanal fine dining curries, biryanis, and royal heritage specialties.",
+    "parent_category": "Fine Dining",
+    "display_order": 13,
+    "icon_name": "icon_luxury"
+  },
+  {
+    "category_id": "CAT_FINE_STARTERS",
+    "display_name": "Gourmet Starters & Appetizers",
+    "description": "Exquisite fine-dining sharing plates, tandoori kebabs, and gourmet soups.",
+    "parent_category": "Fine Dining",
+    "display_order": 14,
+    "icon_name": "icon_gourmet"
+  },
+  {
+    "category_id": "CAT_ROYAL_DESSERTS",
+    "display_name": "Artisanal Royal Desserts",
+    "description": "Traditional Indian sweets, kulfis, halwas, and deconstructed international desserts.",
+    "parent_category": "Desserts",
+    "display_order": 15,
+    "icon_name": "icon_royal_dessert"
+  }
+]
