@@ -1,4 +1,4 @@
-"""Pydantic data models for Generalized Recommendation Engine (Stage 2B)."""
+"""Pydantic data models for Generalized Recommendation Engine (Stage 2C update)."""
 
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
@@ -25,7 +25,7 @@ class RecommendationRequest(BaseModel):
     """Structured recommendation request containing generalized constraints & context."""
     constraints: List[Constraint] = Field(default_factory=list)
     context: RecommendationContext = Field(default_factory=RecommendationContext)
-    top_k: int = 5
+    top_k: int = 50
 
     def get_constraint(self, constraint_type: str) -> Optional[Constraint]:
         """Utility to retrieve constraint by type if present."""
@@ -95,4 +95,5 @@ class RecommendationResult(BaseModel):
     candidate: RecommendationCandidate
     score: RecommendationScore
     reason: RecommendationReason
+    confidence: float = 1.0
     debug: Optional[PipelineDebugInfo] = None

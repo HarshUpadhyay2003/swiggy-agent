@@ -1,4 +1,4 @@
-"""Standard unittest test runner for Stage 1A, Stage 1B, Stage 2A, and Stage 2B test suites."""
+"""Standard unittest test runner for Stage 1A, Stage 1B, Stage 2A, Stage 2B, and Stage 2C test suites."""
 
 import sys
 import unittest
@@ -242,6 +242,30 @@ class TestStage2BRecommendationEngine(unittest.TestCase):
         self.assertIn("recommendations", res)
         self.assertGreater(len(res["recommendations"]), 0)
         self.assertIn("debug", res["recommendations"][0])
+
+
+# STAGE 2C TEST SUITES
+class TestStage2CPlannerIntegration(unittest.TestCase):
+    def setUp(self):
+        self.catalog = CatalogService()
+        self.rec_engine = RecommendationEngine(self.catalog)
+        self.planner = MealPlanner(
+            catalog_service=self.catalog,
+            recommendation_engine=self.rec_engine,
+        )
+
+    def test_seven_day_meal_plan_generation(self):
+        plan = self.planner.generate_fallback_plan({"budget": 2100, "preferences": "veg"})
+        self.assertIn("day_1", plan)
+        self.assertIn("day_7", plan)
+        self.assertTrue(self.planner.validate_plan_structure(plan))
+
+    def test_cheaper_and_healthier_edits(self):
+        plan = self.planner.generate_fallback_plan({"budget": 2100, "preferences": "veg"})
+        edited = self.planner.modify_existing_plan(
+            plan, {"target_day": "day_1", "target_meal": "dinner"}, raw_message="make day 1 dinner cheaper"
+        )
+        self.assertIn("day_1", edited)
 
 
 if __name__ == "__main__":
