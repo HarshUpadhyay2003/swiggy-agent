@@ -1,4 +1,4 @@
-"""Standard unittest test runner for Stage 1A and Stage 1B backend test suites."""
+"""Standard unittest test runner for Stage 1A, Stage 1B, and Stage 2A backend test suites."""
 
 import sys
 import unittest
@@ -22,6 +22,18 @@ from app.services.context_engine import ContextEngine
 from app.services.planner import MealPlanner
 from app.services.cart_service import CartService
 from app.services.order_service import OrderService
+
+# Stage 2A Imports
+from app.services.recommendation_engine import (
+    CandidateRetriever,
+    ExplanationBuilder,
+    RankingEngine,
+    RecommendationCandidate,
+    RecommendationExplanation,
+    RecommendationEngine,
+    RecommendationRequest,
+    RecommendationScore,
+)
 
 
 # STAGE 1A TEST SUITES
@@ -179,6 +191,59 @@ class TestBackwardCompatibilityIntegration(unittest.TestCase):
         order = self.order_service.place_order([101, 201])
         self.assertEqual(len(order["items"]), 2)
         self.assertGreater(order["estimated_delivery_time"], 0)
+
+
+# STAGE 2A TEST SUITES
+class TestStage2ARecommendationEngine(unittest.TestCase):
+    def setUp(self):
+        self.catalog = CatalogService()
+        self.engine = RecommendationEngine(self.catalog)
+
+    def test_scenario_healthy_lunch_under_300(self):
+        req = RecommendationRequest(
+            preference="non-veg",
+            meal_type="lunch",
+            max_budget=300,
+            healthy_only=True,
+            top_k=3,
+        )
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+        for res in results:
+            self.assertEqual(res.candidate.category, "non-veg")
+            self.assertEqual(res.candidate.meal_type, "lunch")
+            self.assertLessEqual(res.candidate.price, 300)
+            self.assertTrue(res.candidate.healthy)
+
+    def test_scenario_vegetarian_breakfast(self):
+        req = RecommendationRequest(preference="veg", meal_type="breakfast", top_k=5)
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+
+    def test_scenario_comfort_food(self):
+        req = RecommendationRequest(mood="comfort", top_k=5)
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+
+    def test_scenario_budget_meal(self):
+        req = RecommendationRequest(max_budget=100, top_k=5)
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+
+    def test_scenario_high_protein_request(self):
+        req = RecommendationRequest(high_protein=True, top_k=5)
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+
+    def test_scenario_invalid_restaurant(self):
+        req = RecommendationRequest(restaurant_id=99999)
+        results = self.engine.generate_recommendations(req)
+        self.assertEqual(len(results), 0)
+
+    def test_scenario_no_matching_items(self):
+        req = RecommendationRequest(max_budget=5)
+        results = self.engine.generate_recommendations(req)
+        self.assertEqual(len(results), 0)
 
 
 if __name__ == "__main__":
