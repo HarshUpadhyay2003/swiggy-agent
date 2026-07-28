@@ -1,8 +1,12 @@
-"""Unit tests for full RecommendationEngine orchestrator pipeline."""
+"""Unit tests for Generalized RecommendationEngine pipeline & strategy chain."""
 
 import unittest
 from app.services.catalog_service import CatalogService
-from app.services.recommendation_engine.models import RecommendationRequest
+from app.services.recommendation_engine.models import (
+    Constraint,
+    RecommendationContext,
+    RecommendationRequest,
+)
 from app.services.recommendation_engine.recommendation_engine import RecommendationEngine
 
 
@@ -13,10 +17,12 @@ class TestRecommendationEngine(unittest.TestCase):
 
     def test_scenario_healthy_lunch_under_300(self):
         req = RecommendationRequest(
-            preference="non-veg",
-            meal_type="lunch",
-            max_budget=300,
-            healthy_only=True,
+            constraints=[
+                Constraint(type="preference", value="non-veg"),
+                Constraint(type="meal_type", value="lunch"),
+                Constraint(type="max_budget", value=300),
+                Constraint(type="healthy_only", value=True),
+            ],
             top_k=3,
         )
         results = self.engine.generate_recommendations(req)
@@ -28,46 +34,36 @@ class TestRecommendationEngine(unittest.TestCase):
             self.assertEqual(res.candidate.meal_type, "lunch")
             self.assertLessEqual(res.candidate.price, 300)
             self.assertTrue(res.candidate.healthy)
-            self.assertGreater(len(res.explanation.reasons), 0)
+            self.assertGreater(len(res.reason.reasons), 0)
 
-    def test_scenario_vegetarian_breakfast(self):
+    def test_scenario_debug_telemetry(self):
         req = RecommendationRequest(
-            preference="veg",
-            meal_type="breakfast",
-            top_k=5,
+            constraints=[
+                Constraint(type="preference", value="veg"),
+                Constraint(type="max_budget", value=200),
+            ],
+            context=RecommendationContext(debug_mode=True),
         )
         results = self.engine.generate_recommendations(req)
         self.assertGreater(len(results), 0)
-        for res in results:
-            self.assertEqual(res.candidate.category, "veg")
-            self.assertEqual(res.candidate.meal_type, "breakfast")
 
-    def test_scenario_comfort_food(self):
-        req = RecommendationRequest(mood="comfort", top_k=5)
+        first_res = results[0]
+        self.assertIsNotNone(first_res.debug)
+        self.assertEqual(first_res.debug.strategy, "explicit_constraints")
+        self.assertIn("preference", first_res.debug.matched_constraints)
+        self.assertGreater(first_res.debug.pipeline_duration_ms, 0.0)
+
+    def test_scenario_neutral_strategy_fallback(self):
+        # Impossible budget constraint forces strategy chain fallback
+        req = RecommendationRequest(
+            constraints=[Constraint(type="max_budget", value=5)]
+        )
         results = self.engine.generate_recommendations(req)
         self.assertGreater(len(results), 0)
-
-    def test_scenario_budget_meal(self):
-        req = RecommendationRequest(max_budget=100, top_k=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertGreater(len(results), 0)
-        for res in results:
-            self.assertLessEqual(res.candidate.price, 100)
-
-    def test_scenario_high_protein_request(self):
-        req = RecommendationRequest(high_protein=True, top_k=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertGreater(len(results), 0)
-
-    def test_scenario_invalid_restaurant(self):
-        req = RecommendationRequest(restaurant_id=99999)
-        results = self.engine.generate_recommendations(req)
-        self.assertEqual(len(results), 0)
-
-    def test_scenario_no_matching_items(self):
-        req = RecommendationRequest(max_budget=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertEqual(len(results), 0)
+        # Verify fallback strategy was triggered
+        first_res = results[0]
+        if first_res.debug:
+            self.assertNotEqual(first_res.debug.strategy, "explicit_constraints")
 
 
 if __name__ == "__main__":

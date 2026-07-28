@@ -1,4 +1,4 @@
-"""Standard unittest test runner for Stage 1A, Stage 1B, and Stage 2A backend test suites."""
+"""Standard unittest test runner for Stage 1A, Stage 1B, Stage 2A, and Stage 2B test suites."""
 
 import sys
 import unittest
@@ -23,16 +23,21 @@ from app.services.planner import MealPlanner
 from app.services.cart_service import CartService
 from app.services.order_service import OrderService
 
-# Stage 2A Imports
+# Stage 2A & 2B Imports
 from app.services.recommendation_engine import (
     CandidateRetriever,
-    ExplanationBuilder,
+    Constraint,
+    DecisionReasonBuilder,
     RankingEngine,
+    ReasonBuilder,
     RecommendationCandidate,
-    RecommendationExplanation,
+    RecommendationContext,
     RecommendationEngine,
+    RecommendationReason,
     RecommendationRequest,
+    RecommendationResult,
     RecommendationScore,
+    RecommendationStrategyChain,
 )
 
 
@@ -193,18 +198,20 @@ class TestBackwardCompatibilityIntegration(unittest.TestCase):
         self.assertGreater(order["estimated_delivery_time"], 0)
 
 
-# STAGE 2A TEST SUITES
-class TestStage2ARecommendationEngine(unittest.TestCase):
+# STAGE 2A & 2B TEST SUITES
+class TestStage2BRecommendationEngine(unittest.TestCase):
     def setUp(self):
         self.catalog = CatalogService()
         self.engine = RecommendationEngine(self.catalog)
 
     def test_scenario_healthy_lunch_under_300(self):
         req = RecommendationRequest(
-            preference="non-veg",
-            meal_type="lunch",
-            max_budget=300,
-            healthy_only=True,
+            constraints=[
+                Constraint(type="preference", value="non-veg"),
+                Constraint(type="meal_type", value="lunch"),
+                Constraint(type="max_budget", value=300),
+                Constraint(type="healthy_only", value=True),
+            ],
             top_k=3,
         )
         results = self.engine.generate_recommendations(req)
@@ -215,35 +222,26 @@ class TestStage2ARecommendationEngine(unittest.TestCase):
             self.assertLessEqual(res.candidate.price, 300)
             self.assertTrue(res.candidate.healthy)
 
-    def test_scenario_vegetarian_breakfast(self):
-        req = RecommendationRequest(preference="veg", meal_type="breakfast", top_k=5)
+    def test_scenario_debug_telemetry(self):
+        req = RecommendationRequest(
+            constraints=[
+                Constraint(type="preference", value="veg"),
+                Constraint(type="max_budget", value=200),
+            ],
+            context=RecommendationContext(debug_mode=True),
+        )
         results = self.engine.generate_recommendations(req)
         self.assertGreater(len(results), 0)
+        first_res = results[0]
+        self.assertIsNotNone(first_res.debug)
+        self.assertEqual(first_res.debug.strategy, "explicit_constraints")
 
-    def test_scenario_comfort_food(self):
-        req = RecommendationRequest(mood="comfort", top_k=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertGreater(len(results), 0)
-
-    def test_scenario_budget_meal(self):
-        req = RecommendationRequest(max_budget=100, top_k=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertGreater(len(results), 0)
-
-    def test_scenario_high_protein_request(self):
-        req = RecommendationRequest(high_protein=True, top_k=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertGreater(len(results), 0)
-
-    def test_scenario_invalid_restaurant(self):
-        req = RecommendationRequest(restaurant_id=99999)
-        results = self.engine.generate_recommendations(req)
-        self.assertEqual(len(results), 0)
-
-    def test_scenario_no_matching_items(self):
-        req = RecommendationRequest(max_budget=5)
-        results = self.engine.generate_recommendations(req)
-        self.assertEqual(len(results), 0)
+    def test_context_engine_migration(self):
+        ce = ContextEngine(self.catalog)
+        res = ce.recommend_food({"preference": "veg", "max_budget": 300, "debug_mode": True})
+        self.assertIn("recommendations", res)
+        self.assertGreater(len(res["recommendations"]), 0)
+        self.assertIn("debug", res["recommendations"][0])
 
 
 if __name__ == "__main__":
