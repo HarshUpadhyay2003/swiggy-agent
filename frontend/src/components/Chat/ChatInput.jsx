@@ -1,32 +1,75 @@
-function ChatInput({ value, onChange, onSend, disabled }) {
+import React from 'react'
+import { Send, Mic, Paperclip, Sparkles, Loader2 } from 'lucide-react'
+import Button from '../ui/Button'
+
+export function ChatInput({ value, onChange, onSend, disabled = false }) {
+  const handleSubmit = (e) => {
+    e?.preventDefault()
+    if (!value?.trim() || disabled) return
+    onSend(value)
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSubmit(e)
+    }
+  }
+
   return (
-    <div className="sticky bottom-0 z-20 rounded-[32px] border border-slate-200/70 bg-white/95 p-4 shadow-soft backdrop-blur-xl dark:border-slate-700/70 dark:bg-slate-950/95">
-      <label className="mb-3 block text-sm font-semibold text-slate-700 dark:text-slate-300">Send a message</label>
-      <div className="flex flex-col gap-3 sm:flex-row">
+    <form onSubmit={handleSubmit} className="relative w-full group">
+      {/* Soft Glow Ring Container */}
+      <div className="absolute inset-0 bg-swiggy-500/10 rounded-full blur-md opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+      {/* Pill Input Bar */}
+      <div className="relative z-10 flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-4 py-2 shadow-gourmet backdrop-blur-xl transition-all duration-300 dark:border-slate-700/80 dark:bg-slate-900/95 group-focus-within:border-swiggy-500/80 group-focus-within:ring-4 group-focus-within:ring-swiggy-500/15">
+        {/* Attachment Placeholder */}
+        <button
+          type="button"
+          disabled={disabled}
+          className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors rounded-full shrink-0"
+          title="Attach food photo or recipe (coming soon)"
+        >
+          <Paperclip className="h-5 w-5" />
+        </button>
+
+        {/* Text Input */}
         <input
           type="text"
           value={value}
-          onChange={(event) => onChange(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              event.preventDefault()
-              onSend(value)
-            }
-          }}
-          placeholder="Ask the assistant for a meal recommendation, cart update, or checkout"
-          className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm text-slate-900 outline-none transition focus:border-swiggy-500 focus:ring-2 focus:ring-swiggy-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-swiggy-400 dark:focus:ring-swiggy-400/20"
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="Ask CraveAI for dishes, diets, budgets, or plans..."
+          disabled={disabled}
+          className="w-full bg-transparent text-sm sm:text-base font-sans text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none disabled:opacity-50 py-2.5"
         />
+
+        {/* Voice Placeholder */}
         <button
           type="button"
-          onClick={() => onSend(value)}
           disabled={disabled}
-          className="rounded-3xl bg-swiggy-500 px-5 py-4 text-sm font-semibold text-white transition hover:bg-swiggy-600 disabled:cursor-not-allowed disabled:opacity-60"
+          className="hidden sm:flex p-2 text-slate-400 hover:text-swiggy-500 transition-colors rounded-full shrink-0"
+          title="Voice search (coming soon)"
         >
-          Send
+          <Mic className="h-5 w-5" />
         </button>
+
+        {/* Send Action Button */}
+        <Button
+          type="submit"
+          variant="primary"
+          size="icon"
+          disabled={!value?.trim() || disabled}
+          className="h-10 w-10 shrink-0 shadow-glow"
+        >
+          {disabled ? (
+            <Loader2 className="h-4 w-4 animate-spin text-white" />
+          ) : (
+            <Send className="h-4 w-4 text-white" />
+          )}
+        </Button>
       </div>
-      <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">Use Enter to submit. Structured cart and checkout commands also work.</p>
-    </div>
+    </form>
   )
 }
 

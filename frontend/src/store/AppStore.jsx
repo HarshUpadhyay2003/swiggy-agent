@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
+import toast from 'react-hot-toast'
 import {
   sendMessage as apiSendMessage,
   addCartItem as apiAddCartItem,
@@ -7,6 +8,7 @@ import {
   getCart as apiGetCart,
   sendTelemetry,
 } from '../services/chatApi'
+import { normalizePlanner } from '../utils/plannerAdapter'
 
 const AppContext = createContext(null)
 
@@ -28,7 +30,7 @@ const initialState = {
     {
       id: 'assistant-1',
       author: 'assistant',
-      text: 'Hello! I am your AI commerce copilot. Ask me to recommend meals, manage your cart, or place an order.',
+      text: 'Hello! I am your AI commerce copilot. Ask me to recommend meals, manage your cart, or build a weekly meal plan.',
       data: {},
       timestamp: new Date().toISOString(),
     },
@@ -113,13 +115,13 @@ const reducer = (state, action) => {
         }),
       }
     case 'SET_CART':
-      // ISSUE 3 FIX: Replace optimistic incremental updates with FULL cart replacement.
       return { ...state, cart: buildCart(JSON.parse(JSON.stringify(action.payload || {}))) }
     case 'CLEAR_CART':
       return { ...state, cart: DEFAULT_CART }
-    case 'SET_PLANNER':
-      // Deep clone to force React to drop stale closures and completely re-render the Planner Panel
-      return { ...state, planner: action.payload ? JSON.parse(JSON.stringify(action.payload)) : {} }
+    case 'SET_PLANNER': {
+      const normalized = action.payload ? normalizePlanner(action.payload) : {}
+      return { ...state, planner: normalized }
+    }
     case 'SET_ORDER':
       return { ...state, orderStatus: action.payload || null }
     case 'SET_CHECKOUT_STATUS':
@@ -128,6 +130,12 @@ const reducer = (state, action) => {
       return { ...state, cartSyncStatus: { ...state.cartSyncStatus, ...action.payload } }
     case 'TOGGLE_THEME':
       return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' }
+    case 'RESET_GUEST_SESSION':
+      return {
+        ...initialState,
+        sessionId: action.payload.newSessionId,
+        theme: state.theme,
+      }
     default:
       return state
   }
@@ -138,13 +146,32 @@ const generateSessionId = () => `session-${Date.now()}-${Math.floor(Math.random(
 const initializeState = () => {
   let sessionId = generateSessionId()
   let theme = 'light'
+  let guestSession = null
 
   if (typeof window !== 'undefined') {
-    const storedSession = window.localStorage.getItem('swiggy_copilot_session')
     const storedTheme = window.localStorage.getItem('swiggy_theme')
-    sessionId = storedSession || sessionId
     theme = storedTheme === 'dark' ? 'dark' : 'light'
-    window.localStorage.setItem('swiggy_copilot_session', sessionId)
+
+    try {
+      const storedGuestSession = window.sessionStorage.getItem('swiggy_guest_session')
+      if (storedGuestSession) {
+        guestSession = JSON.parse(storedGuestSession)
+      }
+    } catch (e) {
+      // Ignore parse error
+    }
+  }
+
+  if (guestSession && guestSession.sessionId) {
+    return {
+      ...initialState,
+      ...guestSession,
+      theme,
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.sessionStorage.setItem('swiggy_guest_session', JSON.stringify({ sessionId }))
   }
 
   return {
@@ -250,15 +277,16 @@ export function AppProvider({ children }) {
         dispatch({ type: 'SET_RECOMMENDATIONS', payload: data.recommendations })
       }
 
-      if (data.meal_plan) {
-        dispatch({ type: 'SET_PLANNER', payload: data.meal_plan })
+      const mealPlanData = data.meal_plan || payload.meal_plan || response?.meal_plan || data.planner || payload.planner || response?.planner
+      if (mealPlanData) {
+        dispatch({ type: 'SET_PLANNER', payload: mealPlanData })
+        toast.success('7-Day Meal Plan generated!')
       }
 
       if (data.order) {
         dispatch({ type: 'SET_ORDER', payload: data.order })
       }
 
-      // 2. Clear UI loading states instantly so panels update immediately
       setLoadingState('recommendations', false)
       setLoadingState('planner', false)
       setLoadingState('cart', false)
@@ -271,13 +299,13 @@ export function AppProvider({ children }) {
         timestamp: new Date().toISOString(),
       }
 
-      // 3. Fake typing delay ONLY for the conversational message bubble (Prevents delayed UI syncs)
       await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 700))
       dispatch({ type: 'ADD_MESSAGE', payload: assistantMessage })
       return response
     } catch (err) {
       const backendError = err.response?.data?.detail || err.response?.data?.message || err.response?.data?.error || err.message || 'Unexpected error'
       dispatch({ type: 'SET_ERROR', payload: `Chat request failed: ${backendError}` })
+      toast.error(`Request failed: ${backendError}`)
       dispatch({
         type: 'ADD_MESSAGE',
         payload: {
@@ -299,6 +327,7 @@ export function AppProvider({ children }) {
   const addToCart = async (item, quantity = 1) => {
     if (!item || typeof item.item_id !== 'number') {
       dispatch({ type: 'SET_ERROR', payload: 'Can only add valid menu items to cart.' })
+      toast.error('Can only add valid menu items to cart.')
       return null
     }
 
@@ -316,9 +345,10 @@ export function AppProvider({ children }) {
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Item added' } })
       } else {
-        // Enforce server truth fallback
         await syncCart()
       }
+
+      toast.success(`Added ${item.item_name ?? item.name ?? 'item'} to cart!`)
 
       dispatch({
         type: 'ADD_MESSAGE',
@@ -334,6 +364,7 @@ export function AppProvider({ children }) {
     } catch (err) {
       const backendError = err.response?.data?.detail || err.message || 'Could not add item to cart.'
       dispatch({ type: 'SET_ERROR', payload: backendError })
+      toast.error(`Could not add item: ${backendError}`)
       dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'error', message: 'Cart update failed' } })
       throw err
     } finally {
@@ -351,7 +382,6 @@ export function AppProvider({ children }) {
     dispatch({ type: 'SET_LOADING', payload: true })
     dispatch({ type: 'SET_ERROR', payload: null })
     setLoadingState('cart', true)
-    dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'syncing', message: 'Removing item from cart…' } })
 
     try {
       const response = await apiRemoveCartItem(state.sessionId, item.item_id, quantity)
@@ -362,25 +392,16 @@ export function AppProvider({ children }) {
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Item removed' } })
       } else {
-        // Enforce server truth fallback
         await syncCart()
       }
 
-      dispatch({
-        type: 'ADD_MESSAGE',
-        payload: {
-          id: `assistant-${Date.now()}`,
-          author: 'assistant',
-          text: `Updated your cart.`,
-          data: { cart: data.cart },
-          timestamp: new Date().toISOString(),
-        },
-      })
+      toast.success(`Removed ${item.item_name ?? item.name ?? 'item'} from cart`)
+
       return response
     } catch (err) {
       const backendError = err.response?.data?.detail || err.message || 'Could not remove item from cart.'
       dispatch({ type: 'SET_ERROR', payload: backendError })
-      dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'error', message: 'Cart update failed' } })
+      toast.error(`Could not remove item: ${backendError}`)
       throw err
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false })
@@ -393,7 +414,6 @@ export function AppProvider({ children }) {
     dispatch({ type: 'SET_ERROR', payload: null })
     setLoadingState('checkout', true)
     dispatch({ type: 'SET_CHECKOUT_STATUS', payload: { inProgress: true, success: false, message: 'Processing checkout…' } })
-    dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'syncing', message: 'Checking out…' } })
 
     try {
       const response = await apiCheckoutCart(state.sessionId)
@@ -409,30 +429,27 @@ export function AppProvider({ children }) {
       } else {
         dispatch({ type: 'CLEAR_CART' })
       }
-      dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Checkout complete' } })
-      dispatch({
-        type: 'ADD_MESSAGE',
-        payload: {
-          id: `assistant-${Date.now()}`,
-          author: 'assistant',
-          text: data.order
-            ? `Your order ${data.order.order_id} is confirmed.`
-            : 'Your checkout is complete.',
-          data: { order: data.order, cart: data.cart },
-          timestamp: new Date().toISOString(),
-        },
-      })
+      toast.success('Order placed successfully! 🎉')
       return response
     } catch (err) {
       const backendError = err.response?.data?.detail || err.message || 'Checkout failed.'
       dispatch({ type: 'SET_ERROR', payload: backendError })
-      dispatch({ type: 'SET_CHECKOUT_STATUS', payload: { inProgress: false, success: false, message: 'Checkout failed' } })
-      dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'error', message: 'Checkout failed' } })
+      toast.error(`Checkout failed: ${backendError}`)
       throw err
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false })
       setLoadingState('checkout', false)
     }
+  }
+
+  const resetGuestSession = () => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem('swiggy_guest_session')
+      window.localStorage.removeItem('swiggy_copilot_planner')
+    }
+    const newSessionId = generateSessionId()
+    dispatch({ type: 'RESET_GUEST_SESSION', payload: { newSessionId } })
+    toast.success('Started a fresh guest session!')
   }
 
   const requestMealPlan = async () => {
@@ -468,10 +485,11 @@ export function AppProvider({ children }) {
         requestMealPlan,
         removeRecommendation,
         replaceRecommendation,
+        resetGuestSession,
         toggleTheme: () => dispatch({ type: 'TOGGLE_THEME' }),
       },
     }),
-    [state, syncCart, sendChat, addToCart, removeFromCart, checkout, requestMealPlan, removeRecommendation, replaceRecommendation]
+    [state, syncCart, sendChat, addToCart, removeFromCart, checkout, requestMealPlan, removeRecommendation, replaceRecommendation, resetGuestSession]
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

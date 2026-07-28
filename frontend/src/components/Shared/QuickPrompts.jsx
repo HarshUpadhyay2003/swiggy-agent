@@ -1,22 +1,46 @@
-function QuickPrompts({ options, onSelect }) {
+import React from 'react'
+import { Sparkles } from 'lucide-react'
+import Chip from '../ui/Chip'
+
+export function QuickPrompts({ options = [], onSelect }) {
+  const defaultPrompts = [
+    'Repeat last order',
+    'Healthy lunch under ₹300',
+    'Weekend dinner',
+    'Office lunch',
+    'High protein',
+    'Family meal',
+    'Dessert',
+    'Late night snacks',
+  ]
+
+  const promptList = options.length > 0 ? options : defaultPrompts
+
   return (
-    <div className="rounded-[32px] border border-slate-200/70 bg-white/90 p-4 shadow-soft backdrop-blur-xl dark:border-slate-700/70 dark:bg-slate-900/80">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">Quick actions</p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">Tap a suggestion to guide the AI instantly.</p>
+    <div className="rounded-2xl border border-slate-200/80 bg-white/80 p-4 shadow-gourmet backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/80 transition-colors duration-300">
+      <div className="mb-3 flex items-center justify-between gap-4 px-1">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-swiggy-500" />
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            Quick AI Prompt Shortcuts
+          </p>
         </div>
+        <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">
+          Tap to run query
+        </span>
       </div>
-      <div className="flex gap-3 overflow-x-auto pb-2">
-        {options.map((option) => (
-          <button
-            key={option}
-            type="button"
-            onClick={() => onSelect(option)}
-            className="whitespace-nowrap rounded-full border border-slate-200/80 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-swiggy-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500"
+
+      <div className="flex items-center gap-2.5 overflow-x-auto pb-1.5 scrollbar-thin">
+        {promptList.map((promptText) => (
+          <Chip
+            key={promptText}
+            variant="default"
+            size="md"
+            onClick={() => onSelect(promptText)}
+            className="hover:border-swiggy-500 hover:text-swiggy-700 dark:hover:text-swiggy-400 shrink-0"
           >
-            {option}
-          </button>
+            {promptText}
+          </Chip>
         ))}
       </div>
     </div>

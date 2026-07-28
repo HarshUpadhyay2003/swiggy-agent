@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CraveAI - Weekly Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "tertiary-container": "#63b549",
+                        "surface-dim": "#dadada",
+                        "surface": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "tertiary-fixed": "#a1f882",
+                        "primary-fixed-dim": "#ffb689",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#032100",
+                        "on-secondary-fixed": "#1d1b19",
+                        "surface-container-low": "#f3f3f3",
+                        "on-surface-variant": "#574236",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#115300",
+                        "secondary-container": "#e4dfdb",
+                        "outline-variant": "#dec1b0",
+                        "on-primary-fixed": "#311300",
+                        "on-primary-fixed-variant": "#733500",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#1b6d01",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "outline": "#8b7264",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffdbc8",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed": "#e7e1de",
+                        "on-tertiary-container": "#0c4200",
+                        "inverse-surface": "#2f3131",
+                        "inverse-primary": "#ffb689",
+                        "secondary-fixed-dim": "#cbc5c2",
+                        "primary": "#984800",
+                        "on-primary-container": "#5e2a00",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#65625f",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#494644",
+                        "surface-tint": "#984800",
+                        "tertiary-fixed-dim": "#86db69",
+                        "primary-container": "#fc8019",
+                        "surface-bright": "#f9f9f9",
+                        "secondary": "#615e5b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .glass-card {
+            background: rgba(249, 249, 249, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 30px rgba(32, 16, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen relative overflow-x-hidden pb-24 md:pb-0">
+<!-- Ambient Background Shader -->
+<div class="fixed inset-0 z-0 pointer-events-none opacity-40">
+<!-- STITCH_SHADER_START:ANIMATION_55 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_55" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_55');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+void main() {
+    vec2 uv = v_texCoord;
+    
+    // Create soft, organic moving clouds/blobs
+    float noise = sin(uv.x * 10.0 + u_time) * cos(uv.y * 8.0 - u_time * 0.5);
+    noise += sin(uv.y * 12.0 + u_time * 0.8) * cos(uv.x * 6.0 + u_time * 1.2);
+    
+    // Warm Swiggy-inspired palette: Cream to very soft Orange
+    vec3 color1 = vec3(1.0, 0.98, 0.96); // Light Cream
+    vec3 color2 = vec3(1.0, 0.94, 0.90); // Very soft peach
+    
+    vec3 finalColor = mix(color1, color2, noise * 0.2 + 0.5);
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_55 -->
+</div>
+<!-- TopAppBar -->
+<header class="bg-surface/70 dark:bg-inverse-surface/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm dark:shadow-none flex justify-between items-center w-full px-4 md:px-8 max-w-7xl mx-auto h-16">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+            CraveAI
+        </div>
+<div class="hidden md:flex space-x-6">
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-3 py-2 rounded-lg" href="#">Crave</a>
+<a class="text-primary font-bold border-b-2 border-primary hover:bg-primary-container/10 transition-colors px-3 py-2" href="#">Planner</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-3 py-2 rounded-lg" href="#">Cart</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-3 py-2 rounded-lg" href="#">Profile</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-primary dark:text-inverse-primary scale-95 active:opacity-80 transition-all">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-primary dark:text-inverse-primary scale-95 active:opacity-80 transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="text-primary dark:text-inverse-primary scale-95 active:opacity-80 transition-all hidden md:block">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full max-w-[1440px] mx-auto pt-6 px-4 md:px-lg lg:px-xl">
+<!-- Header & Global Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 space-y-4 md:space-y-0">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Weekly Curation</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Your personalized dining schedule, optimized for taste, health, and budget.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="glass-panel px-4 py-2 rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-white transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">health_and_safety</span>
+                    Make it Healthier
+                </button>
+<button class="glass-panel px-4 py-2 rounded-full font-label-lg text-label-lg text-on-surface-variant hover:bg-white transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+                    Optimize for Budget
+                </button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-lg text-label-lg shadow-sm hover:bg-primary/90 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">shopping_cart_checkout</span>
+                    Add all to Cart
+                </button>
+</div>
+</div>
+<!-- Horizontal Scrollable Weekly View -->
+<div class="overflow-x-auto hide-scrollbar pb-8 -mx-4 px-4 md:mx-0 md:px-0">
+<div class="flex space-x-6 min-w-max">
+<!-- Monday Column -->
+<div class="w-[320px] flex flex-col space-y-4">
+<div class="sticky top-16 bg-surface/90 backdrop-blur-md z-20 py-2 border-b border-surface-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface">Monday</h2>
+<div class="flex justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">₹1250</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1800 Cal</span>
+</div>
+</div>
+<!-- Breakfast -->
+<div class="glass-card rounded-xl overflow-hidden relative group">
+<div class="h-32 relative">
+<img class="w-full h-full object-cover" data-alt="A premium, high-resolution food photo of a healthy avocado toast with poached eggs and seeds, minimal studio lighting, white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXIiQSJRQMXE_ct2mXbo11yDHi3VHIYDC_0lm2kmskcLOlboEdCNH4WI_bbGWkFRFhwikAe6xHsyEpwy6g1QU1MW2ntVlRCIqY1M2LARQ8R-t5Nc8_MwUrNf83m1rg2zCIZJk7mGO1Z7KrSFJUzI90kd5lKD8yBJShtO0WFvuOgeDjL9yRLZlnbWHb4rX2jQ7tmECxhirHRUWQy_fFNtvACNpEh079lwljzuU_xNcRRcNOPWHNDtYs"/>
+<div class="absolute top-2 right-2 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-on-surface">
+                                ₹350
+                            </div>
+</div>
+<div class="p-4">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Breakfast</div>
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface mb-1">Avocado Toast &amp; Eggs</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Green Leaf Cafe</p>
+<div class="mt-4 flex justify-between items-center border-t border-surface-variant/50 pt-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1" title="Replace (AI)">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1" title="Remove">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Lunch -->
+<div class="glass-card rounded-xl overflow-hidden relative group">
+<div class="h-32 relative">
+<img class="w-full h-full object-cover" data-alt="Top view of a gourmet poke bowl with fresh salmon, avocado, edamame, and mango, studio lighting, high resolution, food photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnLxLD1aTfYWJr6u8BUT5406jHHC85xeB0wV7_-pzPYUWqN-ppnKzcVc6yysDN4OZx_N8rDeb688r2GFzNy8pK9MNzhm-xrIrblrmCIlBfIjoyyABKTxnBg4NI7lDL8ON9BcJ71vt2keysI0VyEfnMbOnTrYJqb0yE-4GeRXj0MGoM5b37qNJce17R6_9miHLtUqlUZlJSoOcB0JuEFTzoqcFJujrfaKpgjTGDFHB3V9Zm-xDVz-ot"/>
+<div class="absolute top-2 right-2 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-on-surface">
+                                ₹450
+                            </div>
+</div>
+<div class="p-4">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Lunch</div>
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface mb-1">Salmon Poke Bowl</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Ocean Fresh</p>
+<div class="mt-4 flex justify-between items-center border-t border-surface-variant/50 pt-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1" title="Replace (AI)">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1" title="Remove">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Dinner (With 'Why This' popup overlay target) -->
+<div class="glass-card rounded-xl overflow-hidden relative group border-2 border-primary/20">
+<div class="absolute top-2 left-2 z-10">
+<button class="bg-primary text-on-primary rounded-full p-1 shadow-sm hover:scale-105 transition-transform" onclick="document.getElementById('why-this-popup').classList.toggle('hidden')" title="Why this?">
+<span class="material-symbols-outlined text-[16px] block">help</span>
+</button>
+</div>
+<div class="h-32 relative">
+<img class="w-full h-full object-cover" data-alt="A gourmet grilled chicken breast with roasted vegetables and quinoa, professional food photography, high resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCVe8g1aeJlXWtpCh8i3yeHy6R6zUIgeViuAmtty0YWqALnA7YKh-uJ_O7mR5g-ndWubRCRpFHGwTNUWCzeeIjfZe1eB5_0A1RybaOYxe02Gktnrf4SAMf7e1VNrU2Tk1KeS5HC4b-pAwhZM9YyfRJs9J0nhpKliQvaAfbCMsAEwM9tgxwv90uYeXQrz3to3_V33vCRtws1LVGe-cmmyHoT_vTPVdRIi3jXQYZAIC3SORb2E8Osd2n"/>
+<div class="absolute top-2 right-2 bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-full font-label-sm text-label-sm text-on-surface">
+                                ₹450
+                            </div>
+</div>
+<div class="p-4">
+<div class="text-xs font-semibold text-primary uppercase tracking-wider mb-1">Dinner</div>
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface mb-1">Grilled Chicken Quinoa</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant">Protein House</p>
+<div class="mt-4 flex justify-between items-center border-t border-surface-variant/50 pt-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors p-1" title="Replace (AI)">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors p-1" title="Remove">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+</div>
+<!-- 'Why This' Popup Overlay (Glassmorphic) -->
+<div class="hidden absolute inset-0 z-30 glass-panel rounded-xl p-4 flex flex-col justify-center animate-fade-in bg-white/80 dark:bg-inverse-surface/90" id="why-this-popup">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-label-lg text-label-lg text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">auto_awesome</span> AI Analysis
+                                </h4>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('why-this-popup').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-[13px] leading-snug text-on-surface-variant mb-4">
+                                We chose this grilled chicken for Monday dinner because it complements your high-protein lunch and stays 15% under your daily budget.
+                            </p>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface mb-1 uppercase">
+<span>Budget Match</span><span>95%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[95%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface mb-1 uppercase">
+<span>Health Score</span><span>88%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary-container w-[88%] rounded-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-[10px] text-on-surface mb-1 uppercase">
+<span>Protein Focus</span><span>High</span>
+</div>
+<div class="h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[80%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tuesday Column (Skeleton/Placeholder to show scrollability) -->
+<div class="w-[320px] flex flex-col space-y-4 opacity-70">
+<div class="sticky top-16 bg-surface/90 backdrop-blur-md z-20 py-2 border-b border-surface-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface">Tuesday</h2>
+<div class="flex justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">₹1100</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1650 Cal</span>
+</div>
+</div>
+<div class="glass-card rounded-xl h-[280px] flex items-center justify-center text-on-surface-variant/50">
+                        Content...
+                     </div>
+<div class="glass-card rounded-xl h-[280px] flex items-center justify-center text-on-surface-variant/50">
+                        Content...
+                     </div>
+<div class="glass-card rounded-xl h-[280px] flex items-center justify-center text-on-surface-variant/50">
+                        Content...
+                     </div>
+</div>
+<!-- Wednesday Column (Skeleton) -->
+<div class="w-[320px] flex flex-col space-y-4 opacity-50">
+<div class="sticky top-16 bg-surface/90 backdrop-blur-md z-20 py-2 border-b border-surface-variant">
+<h2 class="font-headline-md text-headline-md text-on-surface">Wednesday</h2>
+<div class="flex justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">₹--</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">-- Cal</span>
+</div>
+</div>
+<div class="glass-card rounded-xl h-[280px] flex items-center justify-center text-on-surface-variant/30"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface/70 dark:bg-inverse-surface/70 backdrop-blur-xl docked full-width bottom-0 fixed z-50 rounded-t-xl shadow-[0_-4px_20px_rgba(32,16,0,0.05)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">chat_bubble</span>
+<span class="text-label-sm font-label-sm">Crave</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-1 hover:text-primary transition-colors scale-90 active:scale-105 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="text-label-sm font-label-sm">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">shopping_bag</span>
+<span class="text-label-sm font-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 duration-200" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+    </style>
+</body></html>

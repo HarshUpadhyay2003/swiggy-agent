@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CraveAI - Your Culinary Copilot</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "tertiary-container": "#63b549",
+                        "surface-dim": "#dadada",
+                        "surface": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "tertiary-fixed": "#a1f882",
+                        "primary-fixed-dim": "#ffb689",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#032100",
+                        "on-secondary-fixed": "#1d1b19",
+                        "surface-container-low": "#f3f3f3",
+                        "on-surface-variant": "#574236",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#115300",
+                        "secondary-container": "#e4dfdb",
+                        "outline-variant": "#dec1b0",
+                        "on-primary-fixed": "#311300",
+                        "on-primary-fixed-variant": "#733500",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#1b6d01",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "outline": "#8b7264",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffdbc8",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed": "#e7e1de",
+                        "on-tertiary-container": "#0c4200",
+                        "inverse-surface": "#2f3131",
+                        "inverse-primary": "#ffb689",
+                        "secondary-fixed-dim": "#cbc5c2",
+                        "primary": "#984800",
+                        "on-primary-container": "#5e2a00",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#65625f",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#494644",
+                        "surface-tint": "#984800",
+                        "tertiary-fixed-dim": "#86db69",
+                        "primary-container": "#fc8019",
+                        "surface-bright": "#f9f9f9",
+                        "secondary": "#615e5b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: theme('colors.background');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .ambient-shadow {
+            box-shadow: 0 20px 40px -10px rgba(32, 16, 0, 0.05);
+        }
+        
+        .subtle-glow:focus-within {
+            box-shadow: 0 0 20px 0 rgba(252, 128, 25, 0.15);
+            background-color: #ffffff;
+        }
+
+        /* Material Icons setup */
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Ambient Background Gradient */
+        .ambient-bg {
+            background: radial-gradient(circle at top right, rgba(252, 128, 25, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(99, 181, 73, 0.05) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="text-on-background ambient-bg relative overflow-x-hidden">
+<!-- Background Design Element -->
+<div class="fixed top-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-primary-container/5 blur-[120px] pointer-events-none z-0"></div>
+<div class="fixed bottom-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-tertiary-container/5 blur-[100px] pointer-events-none z-0"></div>
+<!-- TopAppBar (Hidden on mobile, visible on md+) -->
+<header class="hidden md:flex bg-surface/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm flex justify-between items-center w-full px-4 md:px-8 max-w-[1200px] mx-auto h-16">
+<div class="flex items-center gap-4">
+<img alt="CraveAI Logo" class="h-8 w-8 rounded-lg object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRg2Y3pHDbSXEs65KBhNgAfwcGX0p-_p-Ikno3yIdkQblKW_Jz2YfEY8twH847-K_FRFU61__FzY9LJxKOmEl8skHH5cEiEcXaFU16wAPkufSq31VYmRrnVhiEQdMaWFEqPmehqT7_DgoK0W-lvg1hnbSfzFMv2sWTSBBmzV7IRcELW5ikBKDk29qG32eP5svmVmzg0HAVmya2VCfWaaP7STvW1v7ogLE9N2cLz8MZAjvmAePcm-Gx"/>
+<span class="text-headline-md font-headline-md font-bold text-primary font-playfair tracking-tight">CraveAI</span>
+</div>
+<!-- Desktop Nav Items -->
+<nav class="flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 px-2 text-label-lg font-label-lg transition-colors" href="#">Crave</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors rounded-full px-4 py-2 text-label-lg font-label-lg scale-95 active:opacity-80 transition-all" href="#">Planner</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors rounded-full px-4 py-2 text-label-lg font-label-lg scale-95 active:opacity-80 transition-all" href="#">Cart</a>
+</nav>
+<div class="flex items-center gap-2">
+<button class="p-2 text-primary hover:bg-primary-container/10 transition-colors rounded-full scale-95 active:opacity-80 transition-all">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-primary hover:bg-primary-container/10 transition-colors rounded-full scale-95 active:opacity-80 transition-all">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<button class="p-2 text-primary hover:bg-primary-container/10 transition-colors rounded-full scale-95 active:opacity-80 transition-all ml-2">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="relative z-10 w-full max-w-[1200px] mx-auto px-5 md:px-[64px] pt-[40px] md:pt-[80px] pb-[120px] md:pb-[64px] flex flex-col items-center">
+<!-- Hero Section -->
+<section class="w-full flex flex-col items-center text-center mb-[64px]">
+<h1 class="font-headline-lg-mobile md:font-display-lg text-headline-lg-mobile md:text-display-lg text-on-surface mb-2 tracking-tight">
+                Good Evening, Alex 👋
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant opacity-80 mb-10 max-w-lg mx-auto">
+                What are you craving today?
+            </p>
+<!-- Conversational Input -->
+<div class="w-full max-w-2xl relative mb-8 group">
+<div class="absolute inset-0 bg-white/40 rounded-full blur-md opacity-0 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+<div class="glass-panel ambient-shadow rounded-full p-2 flex items-center relative z-10 subtle-glow transition-all duration-300 border border-surface-variant/50">
+<span class="material-symbols-outlined text-primary ml-4 mr-2">temp_preferences_custom</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-lg font-body-lg text-on-surface placeholder:text-on-surface-variant/50 h-12 outline-none" placeholder="Tell me what you're hungry for..." type="text"/>
+<button class="bg-primary text-on-primary h-12 w-12 rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors shadow-sm ml-2 flex-shrink-0">
+<span class="material-symbols-outlined fill">arrow_upward</span>
+</button>
+</div>
+</div>
+<!-- Quick Suggestion Chips -->
+<div class="flex flex-wrap justify-center gap-3 w-full max-w-3xl">
+<button class="glass-panel px-5 py-2.5 rounded-full text-label-lg font-label-lg text-on-surface-variant hover:text-primary hover:bg-white hover:border-primary-container/30 transition-all ambient-shadow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">local_dining</span>
+                    Healthy Lunch
+                </button>
+<button class="glass-panel px-5 py-2.5 rounded-full text-label-lg font-label-lg text-on-surface-variant hover:text-primary hover:bg-white hover:border-primary-container/30 transition-all ambient-shadow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">fitness_center</span>
+                    High Protein
+                </button>
+<button class="glass-panel px-5 py-2.5 rounded-full text-label-lg font-label-lg text-on-surface-variant hover:text-primary hover:bg-white hover:border-primary-container/30 transition-all ambient-shadow flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">ramen_dining</span>
+                    Comfort Food
+                </button>
+<button class="glass-panel px-5 py-2.5 rounded-full text-label-lg font-label-lg text-on-surface-variant hover:text-primary hover:bg-white hover:border-primary-container/30 transition-all ambient-shadow flex items-center gap-2 hidden md:flex">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+                    Budget Treat
+                </button>
+<button class="glass-panel px-5 py-2.5 rounded-full text-label-lg font-label-lg text-on-surface-variant hover:text-primary hover:bg-white hover:border-primary-container/30 transition-all ambient-shadow flex items-center gap-2 hidden md:flex">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+                    Under 30 mins
+                </button>
+</div>
+</section>
+<!-- Conversation Start Area -->
+<section class="w-full max-w-3xl mx-auto flex flex-col items-start gap-[24px]">
+<!-- AI Message Bubble -->
+<div class="flex items-end gap-4 max-w-[85%] w-full">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0 shadow-sm border border-primary-container/10">
+<img alt="AI Avatar" class="w-6 h-6 rounded-full object-cover mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRg2Y3pHDbSXEs65KBhNgAfwcGX0p-_p-Ikno3yIdkQblKW_Jz2YfEY8twH847-K_FRFU61__FzY9LJxKOmEl8skHH5cEiEcXaFU16wAPkufSq31VYmRrnVhiEQdMaWFEqPmehqT7_DgoK0W-lvg1hnbSfzFMv2sWTSBBmzV7IRcELW5ikBKDk29qG32eP5svmVmzg0HAVmya2VCfWaaP7STvW1v7ogLE9N2cLz8MZAjvmAePcm-Gx"/>
+</div>
+<div class="glass-panel ambient-shadow px-6 py-5 rounded-[24px] rounded-bl-[8px] text-body-md font-body-md text-on-surface relative">
+<p class="leading-relaxed">I'm your CraveAI Copilot. I can help you find the perfect meal, build a weekly plan, or just find something quick for tonight. What's on your mind?</p>
+</div>
+</div>
+<!-- Intent Chips (Follow up actions) -->
+<div class="flex flex-wrap gap-3 pl-14">
+<button class="bg-white border border-surface-variant/60 px-4 py-2 rounded-full text-label-sm font-label-sm text-on-surface-variant hover:text-primary hover:border-primary-container/50 transition-all shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                    Plan my week
+                </button>
+<button class="bg-white border border-surface-variant/60 px-4 py-2 rounded-full text-label-sm font-label-sm text-on-surface-variant hover:text-primary hover:border-primary-container/50 transition-all shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+                    Find me dinner
+                </button>
+<button class="bg-white border border-surface-variant/60 px-4 py-2 rounded-full text-label-sm font-label-sm text-on-surface-variant hover:text-primary hover:border-primary-container/50 transition-all shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">shopping_cart</span>
+                    Check my cart
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Visible on mobile, hidden on md+) -->
+<nav class="md:hidden bg-surface/70 backdrop-blur-xl shadow-[0_-4px_20px_rgba(32,16,0,0.05)] docked full-width bottom-0 fixed z-50 rounded-t-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-1 hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined fill">chat_bubble</span>
+<span class="text-label-sm font-label-sm mt-1">Crave</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-1">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-label-sm font-label-sm mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

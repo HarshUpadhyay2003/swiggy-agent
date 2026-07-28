@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CraveAI - Premium Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary": "#ffffff",
+            "primary-fixed": "#ffdbc8",
+            "on-secondary-fixed": "#1d1b19",
+            "on-tertiary-fixed-variant": "#115300",
+            "inverse-on-surface": "#f1f1f1",
+            "tertiary": "#1b6d01",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#ffb689",
+            "on-surface-variant": "#574236",
+            "outline": "#8b7264",
+            "surface-container-low": "#f3f3f3",
+            "on-primary-fixed": "#311300",
+            "surface-dim": "#dadada",
+            "inverse-surface": "#2f3131",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "surface": "#f9f9f9",
+            "secondary": "#615e5b",
+            "on-secondary-fixed-variant": "#494644",
+            "primary-container": "#fc8019",
+            "surface-container-high": "#e8e8e8",
+            "on-tertiary-fixed": "#032100",
+            "surface-tint": "#984800",
+            "surface-variant": "#e2e2e2",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#e7e1de",
+            "tertiary-fixed-dim": "#86db69",
+            "on-background": "#1a1c1c",
+            "outline-variant": "#dec1b0",
+            "primary": "#984800",
+            "on-primary-container": "#5e2a00",
+            "tertiary-container": "#63b549",
+            "surface-container": "#eeeeee",
+            "surface-container-highest": "#e2e2e2",
+            "secondary-fixed-dim": "#cbc5c2",
+            "secondary-container": "#e4dfdb",
+            "on-surface": "#1a1c1c",
+            "inverse-primary": "#ffb689",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed-variant": "#733500",
+            "on-tertiary-container": "#0c4200",
+            "on-secondary-container": "#65625f",
+            "background": "#f9f9f9",
+            "tertiary-fixed": "#a1f882",
+            "surface-bright": "#f9f9f9"
+          },
+          "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "md": "24px",
+            "xs": "4px",
+            "xl": "64px",
+            "container-max": "1200px",
+            "lg": "40px",
+            "sm": "12px",
+            "gutter": "20px",
+            "base": "8px"
+          },
+          "fontFamily": {
+            "label-lg": ["Inter"],
+            "headline-lg": ["Playfair Display"],
+            "display-lg": ["Playfair Display"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg-mobile": ["Playfair Display"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- Background Content (Simulated Home Screen) -->
+<main class="fixed inset-0 w-full h-full overflow-y-auto px-4 md:px-8 py-20 pointer-events-none opacity-40">
+<div class="max-w-7xl mx-auto space-y-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="aspect-video rounded-lg overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A macro shot of a fresh Salmon Poke Bowl on a weathered wooden table, with vibrant edamame, sliced avocado, and glistening orange salmon cubes. The lighting is soft morning sunlight, emphasizing a high-end culinary aesthetic and a warm cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAueApkcNijTP8X41M4dmFk6siUKhc1AdW87SiT3a7r5HnAqdY_DZjkimFqBogmzVULdkbySQSqVAaipZPI4rcP-0ey8fYurHputn2Q37h817oGvlVCBKC_DKxMdX0Ei_6dyGofisAZSQYWISWVsEWcvh06wniHpArw2R8zXMIwgXQAaMnZV7o1fGWLPhIH23LzT_sAjtkH_Ut12-uBkYFRiERZy7n7PTQSOylIdK8DrfrRmqhcaR6y"/>
+</div>
+<div class="space-y-sm">
+<div class="h-8 w-48 bg-primary/20 rounded"></div>
+<div class="h-4 w-full bg-on-surface-variant/10 rounded"></div>
+<div class="h-4 w-3/4 bg-on-surface-variant/10 rounded"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Top AppBar (from JSON) -->
+<header class="bg-surface/70 dark:bg-inverse-surface/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-4 md:px-8 max-w-7xl mx-auto h-16">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">CraveAI</div>
+<div class="flex gap-4 items-center">
+<button class="material-symbols-outlined text-primary p-2 rounded-full hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">search</button>
+<button class="material-symbols-outlined text-primary p-2 rounded-full hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">account_circle</button>
+<button class="material-symbols-outlined text-primary p-2 rounded-full hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">dark_mode</button>
+</div>
+</div>
+</header>
+<!-- Backdrop for Drawer -->
+<div class="fixed inset-0 bg-on-background/20 backdrop-blur-sm z-50 transition-opacity duration-500" id="drawer-backdrop"></div>
+<!-- Premium Floating Cart Drawer -->
+<aside class="fixed top-4 bottom-4 right-4 w-[calc(100%-32px)] md:w-[480px] z-[60] glass-panel rounded-lg shadow-xl border border-white/40 flex flex-col transform translate-x-[110%] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]" id="cart-drawer">
+<!-- Drawer Header -->
+<div class="p-md flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Your Cart</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">2 items from <span class="text-primary font-semibold">The Poke Co.</span></p>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors" onclick="closeCart()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-md space-y-lg hide-scrollbar">
+<!-- Cart Items List -->
+<div class="space-y-md">
+<!-- Item 1: Salmon Poke Bowl -->
+<div class="flex gap-md group items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 duration-300">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsB-2POS9zPIlJcHX4jIc7VdCbxYP9F93FkQoXxh0FLWAmWOgGzbHYWIIuC26iylJRVE9g5cucTpwRTT9MmashQvSayoovlQ6x2ckwJBkXHIfg9TMUDr5PdikRbs3SCyDPYBe56qjaS-YjXGdamg7H0gGSfekZNo5MeOVIBm7koFe8me8IHjxLIcJpJZQ_4Du0AGkLLKyI5O-ZK1_C3RyQkJZlWf0wJkNs9FphpMIp5ct_zEYqowcYrHFI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-body-lg text-on-surface truncate">Salmon Poke Bowl</h3>
+<span class="font-label-lg text-label-lg text-on-surface">₹450</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-3">Fresh Atlantic Salmon, Avocado, Edamame</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container rounded-full p-1 border border-outline/10">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary active:scale-90">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-3 font-label-lg text-on-surface">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary active:scale-90">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<button class="text-error font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">Remove</button>
+</div>
+</div>
+</div>
+<!-- Item 2: Vibrant Poke Bowl -->
+<div class="flex gap-md group items-start">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 shadow-sm transition-transform group-hover:scale-105 duration-300">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsB-2POS9zPIlJcHX4jIc7VdCbxYP9F93FkQoXxh0FLWAmWOgGzbHYWIIuC26iylJRVE9g5cucTpwRTT9MmashQvSayoovlQ6x2ckwJBkXHIfg9TMUDr5PdikRbs3SCyDPYBe56qjaS-YjXGdamg7H0gGSfekZNo5MeOVIBm7koFe8me8IHjxLIcJpJZQ_4Du0AGkLLKyI5O-ZK1_C3RyQkJZlWf0wJkNs9FphpMIp5ct_zEYqowcYrHFI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-body-lg text-on-surface truncate">Vibrant Poke Bowl</h3>
+<span class="font-label-lg text-label-lg text-on-surface">₹450</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-3">Beetroot, Tofu, Pickled Ginger, Seaweed</p>
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container rounded-full p-1 border border-outline/10">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary active:scale-90">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-3 font-label-lg text-on-surface">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-primary active:scale-90">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<button class="text-error font-label-sm text-label-sm opacity-0 group-hover:opacity-100 transition-opacity">Remove</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Frequently Added Section -->
+<section>
+<h4 class="font-label-lg text-label-lg text-on-surface-variant mb-sm uppercase tracking-wider">Frequently Added</h4>
+<div class="bg-white/40 border border-white/60 p-sm rounded-lg flex items-center gap-md">
+<div class="w-16 h-16 rounded overflow-hidden bg-surface-container relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A stylish condensation-covered bottle of premium sparkling artisanal water with a lime wedge, presented in a high-end minimalist product photography style against a soft cream background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAXI62meuHhZQKAHnqT-FYrtaYkNj2RgIWA8zJ1s01ObwTD9lXBOLHkIJ-ipsbcAw5IfQ3LhA0zIWTnNtFJ2DRZTLwYcAYftJnvPkbqgORcSEqRsCipjTE2JsgLaLuyKd0BhdqbYPNr8hXPTz8QvytTG8lnorZIpptWWKj92AbyKA04mxCPKvXwKdqkkfzw5zAx-195ZRGVaoAWX4YwoS_b3qxfovqanHDU0GC7Vl19cPsQIaWkVmS2')"></div>
+</div>
+<div class="flex-1">
+<p class="font-label-lg text-label-lg text-on-surface">Sparkling Citrus Water</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">₹120</p>
+</div>
+<button class="bg-primary-fixed text-on-primary-fixed px-4 py-2 rounded-full font-label-lg hover:shadow-md transition-all active:scale-95">Add</button>
+</div>
+</section>
+<!-- Savings Alert -->
+<div class="bg-tertiary/10 border border-tertiary/20 p-md rounded-lg flex gap-3 items-center">
+<span class="material-symbols-outlined text-tertiary">redeem</span>
+<p class="font-label-sm text-label-sm text-on-tertiary-container">Yay! You're saving ₹65 on this order with <span class="font-bold">CRAVE50</span>.</p>
+</div>
+</div>
+<!-- Summary & CTA Section -->
+<div class="p-md bg-white/60 border-t border-white/40 space-y-md">
+<div class="space-y-2">
+<div class="flex justify-between font-label-lg text-label-lg text-on-surface-variant">
+<span>Subtotal</span>
+<span>₹900</span>
+</div>
+<div class="flex justify-between font-label-lg text-label-lg text-on-surface-variant">
+<span>Delivery Fee</span>
+<span>₹30</span>
+</div>
+<div class="flex justify-between font-label-lg text-label-lg text-tertiary font-bold">
+<span>Crave Savings</span>
+<span>-₹65</span>
+</div>
+<div class="flex justify-between font-headline-md text-headline-md text-on-surface pt-2">
+<span>Total</span>
+<span>₹865</span>
+</div>
+</div>
+<button class="w-full bg-primary-container text-white py-5 rounded-lg font-label-lg text-lg flex items-center justify-center gap-2 hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-primary-container/25">
+        Checkout
+        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant/60">Secure checkout powered by CraveAI Intelligence</p>
+</div>
+</aside>
+<!-- Bottom Nav Bar (Suppressed on focused Checkout/Cart logic as per rule, but included here for reference of navigation shell if needed. Hidden on mobile focused task) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface/70 dark:bg-inverse-surface/70 backdrop-blur-md rounded-t-xl shadow-[0_-4px_20px_rgba(32,16,0,0.05)] md:hidden pointer-events-none opacity-0" id="bottom-nav">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-label-sm font-label-sm">Crave</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-label-sm font-label-sm">Planner</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-1">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-label-sm font-label-sm">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+    // Entry animation for the drawer
+    window.addEventListener('DOMContentLoaded', () => {
+      const drawer = document.getElementById('cart-drawer');
+      setTimeout(() => {
+        drawer.style.transform = 'translateX(0)';
+      }, 300);
+    });
+
+    function closeCart() {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('drawer-backdrop');
+      drawer.style.transform = 'translateX(110%)';
+      backdrop.style.opacity = '0';
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 500);
+    }
+
+    // Micro-interaction for quantity buttons
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('mousedown', () => {
+        btn.classList.add('scale-95');
+      });
+      btn.addEventListener('mouseup', () => {
+        btn.classList.remove('scale-95');
+      });
+    });
+  </script>
+</body></html>

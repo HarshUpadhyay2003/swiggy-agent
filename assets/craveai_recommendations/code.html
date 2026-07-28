@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CraveAI - Recommendations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f1f1f1",
+                        "tertiary-container": "#63b549",
+                        "surface-dim": "#dadada",
+                        "surface": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "tertiary-fixed": "#a1f882",
+                        "primary-fixed-dim": "#ffb689",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#032100",
+                        "on-secondary-fixed": "#1d1b19",
+                        "surface-container-low": "#f3f3f3",
+                        "on-surface-variant": "#574236",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#115300",
+                        "secondary-container": "#e4dfdb",
+                        "outline-variant": "#dec1b0",
+                        "on-primary-fixed": "#311300",
+                        "on-primary-fixed-variant": "#733500",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#1b6d01",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "outline": "#8b7264",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#ffdbc8",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed": "#e7e1de",
+                        "on-tertiary-container": "#0c4200",
+                        "inverse-surface": "#2f3131",
+                        "inverse-primary": "#ffb689",
+                        "secondary-fixed-dim": "#cbc5c2",
+                        "primary": "#984800",
+                        "on-primary-container": "#5e2a00",
+                        "on-error": "#ffffff",
+                        "on-secondary-container": "#65625f",
+                        "background": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#494644",
+                        "surface-tint": "#984800",
+                        "tertiary-fixed-dim": "#86db69",
+                        "primary-container": "#fc8019",
+                        "surface-bright": "#f9f9f9",
+                        "secondary": "#615e5b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "lg": "40px",
+                        "xl": "64px",
+                        "md": "24px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "base": "8px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.secondary-container');
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(252, 128, 25, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+        
+        /* Hide scrollbar for horizontal scrolling but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 10px 40px -10px rgba(32, 16, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-md antialiased min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface/70 backdrop-blur-xl shadow-sm text-primary docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-4 md:px-8 max-w-7xl mx-auto h-16">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-bold text-primary">CraveAI</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Crave</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-2 py-1 rounded" href="#">Planner</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-2 py-1 rounded" href="#">Cart</a>
+<a class="text-on-surface-variant font-medium hover:bg-primary-container/10 transition-colors px-2 py-1 rounded" href="#">Profile</a>
+</nav>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary-container/10 transition-colors scale-95 active:opacity-80">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+</header>
+<!-- Main Chat Interface -->
+<main class="max-w-container-max mx-auto px-gutter md:px-xl pt-lg pb-xl flex flex-col gap-lg">
+<!-- User Message -->
+<div class="flex flex-col items-end w-full animate-fade-in-up" style="animation-delay: 0.1s;">
+<div class="bg-primary text-on-primary p-4 md:p-6 rounded-[24px] rounded-br-[8px] max-w-[85%] md:max-w-[70%] shadow-md">
+<p class="font-body-lg text-body-lg">
+                    I want something healthy and fresh for lunch, under ₹500, maybe a bowl or a salad.
+                </p>
+</div>
+</div>
+<!-- AI Response Container -->
+<div class="flex flex-col items-start w-full gap-4">
+<!-- AI Avatar & Text -->
+<div class="flex gap-4 items-end max-w-[85%] md:max-w-[70%]">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center shrink-0 shadow-sm border border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">restaurant_menu</span>
+</div>
+<div class="glass-panel p-4 md:p-6 rounded-[24px] rounded-bl-[8px] card-shadow">
+<p class="font-body-lg text-body-lg text-on-surface">
+                        I found 3 great options that match your preference for something healthy and fresh under ₹500. Check these out:
+                    </p>
+</div>
+</div>
+<!-- Dynamic Constraint Chips -->
+<div class="flex flex-wrap gap-2 ml-14 mt-2">
+<div class="glass-panel rounded-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-white/90 transition-colors group border border-outline-variant/30 shadow-sm">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Healthy</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-error transition-colors">close</span>
+</div>
+<div class="glass-panel rounded-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-white/90 transition-colors group border border-outline-variant/30 shadow-sm">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Fresh</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-error transition-colors">close</span>
+</div>
+<div class="glass-panel rounded-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-white/90 transition-colors group border-primary/40 bg-primary-container/5 shadow-sm">
+<span class="font-label-lg text-label-lg text-primary">Under ₹500</span>
+<span class="material-symbols-outlined text-[16px] text-primary">edit</span>
+</div>
+<div class="glass-panel rounded-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-white/90 transition-colors group border border-outline-variant/30 shadow-sm">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Lunch</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-error transition-colors">close</span>
+</div>
+</div>
+<!-- Recommendation Horizontal Scroll (Bento-ish Cards) -->
+<div class="w-full mt-4 ml-0 md:ml-14 pr-4">
+<div class="flex gap-6 overflow-x-auto hide-scrollbar pb-8 pt-2 snap-x snap-mandatory">
+<!-- Card 1 -->
+<div class="glass-panel rounded-xl shrink-0 w-[300px] md:w-[340px] flex flex-col overflow-hidden card-shadow snap-start group relative border border-white/60">
+<!-- Image Area -->
+<div class="relative h-[200px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCnLxLD1aTfYWJr6u8BUT5406jHHC85xeB0wV7_-pzPYUWqN-ppnKzcVc6yysDN4OZx_N8rDeb688r2GFzNy8pK9MNzhm-xrIrblrmCIlBfIjoyyABKTxnBg4NI7lDL8ON9BcJ71vt2keysI0VyEfnMbOnTrYJqb0yE-4GeRXj0MGoM5b37qNJce17R6_9miHLtUqlUZlJSoOcB0JuEFTzoqcFJujrfaKpgjTGDFHB3V9Zm-xDVz-ot')"></div>
+<!-- Price Pill -->
+<div class="absolute top-3 right-3 glass-panel rounded-full px-3 py-1 font-label-lg text-label-lg text-on-surface shadow-sm">
+                                ₹450
+                            </div>
+</div>
+<!-- Content -->
+<div class="p-5 flex flex-col flex-grow bg-white/40">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Vibrant Poke Bowl</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">The Bowl Co.</p>
+<div class="flex items-center gap-3 mb-4">
+<div class="flex items-center gap-1 bg-surface-container rounded-full px-2 py-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.8</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label-sm text-label-sm">25 mins</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-tertiary-container/10 text-tertiary font-label-sm text-label-sm px-2 py-1 rounded-md border border-tertiary-container/30">High Protein</span>
+<span class="bg-tertiary-container/10 text-tertiary font-label-sm text-label-sm px-2 py-1 rounded-md border border-tertiary-container/30">Fresh</span>
+</div>
+<div class="bg-surface/50 rounded-lg p-3 mb-4 border border-outline-variant/20 flex-grow">
+<p class="font-body-md text-[14px] leading-relaxed text-on-surface-variant italic">
+                                    "Matches your craving for a fresh bowl and hits your protein goals."
+                                </p>
+</div>
+<!-- Actions -->
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary font-label-lg text-label-lg py-3 rounded-full hover:bg-on-primary-container transition-colors shadow-sm">
+                                    Add to Cart
+                                </button>
+<button class="w-12 h-12 flex items-center justify-center bg-white border border-outline-variant text-on-surface rounded-full hover:bg-surface-container transition-colors" title="Why this?">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel rounded-xl shrink-0 w-[300px] md:w-[340px] flex flex-col overflow-hidden card-shadow snap-start group relative border border-white/60">
+<div class="relative h-[200px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUbujJJtUuAhKNBkOu_yreSVLDvo7hsIeD6Yy9X989D_V9GxSoWl9gPlGv4cWY7PwJ05rbOcAMosanK-d1rf025jUhDOfgjRdzeF29F7ygq1vHKHzRl6pCDu8XO1BGOGYKn8RmlUfgWuujuOQUsE0_W0alWuVSRJAAvBCzArbtW2wNAmrhsC6NhXKYOTDgwjWxCVdU4aDUApe670kDISWoR6Juz5POEntd1E_5ZFPonvIt0hBQtDGs')"></div>
+<div class="absolute top-3 right-3 glass-panel rounded-full px-3 py-1 font-label-lg text-label-lg text-on-surface shadow-sm">
+                                ₹380
+                            </div>
+</div>
+<div class="p-5 flex flex-col flex-grow bg-white/40">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Artisan Greek Salad</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Freshly Made</p>
+<div class="flex items-center gap-3 mb-4">
+<div class="flex items-center gap-1 bg-surface-container rounded-full px-2 py-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.5</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label-sm text-label-sm">20 mins</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-tertiary-container/10 text-tertiary font-label-sm text-label-sm px-2 py-1 rounded-md border border-tertiary-container/30">Low Cal</span>
+<span class="bg-tertiary-container/10 text-tertiary font-label-sm text-label-sm px-2 py-1 rounded-md border border-tertiary-container/30">Veg</span>
+</div>
+<div class="bg-surface/50 rounded-lg p-3 mb-4 border border-outline-variant/20 flex-grow">
+<p class="font-body-md text-[14px] leading-relaxed text-on-surface-variant italic">
+                                    "A light, crisp option that fits perfectly within your budget."
+                                </p>
+</div>
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary font-label-lg text-label-lg py-3 rounded-full hover:bg-on-primary-container transition-colors shadow-sm">
+                                    Add to Cart
+                                </button>
+<button class="w-12 h-12 flex items-center justify-center bg-white border border-outline-variant text-on-surface rounded-full hover:bg-surface-container transition-colors" title="Why this?">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel rounded-xl shrink-0 w-[300px] md:w-[340px] flex flex-col overflow-hidden card-shadow snap-start group relative border border-white/60">
+<div class="relative h-[200px] w-full overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAy9pEDJwZz74BNvx4g7IVdreySN5pKwjRBJfy5l3I8qWRWfGA-gWkQb3fk1mtJyrR1EikGBYtQJbqrwSFlX57n7R2oAm00TMW5QRN5T959L8Y7COiUQfYgIe5EjSKitmuXI95c4PNezhGU2ji_YsIJzBJHgveeN5h1BC0hIYm_Wemw1Zd8z-TD7tNlkqxKffyHY0qUZ1qohJRnJgSjOamYGtFhi3ccFyOrfcRT03WLRPJX707z_hAT')"></div>
+<div class="absolute top-3 right-3 glass-panel rounded-full px-3 py-1 font-label-lg text-label-lg text-on-surface shadow-sm">
+                                ₹495
+                            </div>
+</div>
+<div class="p-5 flex flex-col flex-grow bg-white/40">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Garden Margherita</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Pizza Studio</p>
+<div class="flex items-center gap-3 mb-4">
+<div class="flex items-center gap-1 bg-surface-container rounded-full px-2 py-0.5">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.7</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label-sm text-label-sm">30 mins</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2 py-1 rounded-md border border-outline-variant/30">Organic Ingredients</span>
+</div>
+<div class="bg-surface/50 rounded-lg p-3 mb-4 border border-outline-variant/20 flex-grow">
+<p class="font-body-md text-[14px] leading-relaxed text-on-surface-variant italic">
+                                    "A slightly more indulgent but still fresh alternative with high-quality ingredients."
+                                </p>
+</div>
+<div class="flex gap-2 mt-auto">
+<button class="flex-1 bg-primary text-on-primary font-label-lg text-label-lg py-3 rounded-full hover:bg-on-primary-container transition-colors shadow-sm">
+                                    Add to Cart
+                                </button>
+<button class="w-12 h-12 flex items-center justify-center bg-white border border-outline-variant text-on-surface rounded-full hover:bg-surface-container transition-colors" title="Why this?">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Input suggestion area (Floating bottom) -->
+<div class="ml-14 mt-4 w-full max-w-[85%] md:max-w-[70%]">
+<div class="relative w-full">
+<input class="w-full bg-surface-container-low border border-outline-variant/50 rounded-full h-14 pl-6 pr-14 font-body-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-white transition-all shadow-sm placeholder:text-on-surface-variant/50" placeholder="Ask for something else..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:bg-on-primary-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">send</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Cart Pill -->
+<div class="fixed bottom-24 md:bottom-8 right-4 md:right-8 z-50">
+<button class="glass-panel flex items-center gap-3 px-6 py-4 rounded-full shadow-lg border border-white/60 hover:scale-105 active:scale-95 transition-transform bg-white/90">
+<div class="relative">
+<span class="material-symbols-outlined text-primary text-[28px]">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">0</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface hidden md:block">0 items • ₹0</span>
+</button>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface/70 backdrop-blur-xl shadow-[0_-4px_20px_rgba(32,16,0,0.05)] text-primary docked full-width bottom-0 fixed z-50 rounded-t-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe">
+<a class="flex flex-col items-center justify-center bg-primary text-on-primary rounded-full px-4 py-1 scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="text-label-sm font-label-sm mt-1">Crave</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-label-sm font-label-sm mt-1">Planner</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-label-sm font-label-sm mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors scale-90 active:scale-105 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
