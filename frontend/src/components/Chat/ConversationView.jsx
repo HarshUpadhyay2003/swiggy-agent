@@ -7,9 +7,12 @@ import EmptyConversation from './EmptyConversation'
 export function ConversationView({ messages = [], typing = false, onSelectPrompt }) {
   const bottomRef = useRef(null)
 
+  // Scroll into view only during active conversation (messages > 1 or typing)
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, typing])
+    if ((messages && messages.length > 1) || typing) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages?.length, typing])
 
   if (!messages || messages.length === 0) {
     return <EmptyConversation onSelectPrompt={onSelectPrompt} />

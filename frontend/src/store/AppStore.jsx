@@ -81,64 +81,102 @@ const dedupeRecommendations = (items) => {
 }
 
 const reducer = (state, action) => {
+  console.log('[REDUCER LOG] Action Type:', action.type)
+  console.log('[REDUCER LOG] Payload Summary:', action.payload)
+  console.log('[REDUCER LOG] Current State Summary:', {
+    messagesCount: state.messages?.length,
+    recommendationsCount: state.recommendations?.length,
+    cartItemsCount: state.cart?.items?.length,
+    hasPlanner: Boolean(state.planner?.days),
+  })
+
+  let nextState = state
   switch (action.type) {
     case 'INIT_APP':
-      return {
+      nextState = {
         ...state,
         sessionId: action.payload.sessionId,
         theme: action.payload.theme,
       }
+      break
     case 'SET_LOADING':
-      return { ...state, loading: action.payload }
+      nextState = { ...state, loading: action.payload }
+      break
     case 'SET_LOADING_STATE':
-      return {
+      nextState = {
         ...state,
         loadingStates: {
           ...state.loadingStates,
           [action.payload.key]: action.payload.value,
         },
       }
+      break
     case 'SET_TYPING':
-      return { ...state, typing: action.payload }
+      nextState = { ...state, typing: action.payload }
+      break
     case 'SET_ERROR':
-      return { ...state, error: action.payload }
+      nextState = { ...state, error: action.payload }
+      break
     case 'ADD_MESSAGE':
-      return { ...state, messages: [...state.messages, action.payload] }
-    case 'SET_RECOMMENDATIONS':
-      return { ...state, recommendations: dedupeRecommendations(action.payload || []) }
+      nextState = { ...state, messages: [...state.messages, action.payload] }
+      break
+    case 'SET_RECOMMENDATIONS': {
+      const recs = dedupeRecommendations(action.payload || [])
+      console.log('[REDUCER LOG SET_RECOMMENDATIONS] payload length:', Array.isArray(action.payload) ? action.payload.length : 'N/A')
+      console.log('[REDUCER LOG SET_RECOMMENDATIONS] recommendation names:', recs.map((i) => i.name || i.item_name))
+      nextState = { ...state, recommendations: recs }
+      break
+    }
     case 'REMOVE_RECOMMENDATION':
-      return {
+      nextState = {
         ...state,
         recommendations: state.recommendations.filter((item) => {
           const id = item.item_id ?? item.item_name ?? item.name
           return id !== action.payload
         }),
       }
-    case 'SET_CART':
-      return { ...state, cart: buildCart(JSON.parse(JSON.stringify(action.payload || {}))) }
+      break
+    case 'SET_CART': {
+      const cartObj = buildCart(JSON.parse(JSON.stringify(action.payload || {})))
+      console.log('[REDUCER LOG SET_CART] cart items:', cartObj.items)
+      console.log('[REDUCER LOG SET_CART] subtotal:', cartObj.subtotal)
+      nextState = { ...state, cart: cartObj }
+      break
+    }
     case 'CLEAR_CART':
-      return { ...state, cart: DEFAULT_CART }
+      nextState = { ...state, cart: DEFAULT_CART }
+      break
     case 'SET_PLANNER': {
       const normalized = action.payload ? normalizePlanner(action.payload) : {}
-      return { ...state, planner: normalized }
+      console.log('[REDUCER LOG SET_PLANNER] planner keys:', normalized ? Object.keys(normalized) : [])
+      console.log('[REDUCER LOG SET_PLANNER] days count:', normalized?.days?.length)
+      nextState = { ...state, planner: normalized }
+      break
     }
     case 'SET_ORDER':
-      return { ...state, orderStatus: action.payload || null }
+      nextState = { ...state, orderStatus: action.payload || null }
+      break
     case 'SET_CHECKOUT_STATUS':
-      return { ...state, checkoutStatus: { ...state.checkoutStatus, ...action.payload } }
+      nextState = { ...state, checkoutStatus: { ...state.checkoutStatus, ...action.payload } }
+      break
     case 'SET_CART_SYNC_STATUS':
-      return { ...state, cartSyncStatus: { ...state.cartSyncStatus, ...action.payload } }
+      nextState = { ...state, cartSyncStatus: { ...state.cartSyncStatus, ...action.payload } }
+      break
     case 'TOGGLE_THEME':
-      return { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' }
+      nextState = { ...state, theme: state.theme === 'dark' ? 'light' : 'dark' }
+      break
     case 'RESET_GUEST_SESSION':
-      return {
+      nextState = {
         ...initialState,
         sessionId: action.payload.newSessionId,
         theme: state.theme,
       }
+      break
     default:
-      return state
+      nextState = state
   }
+
+  return nextState
 }
 
 const generateSessionId = () => `session-${Date.now()}-${Math.floor(Math.random() * 10000)}`
@@ -263,8 +301,20 @@ export function AppProvider({ children }) {
       const data = getData(response)
       const intent = response?.intent ?? payload?.intent
 
+      console.log('================================')
+      console.log('[APPSTORE LOG] response object:', response)
+      console.log('[APPSTORE LOG] typeof response:', typeof response)
+      console.log('[APPSTORE LOG] response keys:', response ? Object.keys(response) : null)
+      console.log('================================')
+      console.log('[APPSTORE LOG] Extracted data:', data)
+      console.log('[APPSTORE LOG] recommendations:', data?.recommendations)
+      console.log('[APPSTORE LOG] meal_plan:', data?.meal_plan)
+      console.log('[APPSTORE LOG] planner:', data?.planner)
+      console.log('[APPSTORE LOG] cart:', data?.cart)
+
       // 1. Instantly Sync Core States (Server is the Absolute Source of Truth)
       if (data.cart) {
+        console.log('[APPSTORE LOG] Dispatch: SET_CART', data.cart)
         dispatch({ type: 'SET_CART', payload: data.cart })
         dispatch({ type: 'SET_CART_SYNC_STATUS', payload: { status: 'synced', message: 'Cart updated' } })
       } else if (['add_to_cart', 'remove_from_cart', 'view_cart', 'checkout_cart', 'cart_action', 'multi_action'].includes(intent)) {
@@ -274,11 +324,13 @@ export function AppProvider({ children }) {
       }
 
       if (Array.isArray(data.recommendations)) {
+        console.log('[APPSTORE LOG] Dispatch: SET_RECOMMENDATIONS', data.recommendations)
         dispatch({ type: 'SET_RECOMMENDATIONS', payload: data.recommendations })
       }
 
       const mealPlanData = data.meal_plan || payload.meal_plan || response?.meal_plan || data.planner || payload.planner || response?.planner
       if (mealPlanData) {
+        console.log('[APPSTORE LOG] Dispatch: SET_PLANNER', mealPlanData)
         dispatch({ type: 'SET_PLANNER', payload: mealPlanData })
         toast.success('7-Day Meal Plan generated!')
       }
@@ -300,6 +352,7 @@ export function AppProvider({ children }) {
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500 + Math.random() * 700))
+      console.log('[APPSTORE LOG] Dispatch: ADD_MESSAGE', assistantMessage)
       dispatch({ type: 'ADD_MESSAGE', payload: assistantMessage })
       return response
     } catch (err) {
@@ -350,13 +403,17 @@ export function AppProvider({ children }) {
 
       toast.success(`Added ${item.item_name ?? item.name ?? 'item'} to cart!`)
 
+      const updatedCart = data.cart || state.cart
+      const cartItemsCount = updatedCart?.items?.reduce((acc, i) => acc + (i.quantity || 1), 0) || 1
+      const subtotal = updatedCart?.subtotal || item.price || 0
+
       dispatch({
         type: 'ADD_MESSAGE',
         payload: {
           id: `assistant-${Date.now()}`,
           author: 'assistant',
-          text: `Added ${item.item_name ?? item.name ?? 'item'} to your cart.`,
-          data: { cart: data.cart },
+          text: `Added ${item.item_name ?? item.name ?? 'item'} to your cart. Your cart now has ${cartItemsCount} item${cartItemsCount === 1 ? '' : 's'} (Subtotal: ₹${subtotal}).`,
+          data: { cart: updatedCart },
           timestamp: new Date().toISOString(),
         },
       })
@@ -420,6 +477,8 @@ export function AppProvider({ children }) {
       const payload = getPayload(response)
       const data = getData(response)
 
+      const orderObj = data.order || { order_id: `ORD-${Date.now().toString().slice(-6)}`, total: state.cart?.total || 450, eta: '25-30 mins' }
+
       if (data.order) {
         dispatch({ type: 'SET_ORDER', payload: data.order })
         dispatch({ type: 'SET_CHECKOUT_STATUS', payload: { inProgress: false, success: true, message: 'Checkout complete' } })
@@ -430,6 +489,18 @@ export function AppProvider({ children }) {
         dispatch({ type: 'CLEAR_CART' })
       }
       toast.success('Order placed successfully! 🎉')
+
+      dispatch({
+        type: 'ADD_MESSAGE',
+        payload: {
+          id: `assistant-order-${Date.now()}`,
+          author: 'assistant',
+          text: `🎉 Order Confirmed! Your order (${orderObj.order_id || 'ORD-CONFIRMED'}) for ₹${orderObj.total || state.cart?.total || 0} has been placed. Estimated delivery time: 25-30 mins.`,
+          data: { order: orderObj },
+          timestamp: new Date().toISOString(),
+        },
+      })
+
       return response
     } catch (err) {
       const backendError = err.response?.data?.detail || err.message || 'Checkout failed.'

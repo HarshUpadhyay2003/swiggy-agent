@@ -6,9 +6,24 @@ import CartMessage from './CartMessage'
 
 export function AssistantMessage({ message, onSelectPrompt }) {
   const content = typeof message === 'string' ? message : message.content || message.text || ''
-  const recommendations = message.recommendations || message.items || null
-  const planner = message.planner || message.meal_plan || null
-  const cartActionData = message.cart_data || null
+  const recommendations =
+    message.recommendations ??
+    message.data?.recommendations ??
+    message.items ??
+    null
+
+  const planner =
+    message.planner ??
+    message.data?.meal_plan ??
+    message.data?.planner ??
+    message.meal_plan ??
+    null
+
+  const cartActionData =
+    message.cart_data ??
+    message.cart ??
+    message.data?.cart ??
+    null
 
   return (
     <div className="flex flex-col gap-3 my-4 w-full">
@@ -20,11 +35,7 @@ export function AssistantMessage({ message, onSelectPrompt }) {
         <div className="glass-panel ambient-shadow px-6 py-5 rounded-[24px] rounded-bl-[8px] text-base leading-relaxed text-slate-900 dark:text-slate-100 font-sans relative">
           <p className="whitespace-pre-wrap">{content}</p>
 
-          {/* Embedded Rich Message Cards */}
-          {recommendations && recommendations.length > 0 && (
-            <RichRecommendationMessage items={recommendations} />
-          )}
-
+          {/* Embedded Action Cards */}
           {planner && (
             <PlannerMessage plan={planner} />
           )}

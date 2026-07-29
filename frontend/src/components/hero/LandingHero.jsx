@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sparkles, ArrowUp } from 'lucide-react'
 
-export function LandingHero({ inputValue = '', onChangeInput, onSendInput, onSelectPrompt }) {
+export function LandingHero({ inputValue = '', onChangeInput, onSendInput, onSelectPrompt, collapsed = false }) {
   const handleSubmit = (e) => {
     e?.preventDefault()
     if (!inputValue?.trim()) return
@@ -16,11 +16,39 @@ export function LandingHero({ inputValue = '', onChangeInput, onSendInput, onSel
     { label: 'Under 30 mins', icon: '⏱️' },
   ]
 
+  if (collapsed) {
+    return (
+      <section className="w-full flex items-center justify-between py-3 px-1 border-b border-slate-200/50 dark:border-slate-800/80 mb-4 animate-fadeIn">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-swiggy-500/10 text-swiggy-600 dark:text-swiggy-400 flex items-center justify-center font-bold text-xs">
+            C
+          </div>
+          <span className="font-serif text-lg font-bold text-slate-900 dark:text-slate-100">
+            CraveAI Conversation
+          </span>
+        </div>
+
+        <div className="hidden sm:flex items-center gap-2">
+          {suggestionChips.slice(0, 3).map((chip) => (
+            <button
+              key={chip.label}
+              type="button"
+              onClick={() => onSelectPrompt(chip.label)}
+              className="glass-panel px-3 py-1 rounded-full text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-swiggy-600 transition-all"
+            >
+              <span>{chip.icon}</span> <span className="ml-1">{chip.label}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section className="w-full flex flex-col items-center text-center my-6 md:my-10">
+    <section className="w-full flex flex-col items-center text-center my-6 md:my-10 animate-fadeIn">
       {/* Headline */}
       <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-2 tracking-tight">
-        Good Evening, Alex 👋
+        Good Evening 👋
       </h1>
       <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 opacity-80 mb-8 max-w-lg mx-auto font-sans">
         What are you craving today?
@@ -40,7 +68,7 @@ export function LandingHero({ inputValue = '', onChangeInput, onSendInput, onSel
           />
           <button
             type="submit"
-            className="bg-swiggy-500 text-white h-11 w-11 rounded-full flex items-center justify-center hover:bg-swiggy-600 transition-colors shadow-sm ml-2 shrink-0"
+            className="bg-swiggy-500 text-white h-11 w-11 rounded-full flex items-center justify-center hover:bg-swiggy-600 transition-colors shadow-sm ml-2 shrink-0 active:scale-95"
           >
             <ArrowUp className="h-5 w-5" />
           </button>
@@ -54,7 +82,7 @@ export function LandingHero({ inputValue = '', onChangeInput, onSendInput, onSel
             key={chip.label}
             type="button"
             onClick={() => onSelectPrompt(chip.label)}
-            className="glass-panel px-5 py-2.5 rounded-full text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-swiggy-600 hover:bg-white hover:border-swiggy-300 dark:hover:bg-slate-800 transition-all ambient-shadow flex items-center gap-2"
+            className="glass-panel px-5 py-2.5 rounded-full text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-swiggy-600 hover:bg-white hover:border-swiggy-300 dark:hover:bg-slate-800 transition-all ambient-shadow flex items-center gap-2 active:scale-95"
           >
             <span>{chip.icon}</span>
             <span>{chip.label}</span>

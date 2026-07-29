@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { X, Plus, Minus, Trash2, Tag, ArrowRight, ShoppingBag, Check } from 'lucide-react'
 import { useAppActions, useAppState } from '../../store/AppStore'
-import { foodImages } from '../../assets/images'
+import { getFoodImage } from '../../assets/images'
 
 export function CartDrawer({ isOpen, onClose }) {
   const { cart, checkoutStatus, loadingStates } = useAppState()
   const { addToCart, removeFromCart, checkout } = useAppActions()
   const [checkoutDone, setCheckoutDone] = useState(false)
+
+  const isCheckoutLoading = loadingStates?.checkout
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose && onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
@@ -16,39 +28,28 @@ export function CartDrawer({ isOpen, onClose }) {
   const savings = subtotal > 300 ? 65 : 0
   const total = Math.max(0, subtotal + deliveryFee - savings)
 
-  const isCheckoutLoading = loadingStates?.checkout
-
   const handleCheckout = async () => {
     try {
       await checkout()
       setCheckoutDone(true)
       setTimeout(() => {
         setCheckoutDone(false)
-        onClose()
-      }, 2000)
+        onClose && onClose()
+      }, 2500)
     } catch (err) {
       console.error('Checkout failed:', err)
     }
   }
 
   const getItemImage = (item, index) => {
-    if (item.image_url) return item.image_url
-    const keys = Object.keys(foodImages)
-    const name = (item.name || item.item_name || '').toLowerCase()
-    if (name.includes('avocado') || name.includes('toast')) return foodImages.avocadoToast
-    if (name.includes('poke') || name.includes('salmon')) return foodImages.pokeBowl
-    if (name.includes('salad') || name.includes('greek')) return foodImages.greekSalad
-    if (name.includes('chicken')) return foodImages.grilledChicken
-    if (name.includes('pizza')) return foodImages.margheritaPizza
-    if (name.includes('smoothie')) return foodImages.smoothieBowl
-    return foodImages[keys[index % keys.length]]
+    return item.image_url || getFoodImage(item.name || item.item_name, index)
   }
 
   return (
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[90] transition-opacity duration-300"
+        className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[90] animate-fadeIn"
         onClick={onClose}
       />
 
@@ -96,6 +97,10 @@ export function CartDrawer({ isOpen, onClose }) {
                       src={getItemImage(item, idx)}
                       alt={item.name || item.item_name}
                       className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
+                      onError={(e) => {
+                        e.target.onerror = null
+                        e.target.src = getFoodImage(item.name || item.item_name, idx)
+                      }}
                     />
                   </div>
 
@@ -155,7 +160,7 @@ export function CartDrawer({ isOpen, onClose }) {
               </h4>
               <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700 p-3 rounded-xl flex items-center gap-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0">
-                  <img src={foodImages.smoothieBowl} alt="Beverage" className="w-full h-full object-cover" />
+                  <img src={getFoodImage('Sparkling Citrus Water', 3)} alt="Beverage" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">

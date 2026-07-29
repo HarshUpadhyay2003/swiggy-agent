@@ -39,9 +39,15 @@ async def chat(request: ChatRequest) -> Dict[str, Any]:
     Processes user messages and returns orchestrated responses based on intent detection.
     """
     try:
+        session_id = (request.user_context or {}).get("session_id", "unknown")
+        print("========================================")
+        print("[BACKEND LOG] INCOMING REQUEST")
+        print(f"[BACKEND LOG] Message: {request.message}")
+        print(f"[BACKEND LOG] Session ID: {session_id}")
+        print(f"[BACKEND LOG] Context: {request.user_context}")
+
         result = orchestrator.handle_message(request.message, request.user_context or {})
 
-        # Add timestamp and status
         response = {
             "status": "success",
             "intent": result.get("intent", "unknown"),
@@ -52,6 +58,30 @@ async def chat(request: ChatRequest) -> Dict[str, Any]:
             },
             "timestamp": datetime.utcnow().isoformat() + "Z"
         }
+
+        print("----------------------------------------")
+        print("[BACKEND LOG] RETURNING PAYLOAD")
+        print(f"[BACKEND LOG] status: {response.get('status')}")
+        print(f"[BACKEND LOG] intent: {response.get('intent')}")
+        print(f"[BACKEND LOG] response length: {len(response.get('response', ''))}")
+        data_obj = response.get("data", {})
+        print(f"[BACKEND LOG] data keys: {list(data_obj.keys())}")
+
+        if "recommendations" in data_obj:
+            recs = data_obj.get("recommendations", [])
+            print(f"[BACKEND LOG] recommendations count: {len(recs)}")
+            if recs and len(recs) > 0:
+                first = recs[0]
+                print(f"[BACKEND LOG] first recommendation: {first.get('name') or first.get('item_name')}, restaurant: {first.get('restaurant_name')}, price: {first.get('price')}")
+
+        if "meal_plan" in data_obj or "planner" in data_obj:
+            plan = data_obj.get("meal_plan") or data_obj.get("planner")
+            print(f"[BACKEND LOG] meal_plan keys: {list(plan.keys()) if isinstance(plan, dict) else 'non-dict'}")
+
+        if "cart" in data_obj:
+            cart_obj = data_obj.get("cart", {})
+            print(f"[BACKEND LOG] cart items count: {len(cart_obj.get('items', [])) if isinstance(cart_obj, dict) else 'N/A'}")
+        print("========================================")
 
         return response
 

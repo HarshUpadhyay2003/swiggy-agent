@@ -4,27 +4,13 @@ import Card from '../ui/Card'
 import Button from '../ui/Button'
 import Badge from '../ui/Badge'
 import VegIndicator from '../ui/VegIndicator'
-import { foodImages } from '../../assets/images'
+import { getFoodImage } from '../../assets/images'
 import { useAppActions } from '../../store/AppStore'
 
 export function RichRecommendationMessage({ items = [] }) {
   const { addToCart } = useAppActions()
 
   if (!items || items.length === 0) return null
-
-  // Fallback image mapper for food photo presentation
-  const getFoodImage = (dishName, index) => {
-    const keys = Object.keys(foodImages)
-    if (!dishName) return foodImages[keys[index % keys.length]]
-    const lower = dishName.toLowerCase()
-    if (lower.includes('avocado') || lower.includes('toast') || lower.includes('breakfast')) return foodImages.avocadoToast
-    if (lower.includes('salad') || lower.includes('greek') || lower.includes('healthy')) return foodImages.greekSalad
-    if (lower.includes('smoothie') || lower.includes('bowl') || lower.includes('berry')) return foodImages.smoothieBowl
-    if (lower.includes('chicken') || lower.includes('grilled') || lower.includes('protein')) return foodImages.grilledChicken
-    if (lower.includes('pizza') || lower.includes('margherita') || lower.includes('cheese')) return foodImages.margheritaPizza
-    if (lower.includes('poke') || lower.includes('salmon') || lower.includes('fish')) return foodImages.pokeBowl
-    return foodImages[keys[index % keys.length]]
-  }
 
   return (
     <div className="my-3 space-y-3">
