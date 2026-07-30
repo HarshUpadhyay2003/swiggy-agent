@@ -22,7 +22,7 @@ export function Navbar({ currentPath = '/', onNavigate, onOpenCart }) {
         className="flex items-center gap-3 focus:outline-none"
       >
         <div className="h-8 w-8 rounded-lg bg-swiggy-500 flex items-center justify-center text-white font-bold font-serif shadow-sm">
-          C
+          H
         </div>
         <span className="font-serif text-2xl font-bold text-swiggy-700 dark:text-swiggy-400 tracking-tight">
           CraveAI

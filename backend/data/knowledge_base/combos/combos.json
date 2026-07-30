@@ -93,5 +93,383 @@
       "source": "eat-fit-go-meal-guide.pdf",
       "calculation_method": "Official Bundle Discount"
     }
+  },
+  {
+    "combo_id": 1001,
+    "combo_code": "MCD_COMBO_001",
+    "restaurant_id": 1,
+    "restaurant_code": "MCD",
+    "combo_name": "Classic McChicken Meal Deal",
+    "description": "1 McChicken Burger + 1 World Famous Fries + 1 Coca-Cola",
+    "item_ids": [
+      105,
+      131,
+      141
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 345,
+    "discounted_price": 300,
+    "savings_amount": 45,
+    "confidence": {
+      "score": 0.95,
+      "reason": "AI Generated signature non-veg burger meal bundle pairing main, side, and beverage",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "Pairing Discount Model"
+    }
+  },
+  {
+    "combo_id": 1002,
+    "combo_code": "MCD_COMBO_002",
+    "restaurant_id": 1,
+    "restaurant_code": "MCD",
+    "combo_name": "Egg & Cheese Breakfast Power Meal",
+    "description": "1 Egg & Cheese McMuffin + 1 Hash Brown + 1 McCafé Cappuccino",
+    "item_ids": [
+      121,
+      120,
+      124
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 300,
+    "discounted_price": 260,
+    "savings_amount": 40,
+    "confidence": {
+      "score": 0.92,
+      "reason": "AI Generated morning breakfast combo pairing high protein muffin with hash brown and gourmet arabica coffee",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "Breakfast Synergy Pricing"
+    }
+  },
+  {
+    "combo_id": 1003,
+    "combo_code": "MCD_COMBO_003",
+    "restaurant_id": 1,
+    "restaurant_code": "MCD",
+    "combo_name": "Chicken Maharaja Protein Feast",
+    "description": "1 Chicken Maharaja Mac + 1 Chicken McNuggets (6pcs) + 1 Coca-Cola",
+    "item_ids": [
+      112,
+      130,
+      141
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 500,
+    "discounted_price": 430,
+    "savings_amount": 70,
+    "confidence": {
+      "score": 0.94,
+      "reason": "AI Generated high-protein premium feast combining flagship double decker burger with protein sides",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "High-Value Bundle Model"
+    }
+  },
+  {
+    "combo_id": 2003,
+    "combo_code": "KFC_COMBO_003",
+    "restaurant_id": 2,
+    "restaurant_code": "KFC",
+    "combo_name": "Popcorn Chicken Rice Box",
+    "description": "1 Popcorn Chicken Rice Bowl + 1 French Fries Regular + 1 Choco Lava Cake",
+    "item_ids": [
+      205,
+      210,
+      218
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 425,
+    "discounted_price": 370,
+    "savings_amount": 55,
+    "confidence": {
+      "score": 0.91,
+      "reason": "AI Generated full lunch combo pairing savory rice meal with crispy side and dessert",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "Full Course Bundle Pricing"
+    }
+  },
+  {
+    "combo_id": 3002,
+    "combo_code": "DOMINOS_COMBO_002",
+    "restaurant_id": 3,
+    "restaurant_code": "DOMINOS",
+    "combo_name": "Chicken Dominator & Dessert Feast",
+    "description": "1 Medium Chicken Dominator Pizza + 1 Stuffed Garlic Breadsticks + 1 Choco Lava Cake + 1 Medium Pepsi",
+    "item_ids": [
+      303,
+      310,
+      311,
+      312
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 940,
+    "discounted_price": 820,
+    "savings_amount": 120,
+    "confidence": {
+      "score": 0.96,
+      "reason": "AI Generated premium non-veg pizza feast pairing quad chicken pizza with sides, dessert, and drink",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "Party Bundle Discount"
+    }
+  },
+  {
+    "combo_id": 5001,
+    "combo_code": "SHAMIANA_COMBO_001",
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "combo_name": "Taj Royal Murgh & Dessert Pairing",
+    "description": "1 Bhatti Da Murgh + 1 Makhan Murgh + 1 Angoori Kesari Rasmalai",
+    "item_ids": [
+      802,
+      502,
+      805
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 3250,
+    "discounted_price": 2850,
+    "savings_amount": 400,
+    "confidence": {
+      "score": 0.90,
+      "reason": "AI Generated luxury fine-dining three-course meal pairing tandoori starter, flagship main, and traditional mithai",
+      "source": "Commerce Intelligence Engine V1",
+      "calculation_method": "Fine Dining Experience Pricing"
+    }
+  },
+  {
+    "combo_id": 4002,
+    "combo_code": "EATFIT_COMBO_002",
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "combo_name": "Fit Chicken & Protein Yogo Combo",
+    "description": "1 Fit Chicken Bowl + 1 Greek Blueberry Yogo Parfait",
+    "item_ids": [
+      402,
+      809
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 380,
+    "discounted_price": 330,
+    "savings_amount": 50,
+    "confidence": {
+      "score": 0.95,
+      "reason": "AI Generated fit meal pairing a 34g protein lean chicken bowl with a high-protein Greek yogurt dessert",
+      "source": "eat-fit-go-meal-guide.pdf (Page 1)",
+      "calculation_method": "Fitness Bundle Discount"
+    }
+  },
+  {
+    "combo_id": 4003,
+    "combo_code": "EATFIT_COMBO_003",
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "combo_name": "Clean Caesar & Ancient Grain Duo",
+    "description": "1 Chicken Caesar Salad + 1 Ancient Grain Bowl",
+    "item_ids": [
+      808,
+      401
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 430,
+    "discounted_price": 380,
+    "savings_amount": 50,
+    "confidence": {
+      "score": 0.93,
+      "reason": "AI Generated wellness fit meal combining high-fiber ancient grains with a lean chicken romaine salad",
+      "source": "eat-fit-go-meal-guide.pdf (Page 1)",
+      "calculation_method": "Wellness Duo Pricing"
+    }
+  },
+  {
+    "combo_id": 4004,
+    "combo_code": "EATFIT_COMBO_004",
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "combo_name": "Teriyaki Stir Fry Fitness Fuel",
+    "description": "1 Teriyaki Chicken Stir Fry + 1 Greek Blueberry Yogo Parfait",
+    "item_ids": [
+      806,
+      809
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 380,
+    "discounted_price": 330,
+    "savings_amount": 50,
+    "confidence": {
+      "score": 0.92,
+      "reason": "AI Generated balanced gym recovery meal featuring 32g protein wok-charred chicken and parfait",
+      "source": "eat-fit-go-meal-guide.pdf (Page 1)",
+      "calculation_method": "Macronutrient Synergy Discount"
+    }
+  },
+  {
+    "combo_id": 4005,
+    "combo_code": "EATFIT_COMBO_005",
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "combo_name": "High Fiber Turkey & Grain Power Pair",
+    "description": "1 Turkey Chili + 1 Ancient Grain Bowl",
+    "item_ids": [
+      807,
+      401
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 440,
+    "discounted_price": 390,
+    "savings_amount": 50,
+    "confidence": {
+      "score": 0.94,
+      "reason": "AI Generated low-calorie weight-loss combo providing 44.5g protein and 17g fiber",
+      "source": "eat-fit-go-meal-guide.pdf (Page 1)",
+      "calculation_method": "Diet-Friendly Bundle Pricing"
+    }
+  },
+  {
+    "combo_id": 6001,
+    "combo_code": "SUVARNA_COMBO_001",
+    "restaurant_id": 6,
+    "restaurant_code": "SUVARNA",
+    "combo_name": "Royal Rambagh Rajasthani Feast",
+    "description": "1 Laal Maas + 1 Dal Baati Churma",
+    "item_ids": [
+      601,
+      602
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 3800,
+    "discounted_price": 3350,
+    "savings_amount": 450,
+    "confidence": {
+      "score": 0.96,
+      "reason": "AI Generated luxury Indian heritage feast pairing iconic Mathania chili mutton with traditional Dal Baati Churma",
+      "source": "suvarna-mahal-menu.pdf (Page 3)",
+      "calculation_method": "Royal Heritage Package Pricing"
+    }
+  },
+  {
+    "combo_id": 5002,
+    "combo_code": "SHAMIANA_COMBO_002",
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "combo_name": "Taj Gourmet Paneer & Mithai Pairing",
+    "description": "1 Jaituni Mirch Paneer Tikka + 1 Angoori Kesari Rasmalai",
+    "item_ids": [
+      501,
+      805
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 1650,
+    "discounted_price": 1450,
+    "savings_amount": 200,
+    "confidence": {
+      "score": 0.91,
+      "reason": "AI Generated Indian fine-dining meal combining clay-oven olive paneer tikka with saffron rasmalai",
+      "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)",
+      "calculation_method": "Gourmet Course Pairing"
+    }
+  },
+  {
+    "combo_id": 5003,
+    "combo_code": "SHAMIANA_COMBO_003",
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "combo_name": "Parsi Heritage Lamb & Saffron Sweet Meal",
+    "description": "1 Jardaloo Salli Boti + 1 Angoori Kesari Rasmalai",
+    "item_ids": [
+      803,
+      805
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 2250,
+    "discounted_price": 1980,
+    "savings_amount": 270,
+    "confidence": {
+      "score": 0.90,
+      "reason": "AI Generated traditional Parsi Indian dinner pairing sweet-and-spicy apricot lamb with saffron dessert",
+      "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)",
+      "calculation_method": "Heritage Fine Dining Discount"
+    }
+  },
+  {
+    "combo_id": 3003,
+    "combo_code": "DOMINOS_COMBO_003",
+    "restaurant_id": 3,
+    "restaurant_code": "DOMINOS",
+    "combo_name": "Desi Peppy Paneer Meal",
+    "description": "1 Medium Peppy Paneer Pizza + 1 Stuffed Garlic Breadsticks + 1 Medium Pepsi",
+    "item_ids": [
+      302,
+      310,
+      312
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 690,
+    "discounted_price": 600,
+    "savings_amount": 90,
+    "confidence": {
+      "score": 0.93,
+      "reason": "AI Generated Indian-style vegetarian pizza bundle pairing paneer paprika pizza with cheesy garlic sides",
+      "source": "domino_pdf.pdf (Page 1)",
+      "calculation_method": "Popular Co-Occurrence Discount"
+    }
+  },
+  {
+    "combo_id": 1004,
+    "combo_code": "MCD_COMBO_004",
+    "restaurant_id": 1,
+    "restaurant_code": "MCD",
+    "combo_name": "McAloo Tikki Desi Value Meal",
+    "description": "1 McAloo Tikki Burger + 1 World Famous Fries + 1 Coca-Cola",
+    "item_ids": [
+      101,
+      131,
+      141
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 265,
+    "discounted_price": 220,
+    "savings_amount": 45,
+    "confidence": {
+      "score": 0.95,
+      "reason": "AI Generated iconic Indian budget meal featuring spiced potato & pea patty burger with classic sides",
+      "source": "mac'd_menu.pdf (Page 2)",
+      "calculation_method": "Value Meal Bundle Pricing"
+    }
+  },
+  {
+    "combo_id": 2004,
+    "combo_code": "KFC_COMBO_004",
+    "restaurant_id": 2,
+    "restaurant_code": "KFC",
+    "combo_name": "Smoky Grilled Chicken & Rice Box",
+    "description": "1 Pc Smoky Grilled Leg + 1 Popcorn Chicken Rice Bowl + 1 Regular Pepsi",
+    "item_ids": [
+      202,
+      205,
+      215
+    ],
+    "official_combo": false,
+    "is_ai_generated": true,
+    "price": 420,
+    "discounted_price": 360,
+    "savings_amount": 60,
+    "confidence": {
+      "score": 0.92,
+      "reason": "AI Generated high-protein Indian-style lunch bowl paired with low-carb smoky grilled chicken leg",
+      "source": "kfc_nutrition values.pdf (Page 10, 11)",
+      "calculation_method": "Lunch Box Special Pricing"
+    }
   }
 ]

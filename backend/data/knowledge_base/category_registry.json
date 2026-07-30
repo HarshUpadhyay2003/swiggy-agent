@@ -118,5 +118,29 @@
     "parent_category": "Desserts",
     "display_order": 15,
     "icon_name": "icon_royal_dessert"
-  }
+  },
+  {
+  "category_id": "CAT_SOUPS_STARTERS",
+  "display_name": "Soups & Starters",
+  "description": "Fresh soups, broths, appetizers and warm starters.",
+  "parent_category": "Starters",
+  "display_order": 16,
+  "icon_name": "icon_soup"
+},
+{
+  "category_id": "CAT_PARSI_SPECIALTY",
+  "display_name": "Parsi Specialties",
+  "description": "Authentic Parsi heritage dishes and regional delicacies.",
+  "parent_category": "Fine Dining",
+  "display_order": 17,
+  "icon_name": "icon_parsi"
+},
+{
+  "category_id": "CAT_HEALTHY_SNACKS",
+  "display_name": "Healthy Snacks",
+  "description": "Protein-rich snacks, yogurt parfaits, fruit bowls and nutritious light bites.",
+  "parent_category": "Healthy",
+  "display_order": 18,
+  "icon_name": "icon_healthy_snack"
+}
 ]

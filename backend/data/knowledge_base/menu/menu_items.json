@@ -10922,5 +10922,3195 @@
       "rajasthani thali",
       "suvarna mahal dal baati"
     ]
+  },
+  {
+    "item_id": 701,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_SOUP_001",
+    "name": "Classic Chicken and Leek Soup",
+    "description": "Hearty and warming soup prepared with tender chicken morsels, rich cream, fresh leeks, and a hint of thyme.",
+    "category": "non-veg",
+    "meal_type": "starter",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_SOUPS_STARTERS",
+      "category_name": "Soups & Appetizers",
+      "display_order": 1,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_soup",
+      "category_description": "Warm artisanal soups and gourmet starters."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 589.0,
+        "protein_g": 28.0,
+        "carbs_g": 14.0,
+        "net_carbs_g": 12.0,
+        "sugar_g": 3.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 2.0,
+        "fat_g": 45.0,
+        "saturated_fat_g": 20.0,
+        "unsaturated_fat_g": 25.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 180.0,
+        "serving_units": "180g (1 Bowl)"
+      },
+      "micronutrients": {
+        "calcium_mg": 180.0,
+        "iron_mg": 2.1,
+        "potassium_mg": 320.0,
+        "sodium_mg": 710.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": true,
+      "is_dairy_free": false,
+      "allergens": [
+        "dairy"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 6.1,
+      "weight_loss_score": 4.0,
+      "muscle_gain_score": 8.5,
+      "heart_health_score": 3.5,
+      "gut_health_score": 7.0,
+      "diabetic_friendly_score": 5.0,
+      "blood_pressure_score": 6.0,
+      "energy_score": 7.2,
+      "recovery_score": 8.0,
+      "satiety_score": 8.5,
+      "digestibility_score": 7.5,
+      "inflammation_score": 6.0
+    },
+    "ingredients": {
+      "primary_protein": "Tender Chicken",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Leeks",
+        "Onions"
+      ],
+      "grains": [],
+      "dairy": [
+        "Fresh Cream",
+        "Butter"
+      ],
+      "sauces": [],
+      "spices": [
+        "Thyme",
+        "Black Pepper"
+      ],
+      "cooking_oil": "Butter",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Chicken",
+        "cream",
+        "leeks",
+        "thyme",
+        "butter"
+      ],
+      "ingredient_tags": [
+        "chicken_soup",
+        "leek_soup",
+        "creamy",
+        "warm_starter"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 650,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Classic Chicken Soup Special Deal",
+        "item_ids": [
+          701
+        ],
+        "total_price": 650,
+        "discount_price": 600,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Classic Chicken Soup Light Meal",
+        "item_ids": [
+          701
+        ],
+        "total_price": 650,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Classic Chicken Soup Value Meal",
+        "item_ids": [
+          701
+        ],
+        "total_price": 650,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Classic Chicken Soup Luxury Meal",
+        "item_ids": [
+          701
+        ],
+        "total_price": 650,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "starter",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 8,
+      "packaging_quality": 5,
+      "reheating_quality": 9,
+      "messiness_score": 1,
+      "shareability_score": 1,
+      "preparation_time_mins": 10,
+      "popularity_percentile": 90.0,
+      "seasonality": [
+        "winter",
+        "monsoon"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "starter",
+        "comfort_food"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "comfort",
+        "warmth"
+      ],
+      "comfort_score": 9.5
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Soup lovers",
+        "Comfort food seekers"
+      ],
+      "avoid_if": [
+        "Lactose intolerance"
+      ],
+      "strengths": [
+        "Rich and creamy texture",
+        "High protein content (28g)"
+      ],
+      "weaknesses": [
+        "High fat content"
+      ],
+      "conversation_keywords": [
+        "chicken soup",
+        "leek soup",
+        "shamiana soup"
+      ],
+      "health_tradeoffs": "Provides 28g of protein but is relatively rich in fats and calories.",
+      "budget_tradeoffs": "Artisanal fine dining soup priced at ₹650.",
+      "explanation_templates": {
+        "default": "Classic Chicken and Leek Soup from SHAMIANA is available for ₹650[cite: 2].",
+        "healthy": "Classic Chicken and Leek Soup contains 589.0 kcal and 28.0g protein[cite: 2].",
+        "budget": "At ₹650, Classic Chicken and Leek Soup offers great gourmet value![cite: 2]"
+      },
+      "typical_user_persona": [
+        "Fine Diner",
+        "Soup Enthusiast"
+      ],
+      "common_ordering_intent": [
+        "Appetizer",
+        "Warm Starter"
+      ],
+      "conversation_triggers": [
+        "chicken leek soup",
+        "warm soup"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to pair this with a main course?"
+      ],
+      "decision_factors": [
+        "Warmth",
+        "Creaminess",
+        "Flavor"
+      ],
+      "recommendation_priority": 9
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutrient mathematical formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via sensory heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "chicken soup",
+      "leek soup",
+      "classic chicken soup",
+      "shamiana soup"
+    ]
+  },
+  {
+    "item_id": 702,
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "item_code": "EATFIT_MEAL_003",
+    "name": "Ancient Grain Bowl",
+    "description": "Nutritious wellness bowl made with quinoa, brown rice, roasted sweet potato, edamame, kale, and lemon-tahini dressing.",
+    "category": "veg",
+    "meal_type": "lunch",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_HEALTHY_MEALS",
+      "category_name": "Healthy & Wellness Bowls",
+      "display_order": 1,
+      "parent_category": "Healthy",
+      "category_icon": "icon_healthy",
+      "category_description": "Nutritious low-calorie, high-protein bowls."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 380.0,
+        "protein_g": 16.5,
+        "carbs_g": 52.0,
+        "net_carbs_g": 43.0,
+        "sugar_g": 4.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 9.0,
+        "fat_g": 11.0,
+        "saturated_fat_g": 2.0,
+        "unsaturated_fat_g": 9.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 320.0,
+        "serving_units": "320g (1 Bowl)"
+      },
+      "micronutrients": {
+        "calcium_mg": 198.0,
+        "iron_mg": 2.48,
+        "potassium_mg": 312.0,
+        "sodium_mg": 310.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": true,
+      "is_non_veg": false,
+      "is_egg": false,
+      "is_vegan": true,
+      "is_gluten_free": true,
+      "is_dairy_free": true,
+      "allergens": [
+        "sesame"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 9.5,
+      "weight_loss_score": 8.7,
+      "muscle_gain_score": 7.4,
+      "heart_health_score": 6.3,
+      "gut_health_score": 10.0,
+      "diabetic_friendly_score": 1.5,
+      "blood_pressure_score": 7.5,
+      "energy_score": 9.2,
+      "recovery_score": 7.1,
+      "satiety_score": 10.0,
+      "digestibility_score": 5.8,
+      "inflammation_score": 7.0
+    },
+    "ingredients": {
+      "primary_protein": "Quinoa & Edamame Protein",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Sweet Potato",
+        "Kale",
+        "Edamame"
+      ],
+      "grains": [
+        "Quinoa",
+        "Brown Rice"
+      ],
+      "dairy": [],
+      "sauces": [
+        "Lemon Tahini Dressing"
+      ],
+      "spices": [
+        "Herbs & Garlic"
+      ],
+      "cooking_oil": "Cold Pressed Olive Oil",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Quinoa",
+        "brown rice",
+        "sweet potato",
+        "edamame",
+        "kale",
+        "tahini dressing"
+      ],
+      "ingredient_tags": [
+        "quinoa_bowl",
+        "ancient_grains",
+        "gluten_free",
+        "vegan"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 220,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Ancient Grain Bowl Deal",
+        "item_ids": [
+          702
+        ],
+        "total_price": 220,
+        "discount_price": 200,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Ancient Grain Bowl Healthy Meal",
+        "item_ids": [
+          702
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Ancient Grain Bowl Value Meal",
+        "item_ids": [
+          702
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Ancient Grain Bowl Luxury Meal",
+        "item_ids": [
+          702
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "main",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 8,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 15,
+      "popularity_percentile": 95.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "healthy",
+        "wellness",
+        "lunch"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Office Desk",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "healthy_start",
+        "energy_boost"
+      ],
+      "comfort_score": 9.4
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Clean eating",
+        "Weight loss",
+        "Vegan diet"
+      ],
+      "avoid_if": [
+        "Keto diet"
+      ],
+      "strengths": [
+        "High fiber (9g)",
+        "Good plant protein (16.5g)"
+      ],
+      "weaknesses": [
+        "Moderate carbohydrate content"
+      ],
+      "conversation_keywords": [
+        "ancient grain bowl",
+        "quinoa bowl",
+        "eatfit bowl"
+      ],
+      "health_tradeoffs": "Provides 16.5g plant protein and 9g fiber for only 380 kcal[cite: 3].",
+      "budget_tradeoffs": "Priced at ₹220 for a wholesome healthy meal.",
+      "explanation_templates": {
+        "default": "Ancient Grain Bowl from EATFIT is available for ₹220[cite: 3].",
+        "healthy": "Ancient Grain Bowl contains 380.0 kcal and 16.5g protein[cite: 3].",
+        "budget": "At ₹220, Ancient Grain Bowl offers great healthy value![cite: 3]"
+      },
+      "typical_user_persona": [
+        "Fitness Enthusiast",
+        "Vegan Seeker"
+      ],
+      "common_ordering_intent": [
+        "Healthy Lunch",
+        "Clean Dinner"
+      ],
+      "conversation_triggers": [
+        "quinoa grain bowl",
+        "eatfit healthy meal"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to check other wellness options?"
+      ],
+      "decision_factors": [
+        "Fiber",
+        "Protein",
+        "Low Calorie"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official EATFIT guide",
+        "source": "eat-fit-go-meal-guide.pdf (Page 1)[cite: 3]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "EATFIT Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "eat-fit-go-meal-guide.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "ancient grain bowl",
+      "eatfit quinoa bowl",
+      "healthy grain bowl"
+    ]
+  },
+  {
+    "item_id": 801,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_STARTER_002",
+    "name": "Mushroom Galauti",
+    "description": "Exquisite forest mushroom patties delicately spiced with black cardamoms and served on saffron bread with mint chutney.",
+    "category": "veg",
+    "meal_type": "starter",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_FINE_STARTERS",
+      "category_name": "Gourmet Starters & Appetizers",
+      "display_order": 14,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_gourmet",
+      "category_description": "Exquisite fine-dining sharing plates and tandoori kebabs."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 492.0,
+        "protein_g": 12.0,
+        "carbs_g": 32.0,
+        "net_carbs_g": 29.0,
+        "sugar_g": 5.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 3.0,
+        "fat_g": 34.0,
+        "saturated_fat_g": 12.0,
+        "unsaturated_fat_g": 22.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 160.0,
+        "serving_units": "160g (1 Portion)"
+      },
+      "micronutrients": {
+        "calcium_mg": 140.0,
+        "iron_mg": 2.8,
+        "potassium_mg": 290.0,
+        "sodium_mg": 520.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": true,
+      "is_non_veg": false,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": false,
+      "is_dairy_free": false,
+      "allergens": [
+        "gluten",
+        "dairy"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 6.0,
+      "weight_loss_score": 4.5,
+      "muscle_gain_score": 6.0,
+      "heart_health_score": 4.0,
+      "gut_health_score": 7.5,
+      "diabetic_friendly_score": 3.5,
+      "blood_pressure_score": 6.5,
+      "energy_score": 7.0,
+      "recovery_score": 6.0,
+      "satiety_score": 8.0,
+      "digestibility_score": 7.0,
+      "inflammation_score": 6.5
+    },
+    "ingredients": {
+      "primary_protein": "Forest Mushrooms",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Wild Mushrooms",
+        "Onions"
+      ],
+      "grains": [
+        "Saffron Bread"
+      ],
+      "dairy": [
+        "Ghee",
+        "Butter"
+      ],
+      "sauces": [
+        "Mint Chutney"
+      ],
+      "spices": [
+        "Black Cardamom",
+        "Royal Spices"
+      ],
+      "cooking_oil": "Desi Ghee",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Forest mushroom",
+        "black cardamom",
+        "saffron bread",
+        "mint chutney",
+        "ghee"
+      ],
+      "ingredient_tags": [
+        "mushroom",
+        "galauti",
+        "vegetarian_kebab",
+        "fine_dining"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 950,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Mushroom Galauti Special Deal",
+        "item_ids": [
+          801
+        ],
+        "total_price": 950,
+        "discounted_price": 900,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Mushroom Galauti Light Meal",
+        "item_ids": [
+          801
+        ],
+        "total_price": 950,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Mushroom Galauti Value Meal",
+        "item_ids": [
+          801
+        ],
+        "total_price": 950,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Mushroom Galauti Luxury Meal",
+        "item_ids": [
+          801
+        ],
+        "total_price": 950,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "starter",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 8,
+      "packaging_quality": 5,
+      "reheating_quality": 8,
+      "messiness_score": 2,
+      "shareability_score": 2,
+      "preparation_time_mins": 15,
+      "popularity_percentile": 92.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "luxury",
+        "appetizer"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "mild",
+      "mood_tags": [
+        "comfort",
+        "indulgent"
+      ],
+      "comfort_score": 9.2
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Mushroom lovers",
+        "Fine dining vegetarian option"
+      ],
+      "avoid_if": [
+        "Dairy allergy"
+      ],
+      "strengths": [
+        "Melt-in-mouth texture",
+        "Rich aromatic blend of black cardamom"
+      ],
+      "weaknesses": [
+        "Moderate fat content"
+      ],
+      "conversation_keywords": [
+        "mushroom galauti",
+        "galauti kebab",
+        "shamiana mushroom"
+      ],
+      "health_tradeoffs": "Rich gourmet appetizer containing 492 kcal and 34g fat[cite: 2].",
+      "budget_tradeoffs": "Premium starter priced at ₹950[cite: 2].",
+      "explanation_templates": {
+        "default": "Mushroom Galauti from SHAMIANA is available for ₹950[cite: 2].",
+        "healthy": "Mushroom Galauti contains 492.0 kcal and 12.0g protein[cite: 2].",
+        "budget": "At ₹950, Mushroom Galauti offers fine dining elegance[cite: 2]."
+      },
+      "typical_user_persona": [
+        "Fine Diner",
+        "Vegetarian Connoisseur"
+      ],
+      "common_ordering_intent": [
+        "Appetizer",
+        "Celebration Starter"
+      ],
+      "conversation_triggers": [
+        "mushroom galauti",
+        "veg kebab"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to try the Subz Mawa Seekh as well?"
+      ],
+      "decision_factors": [
+        "Texture",
+        "Aroma",
+        "Heritage Recipe"
+      ],
+      "recommendation_priority": 9
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "mushroom galauti",
+      "galauti kebab",
+      "forest mushroom kebab",
+      "shamiana starter"
+    ]
+  },
+  {
+    "item_id": 802,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_STARTER_003",
+    "name": "Bhatti Da Murgh",
+    "description": "Tender chicken morsels marinated with robust spices and black cardamom, charred to perfection in a traditional bhatti.",
+    "category": "non-veg",
+    "meal_type": "starter",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_FINE_STARTERS",
+      "category_name": "Gourmet Starters & Appetizers",
+      "display_order": 14,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_gourmet",
+      "category_description": "Exquisite fine-dining sharing plates and tandoori kebabs."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 720.0,
+        "protein_g": 38.0,
+        "carbs_g": 10.0,
+        "net_carbs_g": 8.0,
+        "sugar_g": 2.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 2.0,
+        "fat_g": 58.0,
+        "saturated_fat_g": 22.0,
+        "unsaturated_fat_g": 36.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 180.0,
+        "serving_units": "180g (1 Portion)"
+      },
+      "micronutrients": {
+        "calcium_mg": 210.0,
+        "iron_mg": 3.5,
+        "potassium_mg": 410.0,
+        "sodium_mg": 890.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": true,
+      "is_dairy_free": false,
+      "allergens": [
+        "dairy"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 5.5,
+      "weight_loss_score": 3.0,
+      "muscle_gain_score": 9.5,
+      "heart_health_score": 2.5,
+      "gut_health_score": 7.0,
+      "diabetic_friendly_score": 6.0,
+      "blood_pressure_score": 5.0,
+      "energy_score": 8.0,
+      "recovery_score": 9.0,
+      "satiety_score": 9.5,
+      "digestibility_score": 6.5,
+      "inflammation_score": 6.0
+    },
+    "ingredients": {
+      "primary_protein": "Chicken Morsels",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Onion",
+        "Green Chili"
+      ],
+      "grains": [],
+      "dairy": [
+        "Yogurt",
+        "Cream"
+      ],
+      "sauces": [],
+      "spices": [
+        "Black Cardamom",
+        "Chili",
+        "Tandoori Spices"
+      ],
+      "cooking_oil": "Mustard Oil & Ghee",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Chicken morsels",
+        "black cardamom",
+        "chili",
+        "yogurt",
+        "spices"
+      ],
+      "ingredient_tags": [
+        "bhatti_da_murgh",
+        "chicken_tikka",
+        "tandoori",
+        "high_protein"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 1050,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Bhatti Da Murgh Special Deal",
+        "item_ids": [
+          802
+        ],
+        "total_price": 1050,
+        "discounted_price": 990,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Bhatti Da Murgh Light Meal",
+        "item_ids": [
+          802
+        ],
+        "total_price": 1050,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Bhatti Da Murgh Value Meal",
+        "item_ids": [
+          802
+        ],
+        "total_price": 1050,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Bhatti Da Murgh Luxury Meal",
+        "item_ids": [
+          802
+        ],
+        "total_price": 1050,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "starter",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 8,
+      "messiness_score": 2,
+      "shareability_score": 3,
+      "preparation_time_mins": 15,
+      "popularity_percentile": 95.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "tandoori",
+        "non_veg_starter"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": true,
+      "spice_level": "medium",
+      "mood_tags": [
+        "comfort",
+        "smoky",
+        "indulgent"
+      ],
+      "comfort_score": 9.6
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Tandoori chicken lovers",
+        "High protein non-veg appetizer (38g protein)"
+      ],
+      "avoid_if": [
+        "Dairy allergy"
+      ],
+      "strengths": [
+        "38g high protein content",
+        "Smoky bhatti flavor profile"
+      ],
+      "weaknesses": [
+        "High calorie content (720 kcal)"
+      ],
+      "conversation_keywords": [
+        "bhatti da murgh",
+        "tandoori chicken",
+        "shamiana chicken"
+      ],
+      "health_tradeoffs": "High protein option (38g) with an indulgent calorie and fat profile[cite: 2].",
+      "budget_tradeoffs": "Gourmet non-veg starter priced at ₹1050[cite: 2].",
+      "explanation_templates": {
+        "default": "Bhatti Da Murgh from SHAMIANA is available for ₹1050[cite: 2].",
+        "healthy": "Bhatti Da Murgh contains 720.0 kcal and 38.0g protein[cite: 2].",
+        "budget": "At ₹1050, Bhatti Da Murgh offers authentic tandoori luxury[cite: 2]."
+      },
+      "typical_user_persona": [
+        "Meat Lover",
+        "Fine Diner"
+      ],
+      "common_ordering_intent": [
+        "Non-Veg Starter",
+        "Dinner Appetizer"
+      ],
+      "conversation_triggers": [
+        "bhatti chicken",
+        "smoky chicken starter"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to pair this with Makhan Murgh?"
+      ],
+      "decision_factors": [
+        "Protein",
+        "Smoky Taste",
+        "Spice Level"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "bhatti da murgh",
+      "tandoori chicken morsels",
+      "shamiana chicken appetizer"
+    ]
+  },
+  {
+    "item_id": 803,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_MAIN_003",
+    "name": "Jardaloo Salli Boti",
+    "description": "Tangy-sweet-n-spicy traditional Parsi lamb curry cooked with apricots and topped with crispy straw potatoes, served with buttered pav.",
+    "category": "non-veg",
+    "meal_type": "dinner",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_PARSI_SPECIALTY",
+      "category_name": "Parsi & Heritage Specialties",
+      "display_order": 13,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_luxury",
+      "category_description": "Heritage Parsi curries and royal specialties."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 698.0,
+        "protein_g": 35.0,
+        "carbs_g": 48.0,
+        "net_carbs_g": 42.0,
+        "sugar_g": 18.0,
+        "added_sugar_g": 5.0,
+        "fiber_g": 6.0,
+        "fat_g": 40.0,
+        "saturated_fat_g": 16.0,
+        "unsaturated_fat_g": 24.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 220.0,
+        "serving_units": "220g (1 Portion)"
+      },
+      "micronutrients": {
+        "calcium_mg": 150.0,
+        "iron_mg": 5.2,
+        "potassium_mg": 480.0,
+        "sodium_mg": 1050.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": false,
+      "is_dairy_free": false,
+      "allergens": [
+        "gluten",
+        "dairy"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 6.2,
+      "weight_loss_score": 2.5,
+      "muscle_gain_score": 9.8,
+      "heart_health_score": 2.0,
+      "gut_health_score": 8.0,
+      "diabetic_friendly_score": 2.0,
+      "blood_pressure_score": 4.0,
+      "energy_score": 8.5,
+      "recovery_score": 9.5,
+      "satiety_score": 10.0,
+      "digestibility_score": 5.0,
+      "inflammation_score": 6.5
+    },
+    "ingredients": {
+      "primary_protein": "Tender Lamb Mutton",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Onion",
+        "Straw Potatoes"
+      ],
+      "grains": [
+        "Buttered Pav"
+      ],
+      "dairy": [
+        "Butter"
+      ],
+      "sauces": [
+        "Tangy Apricot Lamb Gravy"
+      ],
+      "spices": [
+        "Parsi Masalas",
+        "Vinegar"
+      ],
+      "cooking_oil": "Ghee / Oil",
+      "sweeteners": [
+        "Apricots"
+      ],
+      "whole_ingredients_list": [
+        "Lamb",
+        "apricots",
+        "straw potatoes",
+        "buttered pav",
+        "spices"
+      ],
+      "ingredient_tags": [
+        "jardaloo_salli_boti",
+        "parsi_curry",
+        "lamb",
+        "sweet_and_spicy"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 1550,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Jardaloo Salli Boti Special Deal",
+        "item_ids": [
+          803
+        ],
+        "total_price": 1550,
+        "discounted_price": 1450,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Jardaloo Salli Boti Light Meal",
+        "item_ids": [
+          803
+        ],
+        "total_price": 1550,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Jardaloo Salli Boti Value Meal",
+        "item_ids": [
+          803
+        ],
+        "total_price": 1550,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Jardaloo Salli Boti Luxury Meal",
+        "item_ids": [
+          803
+        ],
+        "total_price": 1550,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "main",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 8,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 20,
+      "popularity_percentile": 94.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "parsi_heritage",
+        "luxury_dinner"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": true,
+      "spice_level": "medium",
+      "mood_tags": [
+        "comfort",
+        "tangy",
+        "indulgent"
+      ],
+      "comfort_score": 9.7
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Parsi food enthusiasts",
+        "Lamb curry lovers",
+        "High protein main (35g protein)"
+      ],
+      "avoid_if": [
+        "Gluten allergy"
+      ],
+      "strengths": [
+        "Authentic Parsi sweet-and-spicy flavor profile",
+        "35g protein content"
+      ],
+      "weaknesses": [
+        "High sodium content"
+      ],
+      "conversation_keywords": [
+        "jardaloo salli boti",
+        "parsi lamb curry",
+        "salli boti"
+      ],
+      "health_tradeoffs": "Rich Parsi heritage lamb dish delivering 35g protein[cite: 2].",
+      "budget_tradeoffs": "Heritage luxury main course priced at ₹1550[cite: 2].",
+      "explanation_templates": {
+        "default": "Jardaloo Salli Boti from SHAMIANA is available for ₹1550[cite: 2].",
+        "healthy": "Jardaloo Salli Boti contains 698.0 kcal and 35.0g protein[cite: 2].",
+        "budget": "At ₹1550, Jardaloo Salli Boti offers true heritage culinary value[cite: 2]."
+      },
+      "typical_user_persona": [
+        "Heritage Food Explorer",
+        "Lamb Connoisseur"
+      ],
+      "common_ordering_intent": [
+        "Fine Dining Dinner",
+        "Special Celebration"
+      ],
+      "conversation_triggers": [
+        "salli boti",
+        "parsi mutton"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to try the Parsi Keemo Samosa as a starter?"
+      ],
+      "decision_factors": [
+        "Apricot Sweetness",
+        "Crispy Potatoes",
+        "Tender Lamb"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "jardaloo salli boti",
+      "parsi lamb curry",
+      "salli boti mutton",
+      "shamiana heritage main"
+    ]
+  },
+  {
+    "item_id": 804,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_DESSERT_002",
+    "name": "Apple Mille-Feuille (Gluten Free)",
+    "description": "Delicate gluten-free pastry layered with spiced caramelized apples, rich vanilla cream, and smooth caramel sauce.",
+    "category": "veg",
+    "meal_type": "dessert",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_DESSERTS",
+      "category_name": "Desserts & Fine Pastries",
+      "display_order": 15,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_dessert",
+      "category_description": "Artisanal fine-dining desserts and gluten-free pastries."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 372.0,
+        "protein_g": 4.0,
+        "carbs_g": 54.0,
+        "net_carbs_g": 49.0,
+        "sugar_g": 38.0,
+        "added_sugar_g": 25.0,
+        "fiber_g": 5.0,
+        "fat_g": 16.0,
+        "saturated_fat_g": 8.0,
+        "unsaturated_fat_g": 8.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 120.0,
+        "serving_units": "120g (1 Portion)"
+      },
+      "micronutrients": {
+        "calcium_mg": 65.0,
+        "iron_mg": 0.8,
+        "potassium_mg": 180.0,
+        "sodium_mg": 95.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": true,
+      "is_non_veg": false,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": true,
+      "is_dairy_free": false,
+      "allergens": [
+        "dairy",
+        "nuts"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 5.0,
+      "weight_loss_score": 4.5,
+      "muscle_gain_score": 2.0,
+      "heart_health_score": 5.5,
+      "gut_health_score": 6.5,
+      "diabetic_friendly_score": 1.0,
+      "blood_pressure_score": 8.0,
+      "energy_score": 7.5,
+      "recovery_score": 3.5,
+      "satiety_score": 5.0,
+      "digestibility_score": 6.5,
+      "inflammation_score": 4.0
+    },
+    "ingredients": {
+      "primary_protein": "Milk Solids",
+      "secondary_protein": "None",
+      "vegetables": [],
+      "grains": [
+        "Gluten-Free Flour Blend"
+      ],
+      "dairy": [
+        "Butter",
+        "Vanilla Cream"
+      ],
+      "sauces": [
+        "Caramel Sauce"
+      ],
+      "spices": [
+        "Cinnamon"
+      ],
+      "cooking_oil": "Butter",
+      "sweeteners": [
+        "Caramel",
+        "Sugar"
+      ],
+      "whole_ingredients_list": [
+        "Apples",
+        "gluten-free flour",
+        "caramel",
+        "vanilla sauce",
+        "butter"
+      ],
+      "ingredient_tags": [
+        "apple_mille_feuille",
+        "gluten_free_dessert",
+        "pastry",
+        "sweet"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 700,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Apple Mille-Feuille Special Deal",
+        "item_ids": [
+          804
+        ],
+        "total_price": 700,
+        "discount_price": 650,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Apple Mille-Feuille Light Meal",
+        "item_ids": [
+          804
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Apple Mille-Feuille Value Meal",
+        "item_ids": [
+          804
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Apple Mille-Feuille Luxury Meal",
+        "item_ids": [
+          804
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "dessert",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 7,
+      "packaging_quality": 5,
+      "reheating_quality": 6,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 10,
+      "popularity_percentile": 90.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "dessert",
+        "gluten_free"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "sweet_tooth",
+        "indulgent",
+        "comfort"
+      ],
+      "comfort_score": 9.5
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Gluten-free dessert lovers",
+        "Apple and caramel fans"
+      ],
+      "avoid_if": [
+        "Dairy allergy",
+        "Diabetic diet"
+      ],
+      "strengths": [
+        "100% gluten-free fine pastry",
+        "Exquisite apple and caramel flavor"
+      ],
+      "weaknesses": [
+        "High sugar content"
+      ],
+      "conversation_keywords": [
+        "apple mille feuille",
+        "gluten free dessert",
+        "shamiana dessert"
+      ],
+      "health_tradeoffs": "Gluten-free gourmet dessert containing 372 kcal[cite: 2].",
+      "budget_tradeoffs": "Fine dining dessert priced at ₹700[cite: 2].",
+      "explanation_templates": {
+        "default": "Apple Mille-Feuille (Gluten Free) from SHAMIANA is available for ₹700[cite: 2].",
+        "healthy": "Apple Mille-Feuille (Gluten Free) contains 372.0 kcal and 4.0g protein[cite: 2].",
+        "budget": "At ₹700, Apple Mille-Feuille offers delicious gluten-free indulgence[cite: 2]."
+      },
+      "typical_user_persona": [
+        "Gluten-Free Diner",
+        "Dessert Enthusiast"
+      ],
+      "common_ordering_intent": [
+        "Post-Meal Dessert",
+        "Sweet Treat"
+      ],
+      "conversation_triggers": [
+        "gluten free pastry",
+        "apple dessert"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to explore other desserts like the Deconstructed Banoffee Pie?"
+      ],
+      "decision_factors": [
+        "Gluten-Free",
+        "Caramel Flavor",
+        "Pastry Texture"
+      ],
+      "recommendation_priority": 9
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "apple mille feuille",
+      "gluten free apple pastry",
+      "shamiana dessert apple"
+    ]
+  },
+  {
+    "item_id": 805,
+    "restaurant_id": 5,
+    "restaurant_code": "SHAMIANA",
+    "item_code": "SHAMIANA_DESSERT_003",
+    "name": "Angoori Kesari Rasmalai",
+    "description": "Mini soft cottage cheese dumplings soaked in saffron-infused sweetened milk syrup, garnished with pistachios.",
+    "category": "veg",
+    "meal_type": "dessert",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_DESSERTS",
+      "category_name": "Desserts & Traditional Sweets",
+      "display_order": 15,
+      "parent_category": "Fine Dining",
+      "category_icon": "icon_dessert",
+      "category_description": "Artisanal fine-dining desserts and traditional mithai."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 425.0,
+        "protein_g": 12.0,
+        "carbs_g": 58.0,
+        "net_carbs_g": 55.0,
+        "sugar_g": 48.0,
+        "added_sugar_g": 35.0,
+        "fiber_g": 1.0,
+        "fat_g": 16.0,
+        "saturated_fat_g": 9.0,
+        "unsaturated_fat_g": 7.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 140.0,
+        "serving_units": "140g (1 Portion)"
+      },
+      "micronutrients": {
+        "calcium_mg": 280.0,
+        "iron_mg": 1.1,
+        "potassium_mg": 210.0,
+        "sodium_mg": 110.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": true,
+      "is_non_veg": false,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": true,
+      "is_dairy_free": false,
+      "allergens": [
+        "dairy",
+        "nuts"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 4.8,
+      "weight_loss_score": 3.0,
+      "muscle_gain_score": 5.0,
+      "heart_health_score": 4.5,
+      "gut_health_score": 6.0,
+      "diabetic_friendly_score": 1.0,
+      "blood_pressure_score": 8.0,
+      "energy_score": 8.0,
+      "recovery_score": 4.0,
+      "satiety_score": 6.0,
+      "digestibility_score": 6.0,
+      "inflammation_score": 4.5
+    },
+    "ingredients": {
+      "primary_protein": "Cottage Cheese (Chenna)",
+      "secondary_protein": "None",
+      "vegetables": [],
+      "grains": [],
+      "dairy": [
+        "Whole Milk",
+        "Cottage Cheese"
+      ],
+      "sauces": [
+        "Saffron Rabri Syrup"
+      ],
+      "spices": [
+        "Cardamom",
+        "Saffron"
+      ],
+      "cooking_oil": "None",
+      "sweeteners": [
+        "Sugar"
+      ],
+      "whole_ingredients_list": [
+        "Cottage cheese dumplings",
+        "milk",
+        "saffron",
+        "sugar",
+        "pistachios"
+      ],
+      "ingredient_tags": [
+        "angoori_rasmalai",
+        "kesari_rasmalai",
+        "traditional_sweet",
+        "dessert"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 700,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Angoori Kesari Rasmalai Special Deal",
+        "item_ids": [
+          805
+        ],
+        "total_price": 700,
+        "discounted_price": 650,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Angoori Kesari Rasmalai Light Meal",
+        "item_ids": [
+          805
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Angoori Kesari Rasmalai Value Meal",
+        "item_ids": [
+          805
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Angoori Kesari Rasmalai Luxury Meal",
+        "item_ids": [
+          805
+        ],
+        "total_price": 700,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "dessert",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 7,
+      "packaging_quality": 5,
+      "reheating_quality": 7,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 10,
+      "popularity_percentile": 95.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "fine_dining",
+        "traditional_dessert",
+        "festive"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Restaurant",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "sweet_tooth",
+        "comfort",
+        "festive"
+      ],
+      "comfort_score": 9.8
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Traditional Indian sweet lovers",
+        "Saffron and milk dessert fans"
+      ],
+      "avoid_if": [
+        "Dairy allergy",
+        "Diabetic diet"
+      ],
+      "strengths": [
+        "Authentic saffron aroma",
+        "12g protein from dairy"
+      ],
+      "weaknesses": [
+        "High sugar content"
+      ],
+      "conversation_keywords": [
+        "angoori rasmalai",
+        "kesari rasmalai",
+        "shamiana rasmalai"
+      ],
+      "health_tradeoffs": "Traditional milk-based sweet with 425 kcal and 12g protein[cite: 2].",
+      "budget_tradeoffs": "Fine dining dessert priced at ₹700[cite: 2].",
+      "explanation_templates": {
+        "default": "Angoori Kesari Rasmalai from SHAMIANA is available for ₹700[cite: 2].",
+        "healthy": "Angoori Kesari Rasmalai contains 425.0 kcal and 12.0g protein[cite: 2].",
+        "budget": "At ₹700, Angoori Kesari Rasmalai offers delightful traditional sweetness[cite: 2]."
+      },
+      "typical_user_persona": [
+        "Traditional Sweet Lover",
+        "Fine Diner"
+      ],
+      "common_ordering_intent": [
+        "Post-Meal Dessert",
+        "Festive Treat"
+      ],
+      "conversation_triggers": [
+        "rasmalai",
+        "saffron dessert"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to try the Mithai Ki Thaali as well?"
+      ],
+      "decision_factors": [
+        "Saffron Flavor",
+        "Soft Dumplings",
+        "Milk Syrup"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official SHAMIANA menu booklet",
+        "source": "shamiana-mumbai-vikhroli-menu.pdf (Page 1)[cite: 2]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA reference models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "SHAMIANA Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "shamiana-mumbai-vikhroli-menu.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "angoori kesari rasmalai",
+      "rasmalai",
+      "saffron milk sweet",
+      "shamiana rasmalai"
+    ]
+  },
+  {
+    "item_id": 806,
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "item_code": "EATFIT_MEAL_004",
+    "name": "Teriyaki Chicken Stir Fry",
+    "description": "Tender chicken strips tossed with wok-charred vegetables, brown rice, and savory authentic teriyaki sauce.",
+    "category": "non-veg",
+    "meal_type": "lunch",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_HEALTHY_MEALS",
+      "category_name": "Healthy & Wellness Bowls",
+      "display_order": 1,
+      "parent_category": "Healthy",
+      "category_icon": "icon_healthy",
+      "category_description": "Nutritious low-calorie, high-protein bowls."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 420.0,
+        "protein_g": 32.0,
+        "carbs_g": 48.0,
+        "net_carbs_g": 43.0,
+        "sugar_g": 9.0,
+        "added_sugar_g": 3.0,
+        "fiber_g": 5.0,
+        "fat_g": 9.0,
+        "saturated_fat_g": 1.5,
+        "unsaturated_fat_g": 7.5,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 330.0,
+        "serving_units": "330g (1 Bowl)"
+      },
+      "micronutrients": {
+        "calcium_mg": 85.0,
+        "iron_mg": 2.6,
+        "potassium_mg": 410.0,
+        "sodium_mg": 580.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": false,
+      "is_dairy_free": true,
+      "allergens": [
+        "soy",
+        "gluten"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 8.8,
+      "weight_loss_score": 7.5,
+      "muscle_gain_score": 9.5,
+      "heart_health_score": 6.5,
+      "gut_health_score": 8.5,
+      "diabetic_friendly_score": 3.5,
+      "blood_pressure_score": 6.0,
+      "energy_score": 9.0,
+      "recovery_score": 9.0,
+      "satiety_score": 9.5,
+      "digestibility_score": 7.0,
+      "inflammation_score": 6.5
+    },
+    "ingredients": {
+      "primary_protein": "Chicken Strips",
+      "secondary_protein": "None",
+      "vegetables": [
+        "Bell Peppers",
+        "Broccoli",
+        "Snap Peas"
+      ],
+      "grains": [
+        "Brown Rice"
+      ],
+      "dairy": [],
+      "sauces": [
+        "Teriyaki Sauce"
+      ],
+      "spices": [
+        "Ginger",
+        "Garlic"
+      ],
+      "cooking_oil": "Sesame Oil",
+      "sweeteners": [
+        "Soy Sauce Sweetener"
+      ],
+      "whole_ingredients_list": [
+        "Chicken strips",
+        "brown rice",
+        "broccoli",
+        "bell peppers",
+        "teriyaki sauce"
+      ],
+      "ingredient_tags": [
+        "teriyaki_chicken",
+        "stir_fry",
+        "high_protein",
+        "healthy_meal"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 240,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Teriyaki Chicken Stir Fry Deal",
+        "item_ids": [
+          806
+        ],
+        "total_price": 240,
+        "discount_price": 220,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Teriyaki Chicken Stir Fry Healthy Meal",
+        "item_ids": [
+          806
+        ],
+        "total_price": 240,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Teriyaki Chicken Stir Fry Value Meal",
+        "item_ids": [
+          806
+        ],
+        "total_price": 240,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Teriyaki Chicken Stir Fry Luxury Meal",
+        "item_ids": [
+          806
+        ],
+        "total_price": 240,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "main",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 8,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 15,
+      "popularity_percentile": 94.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "healthy",
+        "fitness",
+        "office_lunch"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Office Desk",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "mild",
+      "mood_tags": [
+        "energy_boost",
+        "comfort"
+      ],
+      "comfort_score": 9.3
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Fitness seekers",
+        "High protein lunch (32g protein)"
+      ],
+      "avoid_if": [
+        "Soy allergy"
+      ],
+      "strengths": [
+        "32g clean lean chicken protein",
+        "Balanced macronutrients"
+      ],
+      "weaknesses": [
+        "Contains soy and gluten in teriyaki sauce"
+      ],
+      "conversation_keywords": [
+        "teriyaki chicken stir fry",
+        "eatfit teriyaki",
+        "chicken stir fry bowl"
+      ],
+      "health_tradeoffs": "Provides 32g protein with only 9g fat in a 420 kcal bowl[cite: 3].",
+      "budget_tradeoffs": "Affordable wellness bowl priced at ₹240[cite: 3].",
+      "explanation_templates": {
+        "default": "Teriyaki Chicken Stir Fry from EATFIT is available for ₹240[cite: 3].",
+        "healthy": "Teriyaki Chicken Stir Fry contains 420.0 kcal and 32.0g protein[cite: 3].",
+        "budget": "At ₹240, Teriyaki Chicken Stir Fry offers excellent fitness value[cite: 3]."
+      },
+      "typical_user_persona": [
+        "Gym Goer",
+        "Office Employee"
+      ],
+      "common_ordering_intent": [
+        "Healthy Lunch",
+        "Post-Workout Meal"
+      ],
+      "conversation_triggers": [
+        "teriyaki chicken bowl",
+        "healthy chicken stir fry"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to pair this with a Greek Yogurt Parfait?"
+      ],
+      "decision_factors": [
+        "32g Protein",
+        "Low Fat",
+        "Savory Teriyaki Flavor"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official EATFIT guide",
+        "source": "eat-fit-go-meal-guide.pdf (Page 1)[cite: 3]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "EATFIT Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "eat-fit-go-meal-guide.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "teriyaki chicken stir fry",
+      "eatfit teriyaki chicken",
+      "healthy stir fry bowl"
+    ]
+  },
+  {
+    "item_id": 807,
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "item_code": "EATFIT_MEAL_005",
+    "name": "Turkey Chili",
+    "description": "Hearty and warming chili made with lean ground turkey, kidney beans, crushed tomatoes, and chili spices.",
+    "category": "non-veg",
+    "meal_type": "lunch",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_HEALTHY_MEALS",
+      "category_name": "Healthy & Wellness Bowls",
+      "display_order": 1,
+      "parent_category": "Healthy",
+      "category_icon": "icon_healthy",
+      "category_description": "Nutritious low-calorie, high-protein bowls."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 340.0,
+        "protein_g": 28.0,
+        "carbs_g": 32.0,
+        "net_carbs_g": 24.0,
+        "sugar_g": 6.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 8.0,
+        "fat_g": 9.0,
+        "saturated_fat_g": 2.0,
+        "unsaturated_fat_g": 7.0,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 310.0,
+        "serving_units": "310g (1 Bowl)"
+      },
+      "micronutrients": {
+        "calcium_mg": 90.0,
+        "iron_mg": 3.8,
+        "potassium_mg": 520.0,
+        "sodium_mg": 450.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": true,
+      "is_dairy_free": true,
+      "allergens": []
+    },
+    "health_scores": {
+      "overall_health_score": 9.2,
+      "weight_loss_score": 9.0,
+      "muscle_gain_score": 9.0,
+      "heart_health_score": 8.0,
+      "gut_health_score": 9.5,
+      "diabetic_friendly_score": 6.5,
+      "blood_pressure_score": 7.5,
+      "energy_score": 8.5,
+      "recovery_score": 8.5,
+      "satiety_score": 10.0,
+      "digestibility_score": 7.0,
+      "inflammation_score": 7.5
+    },
+    "ingredients": {
+      "primary_protein": "Lean Ground Turkey",
+      "secondary_protein": "Kidney Beans",
+      "vegetables": [
+        "Tomatoes",
+        "Onions",
+        "Bell Peppers"
+      ],
+      "grains": [],
+      "dairy": [],
+      "sauces": [
+        "Tomato Chili Sauce"
+      ],
+      "spices": [
+        "Chili Powder",
+        "Cumin",
+        "Garlic"
+      ],
+      "cooking_oil": "Olive Oil",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Ground turkey",
+        "kidney beans",
+        "tomatoes",
+        "chili spices",
+        "onions"
+      ],
+      "ingredient_tags": [
+        "turkey_chili",
+        "high_protein",
+        "gluten_free",
+        "weight_loss"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 220,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Turkey Chili Special Deal",
+        "item_ids": [
+          807
+        ],
+        "total_price": 220,
+        "discount_price": 200,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Turkey Chili Healthy Meal",
+        "item_ids": [
+          807
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Turkey Chili Value Meal",
+        "item_ids": [
+          807
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Turkey Chili Luxury Meal",
+        "item_ids": [
+          807
+        ],
+        "total_price": 220,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "main",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 9,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 10,
+      "popularity_percentile": 95.0,
+      "seasonality": [
+        "winter",
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "healthy",
+        "weight_loss",
+        "comfort_food"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Office Desk",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": true,
+      "spice_level": "medium",
+      "mood_tags": [
+        "comfort",
+        "warmth",
+        "filling"
+      ],
+      "comfort_score": 9.5
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Weight loss seekers",
+        "High protein & high fiber diet (28g protein, 8g fiber)"
+      ],
+      "avoid_if": [
+        "Low spice tolerance"
+      ],
+      "strengths": [
+        "28g lean turkey protein",
+        "8g dietary fiber",
+        "Gluten-free and dairy-free"
+      ],
+      "weaknesses": [
+        "None"
+      ],
+      "conversation_keywords": [
+        "turkey chili",
+        "eatfit turkey chili",
+        "healthy chili bowl"
+      ],
+      "health_tradeoffs": "Exceptional weight-loss meal providing 28g protein and 8g fiber for only 340 kcal[cite: 3].",
+      "budget_tradeoffs": "Affordable healthy bowl priced at ₹220[cite: 3].",
+      "explanation_templates": {
+        "default": "Turkey Chili from EATFIT is available for ₹220[cite: 3].",
+        "healthy": "Turkey Chili contains 340.0 kcal and 28.0g protein[cite: 3].",
+        "budget": "At ₹220, Turkey Chili offers fantastic diet-friendly value[cite: 3]."
+      },
+      "typical_user_persona": [
+        "Weight Loss Seeker",
+        "Fitness Diner"
+      ],
+      "common_ordering_intent": [
+        "Healthy Dinner",
+        "Low Calorie Meal"
+      ],
+      "conversation_triggers": [
+        "turkey chili bowl",
+        "healthy chili meal"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to pair this with a Hummus Snack Box?"
+      ],
+      "decision_factors": [
+        "High Fiber",
+        "Lean Turkey",
+        "Low Calorie"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official EATFIT guide",
+        "source": "eat-fit-go-meal-guide.pdf (Page 1)[cite: 3]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "EATFIT Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "eat-fit-go-meal-guide.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "turkey chili",
+      "eatfit turkey chili",
+      "healthy turkey bowl"
+    ]
+  },
+  {
+    "item_id": 808,
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "item_code": "EATFIT_MEAL_006",
+    "name": "Chicken Caesar Salad",
+    "description": "Crisp romaine lettuce tossed with grilled chicken strips, parmesan cheese, crunchy croutons, and light Caesar dressing.",
+    "category": "non-veg",
+    "meal_type": "lunch",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_HEALTHY_MEALS",
+      "category_name": "Healthy & Wellness Bowls",
+      "display_order": 1,
+      "parent_category": "Healthy",
+      "category_icon": "icon_healthy",
+      "category_description": "Nutritious low-calorie, high-protein salads and wellness meals."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 360.0,
+        "protein_g": 29.0,
+        "carbs_g": 14.0,
+        "net_carbs_g": 11.0,
+        "sugar_g": 3.0,
+        "added_sugar_g": 0.0,
+        "fiber_g": 3.0,
+        "fat_g": 20.0,
+        "saturated_fat_g": 4.5,
+        "unsaturated_fat_g": 15.5,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 280.0,
+        "serving_units": "280g (1 Salad)"
+      },
+      "micronutrients": {
+        "calcium_mg": 210.0,
+        "iron_mg": 2.1,
+        "potassium_mg": 310.0,
+        "sodium_mg": 540.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": false,
+      "is_non_veg": true,
+      "is_egg": true,
+      "is_vegan": false,
+      "is_gluten_free": false,
+      "is_dairy_free": false,
+      "allergens": [
+        "gluten",
+        "dairy",
+        "egg",
+        "fish"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 8.5,
+      "weight_loss_score": 8.2,
+      "muscle_gain_score": 8.8,
+      "heart_health_score": 6.0,
+      "gut_health_score": 8.0,
+      "diabetic_friendly_score": 6.0,
+      "blood_pressure_score": 6.5,
+      "energy_score": 8.5,
+      "recovery_score": 8.5,
+      "satiety_score": 9.0,
+      "digestibility_score": 7.5,
+      "inflammation_score": 6.5
+    },
+    "ingredients": {
+      "primary_protein": "Grilled Chicken Breast",
+      "secondary_protein": "Parmesan Cheese",
+      "vegetables": [
+        "Romaine Lettuce"
+      ],
+      "grains": [
+        "Whole Wheat Croutons"
+      ],
+      "dairy": [
+        "Parmesan Cheese"
+      ],
+      "sauces": [
+        "Light Caesar Dressing"
+      ],
+      "spices": [
+        "Black Pepper",
+        "Garlic"
+      ],
+      "cooking_oil": "Olive Oil",
+      "sweeteners": [],
+      "whole_ingredients_list": [
+        "Romaine lettuce",
+        "grilled chicken",
+        "parmesan cheese",
+        "croutons",
+        "caesar dressing"
+      ],
+      "ingredient_tags": [
+        "chicken_caesar",
+        "caesar_salad",
+        "high_protein_salad",
+        "healthy_lunch"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 210,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Chicken Caesar Salad Special Deal",
+        "item_ids": [
+          808
+        ],
+        "total_price": 210,
+        "discount_price": 190,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Chicken Caesar Salad Healthy Meal",
+        "item_ids": [
+          808
+        ],
+        "total_price": 210,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Chicken Caesar Salad Value Meal",
+        "item_ids": [
+          808
+        ],
+        "total_price": 210,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Chicken Caesar Salad Luxury Meal",
+        "item_ids": [
+          808
+        ],
+        "total_price": 210,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "main",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 9,
+      "packaging_quality": 5,
+      "reheating_quality": 6,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 10,
+      "popularity_percentile": 96.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "healthy",
+        "salad",
+        "office_lunch"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner"
+      ],
+      "eating_environment": [
+        "Office Desk",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "refreshing",
+        "light",
+        "healthy_start"
+      ],
+      "comfort_score": 9.2
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Salad lovers",
+        "High protein low carb lunch (29g protein)"
+      ],
+      "avoid_if": [
+        "Gluten allergy",
+        "Dairy allergy"
+      ],
+      "strengths": [
+        "29g lean chicken protein",
+        "Crisp and refreshing romaine lettuce"
+      ],
+      "weaknesses": [
+        "Contains dairy and gluten croutons"
+      ],
+      "conversation_keywords": [
+        "chicken caesar salad",
+        "eatfit caesar salad",
+        "healthy chicken salad"
+      ],
+      "health_tradeoffs": "Delivers 29g protein in a refreshing 360 kcal salad[cite: 3].",
+      "budget_tradeoffs": "Affordable wellness salad priced at ₹210[cite: 3].",
+      "explanation_templates": {
+        "default": "Chicken Caesar Salad from EATFIT is available for ₹210[cite: 3].",
+        "healthy": "Chicken Caesar Salad contains 360.0 kcal and 29.0g protein[cite: 3].",
+        "budget": "At ₹210, Chicken Caesar Salad offers great wholesome value[cite: 3]."
+      },
+      "typical_user_persona": [
+        "Office Employee",
+        "Fitness Seeker"
+      ],
+      "common_ordering_intent": [
+        "Light Lunch",
+        "Healthy Salad Meal"
+      ],
+      "conversation_triggers": [
+        "caesar salad",
+        "chicken salad meal"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to add a Greek Blueberry Yogurt Parfait for dessert?"
+      ],
+      "decision_factors": [
+        "29g Protein",
+        "Crisp Lettuce",
+        "Low Carbs"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official EATFIT guide",
+        "source": "eat-fit-go-meal-guide.pdf (Page 1)[cite: 3]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "EATFIT Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "eat-fit-go-meal-guide.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "chicken caesar salad",
+      "eatfit caesar salad",
+      "healthy chicken salad"
+    ]
+  },
+  {
+    "item_id": 809,
+    "restaurant_id": 4,
+    "restaurant_code": "EATFIT",
+    "item_code": "EATFIT_SNACK_001",
+    "name": "Greek Blueberry Yogo Parfait",
+    "description": "Layered healthy dessert featuring thick Greek yogurt, sweet blueberry compote, and wholesome granola.",
+    "category": "veg",
+    "meal_type": "dessert",
+    "available": true,
+    "image_url": null,
+    "image_available": false,
+    "image_source": null,
+    "category_intelligence": {
+      "category_id": "CAT_HEALTHY_SNACKS",
+      "category_name": "Healthy Snacks & Desserts",
+      "display_order": 2,
+      "parent_category": "Healthy",
+      "category_icon": "icon_dessert",
+      "category_description": "Nutritious yogurts, parfaits, and healthy sweet snacks."
+    },
+    "nutrition": {
+      "macronutrients": {
+        "calories_kcal": 220.0,
+        "protein_g": 14.0,
+        "carbs_g": 34.0,
+        "net_carbs_g": 31.0,
+        "sugar_g": 22.0,
+        "added_sugar_g": 10.0,
+        "fiber_g": 3.0,
+        "fat_g": 4.0,
+        "saturated_fat_g": 1.5,
+        "unsaturated_fat_g": 2.5,
+        "trans_fat_g": 0.0,
+        "serving_weight_g": 180.0,
+        "serving_units": "180g (1 Parfait)"
+      },
+      "micronutrients": {
+        "calcium_mg": 180.0,
+        "iron_mg": 0.9,
+        "potassium_mg": 210.0,
+        "sodium_mg": 70.0
+      }
+    },
+    "dietary_safety": {
+      "is_veg": true,
+      "is_non_veg": false,
+      "is_egg": false,
+      "is_vegan": false,
+      "is_gluten_free": false,
+      "is_dairy_free": false,
+      "allergens": [
+        "dairy",
+        "gluten"
+      ]
+    },
+    "health_scores": {
+      "overall_health_score": 8.2,
+      "weight_loss_score": 8.0,
+      "muscle_gain_score": 6.5,
+      "heart_health_score": 7.5,
+      "gut_health_score": 9.5,
+      "diabetic_friendly_score": 3.5,
+      "blood_pressure_score": 8.5,
+      "energy_score": 8.0,
+      "recovery_score": 6.0,
+      "satiety_score": 8.0,
+      "digestibility_score": 8.0,
+      "inflammation_score": 7.0
+    },
+    "ingredients": {
+      "primary_protein": "Greek Yogurt",
+      "secondary_protein": "None",
+      "vegetables": [],
+      "grains": [
+        "Granola"
+      ],
+      "dairy": [
+        "Greek Yogurt",
+        "Milk Solids"
+      ],
+      "sauces": [
+        "Blueberry Compote"
+      ],
+      "spices": [
+        "Vanilla"
+      ],
+      "cooking_oil": "None",
+      "sweeteners": [
+        "Honey",
+        "Sugar"
+      ],
+      "whole_ingredients_list": [
+        "Greek yogurt",
+        "blueberries",
+        "granola",
+        "honey"
+      ],
+      "ingredient_tags": [
+        "greek_yogurt",
+        "blueberry_parfait",
+        "healthy_dessert",
+        "probiotic"
+      ]
+    },
+    "commerce_intelligence": {
+      "price": 140,
+      "best_side_item_ids": [],
+      "best_beverage_item_ids": [],
+      "best_dessert_item_ids": [],
+      "frequently_bought_together": [],
+      "likely_add_ons": [],
+      "recommended_combo": {
+        "combo_name": "Greek Blueberry Yogo Parfait Deal",
+        "item_ids": [
+          809
+        ],
+        "total_price": 140,
+        "discount_price": 130,
+        "is_ai_generated": true
+      },
+      "healthy_combo": {
+        "combo_name": "Greek Blueberry Yogo Parfait Healthy Meal",
+        "item_ids": [
+          809
+        ],
+        "total_price": 140,
+        "is_ai_generated": true
+      },
+      "budget_combo": {
+        "combo_name": "Greek Blueberry Yogo Parfait Value Meal",
+        "item_ids": [
+          809
+        ],
+        "total_price": 140,
+        "is_ai_generated": true
+      },
+      "premium_combo": {
+        "combo_name": "Greek Blueberry Yogo Parfait Luxury Meal",
+        "item_ids": [
+          809
+        ],
+        "total_price": 140,
+        "is_ai_generated": true
+      },
+      "combo_priority": 1,
+      "average_cart_position": "dessert",
+      "cross_sell_candidates": [],
+      "upsell_candidates": [],
+      "downsell_candidates": [],
+      "delivery_suitability": 8,
+      "packaging_quality": 5,
+      "reheating_quality": 6,
+      "messiness_score": 2,
+      "shareability_score": 1,
+      "preparation_time_mins": 5,
+      "popularity_percentile": 95.0,
+      "seasonality": [
+        "all_year"
+      ]
+    },
+    "context_intelligence": {
+      "context_tags": [
+        "healthy",
+        "snack",
+        "dessert"
+      ],
+      "suitable_occasions": [
+        "Lunch",
+        "Dinner",
+        "Snack"
+      ],
+      "eating_environment": [
+        "Office Desk",
+        "Home"
+      ]
+    },
+    "mood_sensory": {
+      "spicy": false,
+      "spice_level": "none",
+      "mood_tags": [
+        "refreshing",
+        "sweet_tooth",
+        "comfort"
+      ],
+      "comfort_score": 9.4
+    },
+    "ai_metadata": {
+      "recommended_for": [
+        "Healthy sweet treat seekers",
+        "Greek yogurt lovers",
+        "Probiotic snack"
+      ],
+      "avoid_if": [
+        "Lactose intolerance"
+      ],
+      "strengths": [
+        "14g dairy protein",
+        "Rich in probiotics and blueberries",
+        "Low fat (4g)"
+      ],
+      "weaknesses": [
+        "Contains dairy"
+      ],
+      "conversation_keywords": [
+        "greek blueberry yogurt parfait",
+        "eatfit parfait",
+        "blueberry yogurt snack"
+      ],
+      "health_tradeoffs": "Delivers 14g protein and gut-healthy probiotics for only 220 kcal[cite: 3].",
+      "budget_tradeoffs": "Affordable healthy snack priced at ₹140[cite: 3].",
+      "explanation_templates": {
+        "default": "Greek Blueberry Yogo Parfait from EATFIT is available for ₹140[cite: 3].",
+        "healthy": "Greek Blueberry Yogo Parfait contains 220.0 kcal and 14.0g protein[cite: 3].",
+        "budget": "At ₹140, Greek Blueberry Yogo Parfait offers great wholesome value[cite: 3]."
+      },
+      "typical_user_persona": [
+        "Fitness Diner",
+        "Health-Conscious Snacker"
+      ],
+      "common_ordering_intent": [
+        "Healthy Snack",
+        "Post-Meal Sweet Treat"
+      ],
+      "conversation_triggers": [
+        "yogurt parfait",
+        "blueberry yogurt snack"
+      ],
+      "likely_follow_up_questions": [
+        "Would you like to pair this with a Fit Chicken Bowl?"
+      ],
+      "decision_factors": [
+        "14g Protein",
+        "Probiotics",
+        "Low Calorie"
+      ],
+      "recommendation_priority": 10
+    },
+    "confidence": {
+      "nutrition": {
+        "score": 1.0,
+        "reason": "Extracted directly from official EATFIT guide",
+        "source": "eat-fit-go-meal-guide.pdf (Page 1)[cite: 3]",
+        "calculation_method": "Official Laboratory Assayed Data"
+      },
+      "micronutrients": {
+        "score": 0.35,
+        "reason": "Calculated via USDA models",
+        "source": "AI Estimation Engine V1",
+        "calculation_method": "Ingredient Density Projection"
+      },
+      "health_scores": {
+        "score": 0.85,
+        "reason": "Derived from nutritional formulas",
+        "source": "Health Score Engine V1",
+        "calculation_method": "Weighted Vector Normalization"
+      },
+      "mood_tags": {
+        "score": 0.8,
+        "reason": "Mapped via heuristic matrices",
+        "source": "Sensory Classifier V1",
+        "calculation_method": "Contextual Semantic Alignment"
+      },
+      "commerce": {
+        "score": 0.85,
+        "reason": "Derived from pricing ratios",
+        "source": "Commerce Intelligence Engine V1",
+        "calculation_method": "Pairing Matrix Co-Occurrence Heuristics"
+      }
+    },
+    "source_metadata": {
+      "source": "EATFIT Official Menu & Nutrition Booklet",
+      "source_type": "PDF",
+      "document_name": "eat-fit-go-meal-guide.pdf",
+      "page_number": 1,
+      "last_verified": "2026-07-27",
+      "confidence_level": "official"
+    },
+    "data_quality": {
+      "price_complete": true,
+      "nutrition_complete": true,
+      "ingredients_complete": true,
+      "micronutrients_estimated": true,
+      "health_scores_estimated": true,
+      "manual_review_completed": true
+    },
+    "search_aliases": [
+      "greek blueberry yogurt parfait",
+      "eatfit yogurt parfait",
+      "blueberry yogurt snack"
+    ]
   }
 ]
