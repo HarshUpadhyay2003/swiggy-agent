@@ -59,6 +59,13 @@ class RecommendationCandidate(BaseModel):
     restaurant_id: Optional[int] = None
     restaurant_name: str = ""
     cuisine: str = ""
+    cuisine_type: str = ""
+    taste_preference: str = ""
+    parent_category: str = ""
+    serving: str = ""
+    is_combo: bool = False
+    combo_id: Optional[int] = None
+    savings_amount: Optional[int] = None
     raw_item: Dict[str, Any] = Field(default_factory=dict)
 
 

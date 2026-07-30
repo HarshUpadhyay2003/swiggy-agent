@@ -38,6 +38,7 @@ class ConversationalAssistantTester:
         self.test_cart_operations()
         self.test_meal_planning()
         self.test_natural_language_variations()
+        self.test_stage1_accuracy_matrix()
 
         self.print_summary()
 
@@ -214,6 +215,68 @@ class ConversationalAssistantTester:
             print(f"   Intent: {intent}")
             print(f"   Response: {response[:80]}...")
 
+    def test_stage1_accuracy_matrix(self) -> None:
+        """Automated test cases for Stage 1 intent accuracy (40+ prompts)."""
+        print("\n" + "-" * 80)
+        print("TEST 8: STAGE 1 INTENT ACCURACY MATRIX (40+ PROMPTS)")
+        print("-" * 80)
+
+        test_matrix = [
+            # Concise food/beverage/dessert prompts
+            ("coffee", "food_recommendation", "single-word beverage"),
+            ("tea", "food_recommendation", "single-word beverage"),
+            ("smoothie", "food_recommendation", "single-word beverage"),
+            ("juice", "food_recommendation", "single-word beverage"),
+            ("dessert", "food_recommendation", "single-word dessert"),
+            ("desserts", "food_recommendation", "plural dessert"),
+            ("ice cream", "food_recommendation", "multi-word dessert"),
+            ("burger", "food_recommendation", "single-word food"),
+            ("burgers", "food_recommendation", "plural food"),
+            ("pizza", "food_recommendation", "single-word food"),
+            ("paneer", "food_recommendation", "single-word food ingredient"),
+            ("veg", "food_recommendation", "single-word preference"),
+            ("breakfast", "food_recommendation", "single-word meal type"),
+            ("lunch", "food_recommendation", "single-word meal type"),
+            ("dinner", "food_recommendation", "single-word meal type"),
+            ("combo", "food_recommendation", "single-word combo"),
+            ("family meal", "food_recommendation", "multi-word combo"),
+            ("kids meal", "food_recommendation", "multi-word combo"),
+
+            # Concise recommendation & budget prompts
+            ("meals under 300", "food_recommendation", "meal + budget"),
+            ("under 200", "food_recommendation", "concise budget"),
+            ("cheap meals", "food_recommendation", "budget phrase"),
+            ("best burgers", "food_recommendation", "popularity phrase"),
+            ("popular pizzas", "food_recommendation", "popularity phrase"),
+            ("suggest meals", "food_recommendation", "explicit suggest verb"),
+            ("recommend dinner", "food_recommendation", "explicit recommend verb"),
+
+            # Healthy suggestions prompts
+            ("high protein under 300", "healthy_suggestions", "protein + budget"),
+            ("high protein", "healthy_suggestions", "concise health prompt"),
+            ("protein rich", "healthy_suggestions", "concise health prompt"),
+            ("gym meals", "healthy_suggestions", "concise health prompt"),
+            ("healthy food", "healthy_suggestions", "concise health prompt"),
+            ("diet food", "healthy_suggestions", "concise health prompt"),
+            ("low calorie", "healthy_suggestions", "concise health prompt"),
+            ("healthy", "healthy_suggestions", "single-word health"),
+
+            # Core Cart & Action prompts (protection check)
+            ("add burger", "add_to_cart", "add item to cart"),
+            ("remove fries", "remove_from_cart", "remove item from cart"),
+            ("show cart", "view_cart", "view cart contents"),
+            ("checkout", "checkout_cart", "checkout cart"),
+            ("repeat last order", "reorder_action", "reorder previous order"),
+
+            # Planner & Status prompts (protection check)
+            ("create weekly plan under 3000", "meal_planning", "meal planner creation"),
+            ("show meal plan", "meal_planning", "show meal plan"),
+            ("where is my order", "order_status", "track order status"),
+        ]
+
+        for message, expected_intent, description in test_matrix:
+            self._run_test(message, expected_intent, f"STAGE1 MATRIX: {message} ({description})")
+
     def _run_test(self, message: str, expected_intent: str, description: str) -> None:
         """Run a single test case."""
         print(f"\n📝 '{message}'")
@@ -290,6 +353,96 @@ class ConversationalAssistantTester:
                 if result["status"] == "FAIL":
                     print(f"  - {result['test']}: {result.get('error', 'Unknown error')}")
 
+    def test_stage1_v2_matrix(self) -> None:
+        """Test Recommendation Intelligence V2 progressive memory and candidate retrieval."""
+        print("\n" + "-" * 80)
+        print("TEST STAGE 1 V2: RECOMMENDATION INTELLIGENCE V2 (PROGRESSIVE MEMORY & RETRIEVAL)")
+        print("-" * 80)
+
+        # Multi-turn session test
+        session_v2 = "session-v2-progressive"
+        turns = [
+            ("Indian", "food_recommendation", lambda res: len(res.get("data", {}).get("recommendations", [])) > 0),
+            ("under 300", "food_recommendation", lambda res: len(res.get("data", {}).get("recommendations", [])) > 0 and all(item.get("price", 0) <= 300 for item in res.get("data", {}).get("recommendations", []))),
+            ("Chinese", "food_recommendation", lambda res: len(res.get("data", {}).get("recommendations", [])) > 0),
+            ("reset preferences", "food_recommendation", lambda res: len(res.get("data", {}).get("recommendations", [])) == 0),
+        ]
+
+        print("\n--- Multi-Turn Progressive Refinement Test ---")
+        for msg, expected_intent, val_func in turns:
+            res = self.orchestrator.handle_message(msg, {"session_id": session_v2})
+            recs_list = res.get("data", {}).get("recommendations", [])
+            passed = res.get("intent") == expected_intent and val_func(res)
+            status = "PASS" if passed else "FAIL"
+            self.test_results.append({"test": f"PROGRESSIVE: {msg}", "status": status})
+            print(f"User: '{msg}' | Intent: {res.get('intent')} | Recs: {len(recs_list)} | {'✅ PASS' if passed else '❌ FAIL'}")
+
+        # Single-turn and category test matrix (46 prompts)
+        matrix = [
+            # Cuisine & Tastes
+            ("Indian meals under 300", "food_recommendation"),
+            ("Chinese food", "food_recommendation"),
+            ("spicy biryani", "food_recommendation"),
+            ("sweet desserts", "food_recommendation"),
+            ("tangy snacks", "food_recommendation"),
+            ("cheesy pizza", "food_recommendation"),
+            ("smoky chicken", "food_recommendation"),
+
+            # Specific Categories
+            ("beverages", "food_recommendation"),
+            ("coffee", "food_recommendation"),
+            ("cold drink", "food_recommendation"),
+            ("desserts", "food_recommendation"),
+            ("ice cream", "food_recommendation"),
+            ("lava cake", "food_recommendation"),
+            ("burgers under 200", "food_recommendation"),
+            ("pizzas", "food_recommendation"),
+
+            # Combos & Bundles
+            ("combos", "food_recommendation"),
+            ("family combo", "food_recommendation"),
+            ("meal deal", "food_recommendation"),
+            ("burger combo", "food_recommendation"),
+
+            # Health & Nutrition
+            ("healthy lunch", "food_recommendation"),
+            ("high protein under 400", "food_recommendation"),
+            ("gym meals", "food_recommendation"),
+            ("low calorie dinner", "food_recommendation"),
+            ("light snacks", "food_recommendation"),
+
+            # Diet & Preferences
+            ("veg dinner", "food_recommendation"),
+            ("non veg under 250", "food_recommendation"),
+            ("vegetarian breakfast", "food_recommendation"),
+
+            # Adaptive Defaults
+            ("Food", "food_recommendation"),
+            ("Suggest something", "food_recommendation"),
+            ("what should i eat", "food_recommendation"),
+            ("recommend food", "food_recommendation"),
+
+            # Regression Protection - Cart, Checkout, Reorder, Planner
+            ("show my cart", "show_cart"),
+            ("add 2 burgers to cart", "add_to_cart"),
+            ("remove burger from cart", "remove_from_cart"),
+            ("clear my cart", "clear_cart"),
+            ("checkout", "checkout"),
+            ("place order", "checkout"),
+            ("reorder my last order", "reorder"),
+            ("repeat my last order", "reorder"),
+            ("make a weekly meal plan", "meal_planning"),
+            ("weekly diet plan under 2000", "meal_planning"),
+            ("hi", "greeting"),
+            ("hello", "greeting"),
+            ("thanks", "gratitude"),
+            ("bye", "farewell"),
+        ]
+
+        print("\n--- Recommendation V2 Accuracy Test Matrix ---")
+        for message, expected_intent in matrix:
+            self._run_test(message, expected_intent, f"STAGE1_V2: {message}")
+
 
 def print_architecture_overview() -> None:
     """Print the new conversational architecture."""
@@ -346,27 +499,7 @@ NEW ARCHITECTURE (LLM-Powered + Business Logic Hybrid):
     └────┬──────────────────────────────────┘
          │
     ┌────▼──────────────────────────────────┐
-    │  ConversationMemory                   │  ← Session context tracking
-    │  └─ Maintains conversation history    │  ← Follow-up understanding
-    └────┬──────────────────────────────────┘
-         │
-    ┌────▼──────────────────────────────────┐
-    │  Intent Routing                       │
-    ├─ Conversational (greeting, thanks)    │  ← Immediate response
-    ├─ Multi-Action (remove + add)          │  ← Combined handling
-    ├─ Context-Aware Followup               │  ← Smart modification
-    └─ Core Intent (recommendations, cart)  │  ← Business logic
-         │
-    ┌────▼──────────────────────────────────┐
-    │  Business Logic Layer                 │  ← UNCHANGED
-    │  ├─ Context Engine (filtering)        │  ← Deterministic
-    │  ├─ Cart Service (add/remove/view)    │  ← Reliable operations
-    │  ├─ Order Service (checkout, track)   │  ← Trusted transactions
-    │  ├─ Catalog Service (inventory)       │  ← Data source
-    │  └─ Meal Planner (planning)           │  ← LLM-assisted planning
-    └────┬──────────────────────────────────┘
-         │
-    ┌────▼──────────────────────────────────┐
+    │  ConversationMemory           ┌────▼──────────────────────────────────┐
     │  ConversationalResponseGenerator      │  ← LLM-based response gen
     │  ├─ Natural language generation       │  ← Varied phrasing
     │  ├─ Context-aware responses           │  ← Tone adaptation
@@ -376,56 +509,28 @@ NEW ARCHITECTURE (LLM-Powered + Business Logic Hybrid):
          │
     ┌────▼──────────────────────────────────┐
     │  User Response (Natural & Smart)      │
-    └─────────────────────────────────────────┘
-
-
-KEY IMPROVEMENTS:
-
-1. INTELLIGENT INTENT DETECTION
-   ✅ Understands casual language ("cool", "nice", "okay")
-   ✅ Detects mixed intents ("remove X and add Y")
-   ✅ Recognizes follow-ups with context
-   ✅ Handles variations gracefully
-
-2. SMART ENTITY EXTRACTION
-   ✅ Budget: "under 200", "between 100-200", "cheap"
-   ✅ Preferences: "veg", "non-veg", "healthy", "protein rich"
-   ✅ Meal Type: "dinner", "lunch", "breakfast", "snacks"
-   ✅ Mood: "comfort", "light", "expensive", "late night"
-   ✅ Modifications: "spicy", "less spicy", "lighter", "cheaper"
-
-3. CONVERSATIONAL CONTEXT AWARENESS
-   ✅ Remembers previous intent in session
-   ✅ Applies modifications to previous filters
-   ✅ Maintains entity history
-   ✅ Understands implicit continuations
-
-4. NATURAL RESPONSE GENERATION
-   ✅ Varied phrasing (not templates)
-   ✅ Tone-aware responses
-   ✅ Follow-up suggestions
-   ✅ Conversational flow
-
-5. FALLBACK PROTECTION
-   ✅ LLM classification with keyword fallback
-   ✅ Degraded mode when LLM unavailable
-   ✅ Business logic always deterministic
-   ✅ Safe error handling
-
-6. BACKWARD COMPATIBILITY
-   ✅ Old keyword extraction still available
-   ✅ Regex patterns as fallback
-   ✅ Existing business logic untouched
-   ✅ Session manager still tracks interactions
+    └───────────────────────────────────────┘
 """)
 
 
 if __name__ == "__main__":
-    print_architecture_overview()
-
     tester = ConversationalAssistantTester()
     try:
-        tester.run_all_tests()
+        if "--v2" in sys.argv:
+            print("\n" + "=" * 80)
+            print("RUNNING RECOMMENDATION INTELLIGENCE V2 TEST MATRIX ONLY")
+            print("=" * 80)
+            tester.test_stage1_v2_matrix()
+            tester.print_summary()
+        elif "--stage1" in sys.argv:
+            print("\n" + "=" * 80)
+            print("RUNNING STAGE 1 INTENT ACCURACY MATRIX ONLY")
+            print("=" * 80)
+            tester.test_stage1_accuracy_matrix()
+            tester.print_summary()
+        else:
+            print_architecture_overview()
+            tester.run_all_tests()
     except Exception as e:
         print(f"\n❌ Test execution failed: {e}")
         sys.exit(1)

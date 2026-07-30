@@ -39,20 +39,39 @@ class ContextEngine:
         if min_budget is not None and isinstance(min_budget, (int, float)):
             constraints.append(Constraint(type="min_budget", value=min_budget))
 
-        # Extract preference constraint
-        preference = context.get("preference") or context.get("category")
-        if preference:
-            constraints.append(Constraint(type="preference", value=preference))
+        # Extract cuisine constraint
+        cuisine = context.get("cuisine_type") or context.get("cuisine")
+        if cuisine:
+            constraints.append(Constraint(type="cuisine_type", value=cuisine))
 
-        # Extract meal type constraint
-        meal_type = context.get("meal_type")
-        if meal_type:
-            constraints.append(Constraint(type="meal_type", value=meal_type))
+        # Extract taste constraint
+        taste = context.get("taste_preference") or context.get("taste")
+        if taste:
+            constraints.append(Constraint(type="taste_preference", value=taste))
+
+        # Extract category constraint
+        category = context.get("category") or context.get("item_category")
+        if category:
+            constraints.append(Constraint(type="category", value=category))
+
+        # Extract diet constraint
+        diet = context.get("diet") or context.get("preference")
+        if diet:
+            constraints.append(Constraint(type="diet", value=diet))
+
+        # Extract serving constraint
+        serving = context.get("serving")
+        if serving:
+            constraints.append(Constraint(type="serving", value=serving))
+
+        # Extract combo constraint
+        if context.get("is_combo") or (category and str(category).lower() in {"combo", "combos", "meal deal", "family combo"}):
+            constraints.append(Constraint(type="is_combo", value=True))
 
         # Extract health constraint
         health_goal = context.get("health_goal") or context.get("healthy_only") or context.get("healthy")
         if health_goal:
-            constraints.append(Constraint(type="health_goal", value=True))
+            constraints.append(Constraint(type="health_goal", value=health_goal))
 
         # Extract mood constraint
         mood = context.get("mood")
@@ -60,8 +79,10 @@ class ContextEngine:
             constraints.append(Constraint(type="mood", value=mood))
 
         # Extract additional attribute constraints
-        if context.get("high_protein") or context.get("protein_rich"):
+        if context.get("high_protein") or context.get("protein_rich") or health_goal == "high_protein":
             constraints.append(Constraint(type="high_protein", value=True))
+        if context.get("low_calorie") or health_goal == "low_calorie":
+            constraints.append(Constraint(type="low_calorie", value=True))
         if context.get("spicy") is not None:
             constraints.append(Constraint(type="spicy", value=context.get("spicy")))
         if context.get("vegan"):
@@ -102,10 +123,14 @@ class ContextEngine:
             rec_item: Dict[str, Any] = {
                 "item_id": res.candidate.item_id,
                 "item_name": res.candidate.name,
+                "name": res.candidate.name,
                 "restaurant": res.candidate.restaurant_name,
+                "restaurant_name": res.candidate.restaurant_name,
                 "price": res.candidate.price,
-                "cuisine": res.candidate.cuisine,
+                "cuisine": res.candidate.cuisine or res.candidate.cuisine_type,
+                "cuisine_type": res.candidate.cuisine_type or res.candidate.cuisine,
                 "healthy": res.candidate.healthy,
+                "is_combo": res.candidate.is_combo,
                 "reason": reason_str,
             }
 

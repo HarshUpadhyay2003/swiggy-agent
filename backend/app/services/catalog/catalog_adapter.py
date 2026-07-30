@@ -78,6 +78,13 @@ class CatalogAdapter:
             "restaurant_id": item.get("restaurant_id"),
             "restaurant_name": rest_name,
             "cuisine": cuisine_str,
+            "cuisine_type": item.get("cuisine_type", cuisine_str),
+            "taste_preference": item.get("taste_preference", ""),
+            "category_intelligence": item.get("category_intelligence", {}),
+            "secondary_cuisines": restaurant.get("secondary_cuisines", []) if restaurant else [],
+            "nutrition": nutrition,
+            "health_scores": health_scores,
+            "dietary_safety": dietary,
         }
 
     @staticmethod

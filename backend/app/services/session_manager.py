@@ -9,10 +9,56 @@ class PlannerState(BaseModel):
     preferences: Dict[str, Any] = Field(default_factory=dict)
     rejected_items: List[str] = Field(default_factory=list)
 
+class RecommendationContextMemory(BaseModel):
+    meal_type: Optional[str] = None
+    budget: Optional[float] = None
+    diet: Optional[str] = None
+    taste_preference: Optional[str] = None
+    cuisine_type: Optional[str] = None
+    category: Optional[str] = None
+    restaurant: Optional[str] = None
+    health_goal: Optional[str] = None
+    occasion: Optional[str] = None
+    serving: Optional[str] = None
+    popularity: Optional[str] = None
+    last_recommendations: List[Dict[str, Any]] = Field(default_factory=list)
+
+    def clear(self) -> None:
+        """Reset recommendation memory only without affecting cart or planner."""
+        self.meal_type = None
+        self.budget = None
+        self.diet = None
+        self.taste_preference = None
+        self.cuisine_type = None
+        self.category = None
+        self.restaurant = None
+        self.health_goal = None
+        self.occasion = None
+        self.serving = None
+        self.popularity = None
+        self.last_recommendations = []
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "meal_type": self.meal_type,
+            "budget": self.budget,
+            "diet": self.diet,
+            "taste_preference": self.taste_preference,
+            "cuisine_type": self.cuisine_type,
+            "category": self.category,
+            "restaurant": self.restaurant,
+            "health_goal": self.health_goal,
+            "occasion": self.occasion,
+            "serving": self.serving,
+            "popularity": self.popularity,
+        }
+
+
 class SessionState(BaseModel):
     session_id: str
     active_domain: str = "general" # "general", "planner", "cart", "recommendations"
     planner_state: PlannerState = Field(default_factory=PlannerState)
+    recommendation_memory: RecommendationContextMemory = Field(default_factory=RecommendationContextMemory)
     active_cart: Optional[Dict[str, Any]] = None
     last_intent: Optional[str] = None
     last_action: Optional[str] = None

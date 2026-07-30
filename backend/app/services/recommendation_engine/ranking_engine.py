@@ -183,6 +183,112 @@ class HistoryScorer(BaseComponentScorer):
         return ComponentScore(component=self.component_name, score=0.0)
 
 
+class CuisineScorer(BaseComponentScorer):
+    component_name = "cuisine"
+    weight = 25.0
+
+    def compute_score(
+        self, candidate: RecommendationCandidate, request: RecommendationRequest
+    ) -> ComponentScore:
+        cuisine_req = request.get_constraint_value("cuisine_type") or request.get_constraint_value("cuisine")
+        if cuisine_req:
+            norm_req = str(cuisine_req).strip().lower()
+            text = f"{candidate.cuisine} {candidate.cuisine_type} {candidate.restaurant_name} {candidate.name}".lower()
+            if norm_req in text:
+                return ComponentScore(component=self.component_name, score=self.weight, reason=f"Matches {cuisine_req} cuisine")
+        return ComponentScore(component=self.component_name, score=0.0)
+
+
+class TasteScorer(BaseComponentScorer):
+    component_name = "taste"
+    weight = 20.0
+
+    def compute_score(
+        self, candidate: RecommendationCandidate, request: RecommendationRequest
+    ) -> ComponentScore:
+        taste_req = request.get_constraint_value("taste_preference") or request.get_constraint_value("taste")
+        if taste_req:
+            norm_req = str(taste_req).strip().lower()
+            text = f"{candidate.taste_preference} {candidate.name} {candidate.description}".lower()
+            if norm_req in text or (norm_req == "spicy" and candidate.spicy):
+                return ComponentScore(component=self.component_name, score=self.weight, reason=f"Matches {taste_req} taste")
+        return ComponentScore(component=self.component_name, score=0.0)
+
+
+class CategoryScorer(BaseComponentScorer):
+    component_name = "category"
+    weight = 25.0
+
+    def compute_score(
+        self, candidate: RecommendationCandidate, request: RecommendationRequest
+    ) -> ComponentScore:
+        cat_req = request.get_constraint_value("category") or request.get_constraint_value("item_category")
+        if cat_req:
+            norm_req = str(cat_req).strip().lower()
+            text = f"{candidate.parent_category} {candidate.name} {candidate.description}".lower()
+            if norm_req in text:
+                return ComponentScore(component=self.component_name, score=self.weight, reason=f"Matches {cat_req} category")
+        return ComponentScore(component=self.component_name, score=0.0)
+
+
+class ComboScorer(BaseComponentScorer):
+    component_name = "combo"
+    weight = 30.0
+
+    def compute_score(
+        self, candidate: RecommendationCandidate, request: RecommendationRequest
+    ) -> ComponentScore:
+        is_combo_req = request.get_constraint_value("is_combo") or request.get_constraint_value("category") in {"combo", "combos", "meal deal", "family combo"}
+        if is_combo_req and candidate.is_combo:
+            return ComponentScore(component=self.component_name, score=self.weight, reason="Official combo deal")
+        return ComponentScore(component=self.component_name, score=0.0)
+
+
+class DiversityReranker:
+    """Applies greedy diversity penalty to avoid returning duplicate categories/restaurants in top-K."""
+
+    def rerank(
+        self,
+        scored_pairs: List[Tuple[RecommendationCandidate, RecommendationScore]],
+        top_k: int = 5,
+        single_category_focused: bool = False,
+    ) -> List[Tuple[RecommendationCandidate, RecommendationScore]]:
+        if len(scored_pairs) <= 1 or single_category_focused:
+            return scored_pairs[:top_k]
+
+        selected: List[Tuple[RecommendationCandidate, RecommendationScore]] = []
+        candidates_pool = list(scored_pairs)
+
+        seen_restaurants = set()
+        seen_parent_categories = set()
+
+        while candidates_pool and len(selected) < top_k:
+            best_idx = 0
+            best_adjusted_score = -9999.0
+
+            for idx, (cand, score) in enumerate(candidates_pool):
+                penalty = 0.0
+                if cand.restaurant_id in seen_restaurants:
+                    penalty += 15.0
+                if cand.parent_category and cand.parent_category.lower() in seen_parent_categories:
+                    penalty += 15.0
+
+                adj_score = score.total_score - penalty
+                if adj_score > best_adjusted_score:
+                    best_adjusted_score = adj_score
+                    best_idx = idx
+
+            chosen_pair = candidates_pool.pop(best_idx)
+            chosen_cand = chosen_pair[0]
+            selected.append(chosen_pair)
+
+            seen_restaurants.add(chosen_cand.restaurant_id)
+            if chosen_cand.parent_category:
+                seen_parent_categories.add(chosen_cand.parent_category.lower())
+
+        return selected
+
+
 class RankingEngine:
     """Combines independent component scorers into aggregated candidate scores."""
 
@@ -190,6 +296,10 @@ class RankingEngine:
         self.scorers: List[BaseComponentScorer] = scorers or [
             BudgetScorer(),
             PreferenceScorer(),
+            CuisineScorer(),
+            TasteScorer(),
+            CategoryScorer(),
+            ComboScorer(),
             MealTypeScorer(),
             MoodScorer(),
             PopularityScorer(),
@@ -197,6 +307,7 @@ class RankingEngine:
             AttributeScorer(),
             HistoryScorer(),
         ]
+        self.reranker = DiversityReranker()
 
     def score_candidates(
         self, candidates: List[RecommendationCandidate], request: RecommendationRequest
@@ -220,4 +331,8 @@ class RankingEngine:
             scored_pairs.append((candidate, rec_score))
 
         scored_pairs.sort(key=lambda pair: pair[1].total_score, reverse=True)
-        return scored_pairs
+
+        cat_req = request.get_constraint_value("category") or request.get_constraint_value("item_category")
+        is_single_focus = bool(cat_req and str(cat_req).lower() in {"burger", "burgers", "coffee", "tea", "pizza", "pizzas"})
+
+        return self.reranker.rerank(scored_pairs, top_k=request.top_k, single_category_focused=is_single_focus)

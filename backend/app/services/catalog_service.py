@@ -72,6 +72,32 @@ class CatalogService:
         """Return all currently available menu items."""
         return self._filter_items(available_only=True)
 
+    def get_available_combos(self) -> List[Dict[str, Any]]:
+        """Return all active combo bundles from Knowledge Base."""
+        combos = []
+        for combo in self.kb_service.get_all_combos():
+            rid = combo.get("restaurant_id", 0)
+            restaurant = self.kb_service.get_restaurant(rid) or {}
+            combos.append({
+                "combo_id": combo.get("combo_id"),
+                "combo_code": combo.get("combo_code"),
+                "name": combo.get("combo_name"),
+                "description": combo.get("description", ""),
+                "price": combo.get("discounted_price", combo.get("price", 0)),
+                "original_price": combo.get("price", 0),
+                "savings_amount": combo.get("savings_amount", 0),
+                "restaurant_id": rid,
+                "restaurant_name": restaurant.get("name", combo.get("restaurant_code", "")),
+                "cuisine": restaurant.get("primary_cuisine", ""),
+                "secondary_cuisines": restaurant.get("secondary_cuisines", []),
+                "category": "veg" if "veg" in combo.get("combo_name", "").lower() else "non-veg",
+                "meal_type": "lunch",
+                "available": True,
+                "is_combo": True,
+                "raw_combo": combo,
+            })
+        return combos
+
     def get_budget_meals(self, max_price: int) -> List[Dict[str, Any]]:
         """Return available items priced at or below max_price."""
         return [

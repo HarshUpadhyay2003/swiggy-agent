@@ -33,6 +33,7 @@ class ConversationalClassifier:
     # Supported intents
     CORE_INTENTS = [
         "food_recommendation",
+        "healthy_suggestions",
         "add_to_cart",
         "remove_from_cart",
         "cart_action",
@@ -151,7 +152,7 @@ User message: "{message}"{session_info}
 Respond with ONLY valid JSON (no markdown, no code blocks, no extra text):
 
 {{
-  "intent": "primary intent (one of: food_recommendation, cart_action, view_cart, checkout_cart, meal_planning, modify_meal_plan, show_meal_plan, order_status, greeting, gratitude, affirmation, rejection, clarification, casual_chat, modify_previous_request, preference_update)",
+  "intent": "primary intent (one of: food_recommendation, healthy_suggestions, cart_action, view_cart, checkout_cart, meal_planning, modify_meal_plan, show_meal_plan, order_status, greeting, gratitude, affirmation, rejection, clarification, casual_chat, modify_previous_request, preference_update)",
   "actions": [
     {{
       "type": "cart_add|cart_remove|planner_modify|planner_create|other",
@@ -174,7 +175,8 @@ Classification rules:
 - If user wants to remove items → cart_action + action "cart_remove"
 - If user asks about cart contents → view_cart
 - If user wants to pay/complete → checkout_cart
-- If user mentions dietary preferences, budget, or wants suggestions → food_recommendation
+- If user asks for healthy food, high protein, gym meals, diet food, low calorie → healthy_suggestions
+- If user mentions food items, beverages, desserts, dietary preferences, budget (e.g. "meals under 300", "coffee", "burgers", "pizza", "desserts", "veg", "under 200", "combo", "family meal", "breakfast") → food_recommendation
 - If user wants to create a NEW weekly meal plan → meal_planning
 - If user wants to change, edit, replace, or update an existing meal plan → modify_meal_plan
 - If user asks to show, view, or display their meal plan → show_meal_plan
@@ -385,7 +387,15 @@ Rules:
             intent = "modify_meal_plan"
         elif any(word in message_lower for word in ["plan", "weekly", "schedule", "planner"]):
             intent = "meal_planning"
-        elif any(word in message_lower for word in ["recommend", "suggest", "cheap", "healthy"]):
+        elif any(word in message_lower for word in ["healthy", "protein", "diet", "gym", "low calorie", "high fibre", "high fiber", "fitness"]):
+            intent = "healthy_suggestions"
+        elif any(word in message_lower for word in [
+            "recommend", "suggest", "cheap", "budget", "under", "below", "affordable", "food", "meal", "meals",
+            "dish", "dishes", "burger", "pizza", "wrap", "rice", "bowl", "pasta", "noodles", "fries", "chicken",
+            "paneer", "veg", "non veg", "breakfast", "lunch", "dinner", "snacks", "late night", "dessert",
+            "sweet", "ice cream", "coffee", "tea", "shake", "smoothie", "juice", "drink", "beverage", "combo",
+            "family meal", "kids meal", "best", "top", "popular", "trending", "famous"
+        ]):
             intent = "food_recommendation"
         elif any(word in message_lower for word in ["status", "track", "where"]):
             intent = "order_status"
