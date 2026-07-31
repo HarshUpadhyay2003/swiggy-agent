@@ -68,6 +68,11 @@ class ContextEngine:
         if context.get("is_combo") or (category and str(category).lower() in {"combo", "combos", "meal deal", "family combo"}):
             constraints.append(Constraint(type="is_combo", value=True))
 
+        # Extract meal_type constraint
+        meal_type = context.get("meal_type")
+        if meal_type:
+            constraints.append(Constraint(type="meal_type", value=meal_type))
+
         # Extract health constraint
         health_goal = context.get("health_goal") or context.get("healthy_only") or context.get("healthy")
         if health_goal:
@@ -97,6 +102,7 @@ class ContextEngine:
 
         rec_context = RecommendationContext(
             session_id=context.get("session_id"),
+            raw_query=str(context.get("message") or context.get("query") or ""),
             debug_mode=debug_mode,
         )
 
@@ -106,16 +112,47 @@ class ContextEngine:
             top_k=top_k,
         )
 
+        session_state = context.get("session_state")
+        rec_memory = session_state.recommendation_memory if session_state and hasattr(session_state, "recommendation_memory") else None
+
+        if rec_memory:
+            from app.services.recommendation_engine.conversation_intelligence import ConversationIntelligenceEngine
+            from app.services.session_manager import ConstraintLifecycleEngine
+
+            intelligence_engine = ConversationIntelligenceEngine()
+            lifecycle_engine = ConstraintLifecycleEngine()
+
+            eff_req, _, telemetry = intelligence_engine.process(
+                raw_query=str(context.get("message") or context.get("query") or ""),
+                request=req,
+                session_memory=rec_memory,
+                candidate_retriever=self.recommendation_engine.retriever,
+            )
+
+            effective_req = lifecycle_engine.process_lifecycle(
+                raw_request=eff_req,
+                session_memory=rec_memory,
+                active_domain=getattr(session_state, "active_domain", "recommendations"),
+            )
+        else:
+            effective_req = req
+
         # Delegate to RecommendationEngine
-        results = self.recommendation_engine.generate_recommendations(req)
+        results = self.recommendation_engine.generate_recommendations(effective_req)
 
         # Format output payload expected by ChatOrchestrator and legacy callers
         formatted_recs: List[Dict[str, Any]] = []
         fallback_used = False
 
+        req_max_budget = max_budget if (max_budget and isinstance(max_budget, (int, float))) else None
+
         for res in results:
             if res.debug and res.debug.strategy != "explicit_constraints":
                 fallback_used = True
+
+            price_diff = 0
+            if req_max_budget and res.candidate.price > req_max_budget:
+                price_diff = int(res.candidate.price - req_max_budget)
 
             # Formulate natural language reason string from structured reasons
             reason_str = ", ".join(res.reason.reasons) if res.reason.reasons else "Matches criteria"
@@ -129,8 +166,11 @@ class ContextEngine:
                 "price": res.candidate.price,
                 "cuisine": res.candidate.cuisine or res.candidate.cuisine_type,
                 "cuisine_type": res.candidate.cuisine_type or res.candidate.cuisine,
+                "parent_category": res.candidate.parent_category,
                 "healthy": res.candidate.healthy,
                 "is_combo": res.candidate.is_combo,
+                "price_difference": price_diff,
+                "budget_exceeded": bool(price_diff > 0),
                 "reason": reason_str,
             }
 
@@ -142,11 +182,15 @@ class ContextEngine:
 
             formatted_recs.append(rec_item)
 
-        reasoning = (
-            "Found items matching your criteria."
-            if not fallback_used
-            else "Relaxed constraints to suggest popular matching meals."
-        )
+        cuisine_label = str(cuisine or category or "requested").title()
+        if not formatted_recs:
+            reasoning = "No exact matches satisfy every requested constraint."
+        elif fallback_used and req_max_budget:
+            reasoning = f"No {cuisine_label} meals are available under ₹{int(req_max_budget)}. Closest available options:"
+        elif fallback_used:
+            reasoning = f"Relaxed flexible criteria to find matching {cuisine_label} options."
+        else:
+            reasoning = "Found items matching your criteria."
 
         return {
             "recommendations": formatted_recs,

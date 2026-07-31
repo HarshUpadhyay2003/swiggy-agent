@@ -1,4 +1,3 @@
-```gitignore
 # ========================
 # Python
 # ========================
@@ -65,7 +64,7 @@ alembic/versions/*.pyc
 dump.rdb
 
 # ========================
-# Testing
+# Testing & Reports
 # ========================
 .pytest_cache/
 .coverage
@@ -76,6 +75,8 @@ nosetests.xml
 test-results/
 *.cover
 .hypothesis/
+backend/tests/output/latest/
+backend/tests/output/archive/
 
 # ========================
 # Type Checking & Linting
@@ -108,49 +109,20 @@ docker-compose.override.yml
 # ========================
 poetry.lock
 Pipfile.lock
-# Uncomment below if you don't want to commit requirements.txt
-# requirements.txt
-
-# ========================
-# Uploads & Static Files
-# ========================
-uploads/
-media/
-staticfiles/
-
-# ========================
-# Celery (if used)
-# ========================
-celerybeat-schedule
-celerybeat.pid
-
-# ========================
-# Jupyter (if used)
-# ========================
-.ipynb_checkpoints/
-*.ipynb
 
 # ========================
 # React / Frontend
 # ========================
-
-# Node modules
 node_modules/
-
-# Production build
 build/
 dist/
 .next/
 out/
-
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-# Package managers
 .pnpm-store/
 .npm/
 .yarn/
@@ -158,47 +130,26 @@ lerna-debug.log*
 .yarn/unplugged/
 .yarn/build-state.yml
 .yarn/install-state.gz
-
-# Vite
 vite.svg
-
-# Parcel
 .cache/
 .parcel-cache/
-
-# TurboRepo
 .turbo/
-
-# Coverage
 coverage/
-
-# Storybook
 storybook-static/
-
-# React env files
 frontend/.env
 frontend/.env.*
 client/.env
 client/.env.*
-
-# TypeScript
 *.tsbuildinfo
-
-# ESLint cache
 .eslintcache
-
-# Sass cache
 .sass-cache/
 
-# Temporary files
+# ========================
+# Temporary Files & Artifacts
+# ========================
 tmp/
 temp/
-
-# ========================
-# Misc
-# ========================
 *.bak
 *.tmp
 *.orig
 .cache/
-```

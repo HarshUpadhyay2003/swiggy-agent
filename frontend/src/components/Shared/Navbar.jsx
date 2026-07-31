@@ -1,6 +1,7 @@
 import React from 'react'
 import { Moon, Sun, User, ShoppingBag, RotateCcw } from 'lucide-react'
 import { useAppActions, useAppState } from '../../store/AppStore'
+import onlyLogo from '../../assets/only_logo.png'
 
 export function Navbar({ currentPath = '/', onNavigate, onOpenCart }) {
   const { theme, cart } = useAppState()
@@ -14,15 +15,15 @@ export function Navbar({ currentPath = '/', onNavigate, onOpenCart }) {
   }
 
   return (
-    <header className="hidden md:flex bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl top-0 sticky z-50 shadow-sm flex justify-between items-center w-full px-4 md:px-8 max-w-[1200px] mx-auto h-16 rounded-b-2xl border-b border-white/60 dark:border-slate-800 transition-colors">
+    <header className="hidden rounded-xl md:flex bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl top-0 sticky z-50 shadow-sm flex justify-between items-center w-full px-4 md:px-8 max-w-[1200px] mx-auto h-16 rounded-b-2xl border-b border-white/60 dark:border-slate-800 transition-colors">
       {/* Brand Identity */}
       <button
         type="button"
         onClick={(e) => handleNavClick('/', e)}
-        className="flex items-center gap-3 focus:outline-none"
+        className="flex items-center gap-3 focus:outline-none transition-transform duration-300 ease-out hover:scale-105 active:scale-95 origin-left"
       >
-        <div className="h-8 w-8 rounded-lg bg-swiggy-500 flex items-center justify-center text-white font-bold font-serif shadow-sm">
-          H
+        <div className="h-9 w-9 rounded-xl overflow-hidden flex items-center justify-center shadow-sm shrink-0 bg-swiggy-50 dark:bg-slate-800 border border-slate-200/50 dark:border-slate-700">
+          <img src={onlyLogo} alt="CraveAI Logo" className="w-full h-full object-cover" />
         </div>
         <span className="font-serif text-2xl font-bold text-swiggy-700 dark:text-swiggy-400 tracking-tight">
           CraveAI

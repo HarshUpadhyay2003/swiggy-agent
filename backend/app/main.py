@@ -4,14 +4,17 @@ FastAPI Application Main Module
 Entry point for the Swiggy AI Agent backend.
 """
 
+from contextlib import asynccontextmanager
 import logging
-import os
+import sys
+import time
 import traceback
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.config.settings import settings
 from app.routes.cart import router as cart_router
 from app.routes.chat import ChatRequest, chat as chat_handler, router as chat_router
 from app.routes.context import router as context_router
@@ -20,28 +23,36 @@ from app.routes.plan import router as planner_router
 from app.routes.profile import router
 from app.routes.telemetry import router as telemetry_router
 
-app = FastAPI(
-    title="Swiggy AI Copilot",
-    description="AI-powered food ordering assistant backend",
-    version="1.0.0",
-)
+STARTUP_TIME = time.time()
 
 # Setup logger for debug logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=getattr(logging, settings.LOG_LEVEL.upper(), logging.INFO),
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
 logger = logging.getLogger("swiggy_agent")
-logger.setLevel(logging.INFO)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info(f"Starting {settings.APP_NAME} v{settings.VERSION} [{settings.RELEASE}]")
+    logger.info(f"Environment: {settings.ENVIRONMENT} | Architecture: {settings.ARCHITECTURE_VERSION}")
+    yield
+    logger.info(f"Shutting down {settings.APP_NAME} gracefully...")
+
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    description="AI-powered food ordering assistant backend",
+    version=settings.VERSION,
+    lifespan=lifespan,
+)
 
 # CORS: allow frontend origins and preflight handling
-origins = [
-    "http://localhost:5173",
-    "http://localhost:4173",
-    "https://swiggy-agent.vercel.app",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_origin_regex="https://.*\\.vercel\\.app",
+    allow_origins=settings.CORS_ORIGINS,
+    allow_origin_regex=settings.CORS_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -99,9 +110,31 @@ app.include_router(telemetry_router, prefix="/telemetry", tags=["telemetry"])
 
 @app.get("/")
 async def root() -> dict[str, str]:
-    return {"message": "Swiggy AI Agent API", "status": "running"}
+    return {"message": "Swiggy AI Agent API", "status": "running", "release": settings.RELEASE}
 
 
 @app.get("/health")
-async def health_check() -> dict[str, str]:
-    return {"status": "healthy"}
+async def health_check() -> dict:
+    return {
+        "status": "healthy",
+        "version": settings.VERSION,
+        "release": settings.RELEASE,
+        "environment": settings.ENVIRONMENT,
+        "uptime_seconds": round(time.time() - STARTUP_TIME, 2),
+        "knowledge_base_loaded": True,
+        "catalog_loaded": True,
+    }
+
+
+@app.get("/version")
+async def version_info() -> dict:
+    return {
+        "name": settings.APP_NAME,
+        "version": settings.VERSION,
+        "release": settings.RELEASE,
+        "architecture": settings.ARCHITECTURE_VERSION,
+        "ranking": settings.RANKING_VERSION,
+        "semantic": settings.SEMANTIC_VERSION,
+        "build": settings.BUILD_DATE,
+        "python": f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
+    }

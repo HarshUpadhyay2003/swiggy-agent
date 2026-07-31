@@ -1,0 +1,762 @@
+{
+  "scenario_stats": {
+    "Coffee": {
+      "total_candidates": 10,
+      "accepted": 3,
+      "rejected": 7,
+      "mean_semantic": 0.652,
+      "median_semantic": 0.58,
+      "variance_semantic": 0.0299,
+      "stddev_semantic": 0.173,
+      "unique_semantic_scores": [
+        0.46,
+        0.58,
+        0.85,
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    },
+    "Desserts": {
+      "total_candidates": 10,
+      "accepted": 10,
+      "rejected": 0,
+      "mean_semantic": 1.0,
+      "median_semantic": 1.0,
+      "variance_semantic": 0.0,
+      "stddev_semantic": 0.0,
+      "unique_semantic_scores": [
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    },
+    "Healthy": {
+      "total_candidates": 10,
+      "accepted": 5,
+      "rejected": 5,
+      "mean_semantic": 0.79,
+      "median_semantic": 1.0,
+      "variance_semantic": 0.0441,
+      "stddev_semantic": 0.21,
+      "unique_semantic_scores": [
+        0.58,
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    },
+    "Italian": {
+      "total_candidates": 10,
+      "accepted": 10,
+      "rejected": 0,
+      "mean_semantic": 0.985,
+      "median_semantic": 1.0,
+      "variance_semantic": 0.002,
+      "stddev_semantic": 0.045,
+      "unique_semantic_scores": [
+        0.85,
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    },
+    "Pizza": {
+      "total_candidates": 6,
+      "accepted": 6,
+      "rejected": 0,
+      "mean_semantic": 1.0,
+      "median_semantic": 1.0,
+      "variance_semantic": 0.0,
+      "stddev_semantic": 0.0,
+      "unique_semantic_scores": [
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    },
+    "Indian Dinner": {
+      "total_candidates": 6,
+      "accepted": 3,
+      "rejected": 3,
+      "mean_semantic": 0.73,
+      "median_semantic": 1.0,
+      "variance_semantic": 0.0729,
+      "stddev_semantic": 0.27,
+      "unique_semantic_scores": [
+        0.46,
+        1.0
+      ],
+      "mean_suitability": 1.0,
+      "unique_suitability": [
+        1.0
+      ]
+    }
+  },
+  "evaluations": [
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "McCaf\u00e9 Cappuccino",
+      "ranking_score": 65.22,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": true,
+      "reason": "Recommended because: Coffee domain match, Fits budget (\u20b9140)",
+      "violations": []
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Smoky Grilled Chicken & Rice Box",
+      "ranking_score": 31.82,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Desi Peppy Paneer Meal",
+      "ranking_score": 31.65,
+      "semantic_score": 0.46,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Forbidden domain"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Classic Zinger Box",
+      "ranking_score": 31.32,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Veg Zinger Box",
+      "ranking_score": 31.05,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Fit Chicken Bowl",
+      "ranking_score": 30.97,
+      "semantic_score": 0.85,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": true,
+      "reason": "Recommended because: Coffee domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Margherita & Stuffed Garlic Bread Combo",
+      "ranking_score": 30.81,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Egg & Cheese Breakfast Power Meal",
+      "ranking_score": 30.39,
+      "semantic_score": 0.46,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Forbidden domain"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Chicken Dominator & Dessert Feast",
+      "ranking_score": 30.2,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Coffee",
+      "query": "Coffee",
+      "candidate_name": "Egg & Cheese McMuffin",
+      "ranking_score": 29.2,
+      "semantic_score": 0.85,
+      "suitability_score": 1.0,
+      "threshold": 0.85,
+      "accepted": true,
+      "reason": "Recommended because: Coffee domain match, Fits budget (\u20b9115)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Taj Royal Murgh & Dessert Pairing",
+      "ranking_score": 74.75,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b92850)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "McFlurry (Oreo)",
+      "ranking_score": 72.57,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9115)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Chicken Dominator & Dessert Feast",
+      "ranking_score": 74.26,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9820)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Choco Lava Cake",
+      "ranking_score": 72.06,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9110)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Greek Blueberry Yogo Parfait",
+      "ranking_score": 65.97,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9140)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Soft Serve Cone",
+      "ranking_score": 71.98,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b945)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Choco Lava Cake",
+      "ranking_score": 71.62,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9110)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Dal Baati Churma",
+      "ranking_score": 27.41,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b91900)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Stuffed Garlic Breadsticks",
+      "ranking_score": 27.85,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9150)",
+      "violations": []
+    },
+    {
+      "scenario": "Desserts",
+      "query": "Desserts",
+      "candidate_name": "Fit Chicken Bowl",
+      "ranking_score": 30.97,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Dessert domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Turkey Chili",
+      "ranking_score": 71.44,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Healthy domain match, Fits budget (\u20b9220)",
+      "violations": []
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Jardaloo Salli Boti",
+      "ranking_score": 70.52,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "McSpicy Chicken Burger",
+      "ranking_score": 67.79,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "1 Pc Smoky Grilled Leg",
+      "ranking_score": 65.98,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Laal Maas",
+      "ranking_score": 69.03,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Fit Chicken Bowl",
+      "ranking_score": 71.36,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Healthy domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Teriyaki Chicken Stir Fry",
+      "ranking_score": 70.01,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Healthy domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Makhan Murgh",
+      "ranking_score": 69.48,
+      "semantic_score": 0.58,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Below semantic threshold"
+      ]
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Chicken Caesar Salad",
+      "ranking_score": 69.19,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Healthy domain match, Fits budget (\u20b9210)",
+      "violations": []
+    },
+    {
+      "scenario": "Healthy",
+      "query": "Healthy meals",
+      "candidate_name": "Ancient Grain Bowl",
+      "ranking_score": 68.93,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Healthy domain match, Fits budget (\u20b9220)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Chicken Caesar Salad",
+      "ranking_score": 79.82,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9210)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Chicken Dominator Pizza Medium",
+      "ranking_score": 78.78,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9590)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "McCaf\u00e9 Cappuccino",
+      "ranking_score": 78.11,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9140)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Stuffed Garlic Breadsticks",
+      "ranking_score": 77.85,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9150)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Desi Peppy Paneer Meal",
+      "ranking_score": 75.71,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9600)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Margherita Pizza Medium",
+      "ranking_score": 78.44,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Choco Lava Cake",
+      "ranking_score": 71.62,
+      "semantic_score": 0.85,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9110)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Margherita & Stuffed Garlic Bread Combo",
+      "ranking_score": 74.87,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9420)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Chicken Dominator & Dessert Feast",
+      "ranking_score": 74.26,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9820)",
+      "violations": []
+    },
+    {
+      "scenario": "Italian",
+      "query": "Italian food",
+      "candidate_name": "Peppy Paneer Pizza Medium",
+      "ranking_score": 73.01,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Italian domain match, Fits budget (\u20b9450)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Peppy Paneer Pizza Medium",
+      "ranking_score": 73.01,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9450)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Chicken Dominator Pizza Medium",
+      "ranking_score": 72.84,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9590)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Margherita Pizza Medium",
+      "ranking_score": 72.5,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9240)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Desi Peppy Paneer Meal",
+      "ranking_score": 68.76,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9600)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Margherita & Stuffed Garlic Bread Combo",
+      "ranking_score": 67.92,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9420)",
+      "violations": []
+    },
+    {
+      "scenario": "Pizza",
+      "query": "Pizza",
+      "candidate_name": "Chicken Dominator & Dessert Feast",
+      "ranking_score": 67.31,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.8,
+      "accepted": true,
+      "reason": "Recommended because: Pizza domain match, Fits budget (\u20b9820)",
+      "violations": []
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Laal Maas",
+      "ranking_score": 80.52,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Indian domain match, Dinner context match, Fits budget (\u20b91900)",
+      "violations": []
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Chicken Maharaja Mac",
+      "ranking_score": 78.88,
+      "semantic_score": 0.46,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Forbidden domain"
+      ]
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Peppy Paneer Pizza Medium",
+      "ranking_score": 75.28,
+      "semantic_score": 0.46,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Forbidden domain"
+      ]
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Makhan Murgh",
+      "ranking_score": 79.92,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Indian domain match, Dinner context match, Fits budget (\u20b91500)",
+      "violations": []
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Veg Maharaja Mac",
+      "ranking_score": 77.35,
+      "semantic_score": 0.46,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": false,
+      "reason": "Rejected: Low semantic suitability",
+      "violations": [
+        "Forbidden domain"
+      ]
+    },
+    {
+      "scenario": "Indian Dinner",
+      "query": "Indian dinner",
+      "candidate_name": "Jardaloo Salli Boti",
+      "ranking_score": 76.74,
+      "semantic_score": 1.0,
+      "suitability_score": 1.0,
+      "threshold": 0.75,
+      "accepted": true,
+      "reason": "Recommended because: Indian domain match, Dinner context match, Fits budget (\u20b91550)",
+      "violations": []
+    }
+  ]
+}

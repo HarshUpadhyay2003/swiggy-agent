@@ -2,7 +2,7 @@ import json
 import re
 import logging
 from datetime import datetime
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 try:
     from app.services.catalog_service import CatalogService
@@ -206,22 +206,7 @@ class ChatOrchestrator:
             is_rec_followup = bool(re.search(r'\b(cheaper|healthier|spicy|more|another|instead)\b', message.lower()))
             if is_rec_followup or current_intent in ["modify_previous_request", "food_recommendation"]:
                 logger.info("[DOMAIN] Recommendation followup accepted")
-                merged_context = dict(user_context)
-                merged_context.update(last_entities)
-                merged_context.update(entities)
-                
-                # Apply modifications
-                if "budget_max" in entities and "budget_max" in last_entities:
-                    if entities["budget_max"] < last_entities["budget_max"]:
-                        merged_context["budget_max"] = entities["budget_max"]
-                
-                if "health_goal" in entities:
-                    merged_context["health_goal"] = entities["health_goal"]
-                
-                if "preference" in entities:
-                    merged_context["preference"] = entities["preference"]
-                
-                return self.handle_food_recommendation(message, merged_context)
+                return self.handle_food_recommendation(message, user_context, session_state=session_state)
 
         # Default fallback
         logger.info("[FOLLOWUP] No specific domain followup matched. Falling back to core intent.")
@@ -329,6 +314,9 @@ class ChatOrchestrator:
             "pastry",
         ]
 
+        if any(phrase in message_lower for phrase in ["plan my meals", "meal plan", "weekly plan", "plan meal", "plan meals"]):
+            return "meal_planning"
+
         if any(phrase in message_lower for phrase in checkout_phrases):
             return "checkout_cart"
 
@@ -421,6 +409,9 @@ class ChatOrchestrator:
 
     def _is_recommendation_request(self, message: str) -> bool:
         msg_lower = message.lower()
+        if self._is_explicit_meal_plan_request(message):
+            return False
+
         if re.search(r'\b(suggest|recommend|recommendation|suggestions|options|ideas)\b', msg_lower):
             return True
 
@@ -454,7 +445,10 @@ class ChatOrchestrator:
         return False
 
     def _is_explicit_meal_plan_request(self, message: str) -> bool:
-        return bool(re.search(r'\b(meal plan|weekly plan|diet plan|7 day plan|full plan)\b', message.lower()))
+        msg = message.lower()
+        if any(p in msg for p in ["plan my meal", "plan my meals", "meal plan", "weekly plan", "diet plan", "plan meal", "plan meals", "make a meal plan"]):
+            return True
+        return bool(re.search(r'\b(meal plans?|weekly plans?|diet plans?|7 day plans?|full plans?|plan my meals?|plan meals?|make a plan|create a plan)\b', msg))
 
     def _is_planner_followup(self, message: str) -> bool:
         return bool(re.search(r'\b(replace|change|swap|instead|remove|day|make it)\b', message.lower()))
@@ -665,8 +659,15 @@ class ChatOrchestrator:
         return self.format_response(result)
 
     def handle_food_recommendation(self, message: str, user_context: Dict[str, Any], intent: str = "food_recommendation", session_state: Any = None) -> Dict[str, Any]:
-        """Handle food recommendation requests with Progressive Recommendation Memory V2."""
+        """Handle food recommendation requests with Stage 3.3 pure extraction & EffectiveRequest lifecycle."""
+        session_id = user_context.get("session_id")
+        if not session_state and session_id:
+            session_state = self.session_manager.get_session_context(session_id)
+
         context = self._extract_recommendation_context(message, user_context, session_state)
+        if session_state:
+            context["session_state"] = session_state
+
         result = self.context_engine.recommend_food(context)
 
         if session_state and hasattr(session_state, "switch_domain"):
@@ -1279,21 +1280,70 @@ class ChatOrchestrator:
         else:
             return "late night"
 
+    def _detect_query_type(self, message: str) -> Tuple[Optional[str], str, float, Optional[str]]:
+        """
+        Dataset-first query type detection:
+        Dataset lookup -> Category Intelligence -> Restaurant metadata -> Fallback keywords
+        Returns: (query_type, source, confidence, category_name)
+        """
+        msg_lower = message.lower()
+        if any(k in msg_lower for k in ["plan my", "meal plan", "weekly plan", "planner", "plan meals", "make a plan", "show meal plan"]):
+            return None, "none", 0.0, None
+
+        items = self.catalog_service.get_available_items()
+
+        # Step 1: Direct Item Name / Dataset Match
+        for item in items:
+            name = str(item.get("name", "")).lower()
+            if name and len(name) > 3 and name in msg_lower:
+                cat_intel = item.get("category_intelligence", {}) if isinstance(item.get("category_intelligence"), dict) else {}
+                parent = str(cat_intel.get("parent_category", "")).lower()
+                if parent == "beverages":
+                    return "beverage", "dataset_match", 0.98, "beverages"
+                elif parent == "desserts":
+                    return "dessert", "dataset_match", 0.98, "desserts"
+                elif parent in ["burgers", "pizzas", "meals", "chicken", "sides & snacks", "fine dining", "breakfast", "healthy"]:
+                    return "meal", "dataset_match", 0.98, parent
+
+        # Step 2: Category Intelligence & Keywords
+        # Beverage
+        if any(k in msg_lower for k in ["coffee", "tea", "cappuccino", "latte", "chai", "smoothie", "cold drink", "milkshake", "shake", "juice", "pepsi", "coke", "beverage", "beverages", "drink", "drinks"]):
+            return "beverage", "category_intelligence", 0.95, "beverages"
+
+        # Dessert
+        if any(k in msg_lower for k in ["ice cream", "icecream", "brownie", "cake", "pastry", "sweet", "sweets", "dessert", "desserts", "mcflurry", "lava cake", "rasmalai", "parfait"]):
+            return "dessert", "category_intelligence", 0.95, "desserts"
+
+        # Combo
+        if any(k in msg_lower for k in ["combo", "combos", "meal deal", "family combo", "kids combo"]):
+            return "combo", "category_intelligence", 0.95, "combos"
+
+        # Meal
+        meal_keywords = [
+            "meal", "meals", "food", "dinner", "lunch", "breakfast", "indian", "chinese", "italian", "american", "mexican", "asian",
+            "burger", "burgers", "pizza", "pizzas", "biryani", "rice", "bowl", "wrap", "wraps", "roll", "paneer", "chicken", "thali", "dosa"
+        ]
+        if any(k in msg_lower for k in meal_keywords):
+            return "meal", "category_intelligence", 0.90, "meals"
+
+        return None, "fallback_keyword", 0.50, None
+
     def _extract_recommendation_context(
         self, message: str, user_context: Dict[str, Any], session_state: Any = None
     ) -> Dict[str, Any]:
-        """Progressive constraint extraction and memory refinement for Recommendation Intelligence V2."""
+        """Stage 3.3 Pure Layer 1 Extraction: extracts only explicit user constraints from text/NER."""
         message_lower = message.lower()
         context = dict(user_context)
+        context["message"] = message
 
-        session_id = user_context.get("session_id")
-        if not session_state and session_id:
-            session_state = self.session_manager.get_session_context(session_id)
+        # 0. Dataset-First Query Type Detection
+        detected_qtype, qtype_source, qtype_conf, cat_name = self._detect_query_type(message)
+        if detected_qtype:
+            context["query_type"] = detected_qtype
+            if cat_name and cat_name != "meals":
+                context["category"] = cat_name
 
-        rec_mem = session_state.recommendation_memory if session_state and hasattr(session_state, "recommendation_memory") else None
-        prev_memory_dict = rec_mem.to_dict() if rec_mem else {}
-
-        # 1. Cuisine Extraction & Replacement
+        # 1. Cuisine Extraction
         cuisines_map = {
             "indian": "Indian",
             "chinese": "Chinese",
@@ -1310,33 +1360,25 @@ class ChatOrchestrator:
         }
         for k, v in cuisines_map.items():
             if k in message_lower:
-                if rec_mem:
-                    rec_mem.cuisine_type = v
                 context["cuisine_type"] = v
                 break
 
-        # 2. Taste Preference Extraction & Replacement
+        # 2. Taste Preference Extraction
         tastes = ["spicy", "sweet", "tangy", "smoky", "cheesy", "crunchy", "creamy", "salty", "savory"]
         for t in tastes:
             if t in message_lower:
-                if rec_mem:
-                    rec_mem.taste_preference = t
                 context["taste_preference"] = t
                 break
 
-        # 3. Diet Extraction & Replacement
+        # 3. Diet Extraction
         if "non-veg" in message_lower or "non veg" in message_lower or "nonveg" in message_lower:
-            if rec_mem:
-                rec_mem.diet = "non-veg"
             context["diet"] = "non-veg"
             context["preference"] = "non-veg"
         elif "veg" in message_lower or "vegetarian" in message_lower:
-            if rec_mem:
-                rec_mem.diet = "veg"
             context["diet"] = "veg"
             context["preference"] = "veg"
 
-        # 4. Item Category Extraction & Replacement
+        # 4. Item Category Extraction
         categories_list = [
             ("beverages", ["beverage", "beverages", "drink", "drinks", "coffee", "tea", "juice", "smoothie", "shake", "cold drink"]),
             ("desserts", ["dessert", "desserts", "sweet", "sweets", "ice cream", "icecream", "brownie", "cake"]),
@@ -1346,92 +1388,54 @@ class ChatOrchestrator:
             ("rice", ["rice", "biryani", "bowl"]),
             ("wraps", ["wrap", "wraps", "roll"]),
         ]
-        for cat_name, keywords in categories_list:
+        for cat_name_item, keywords in categories_list:
             if any(k in message_lower for k in keywords):
-                if rec_mem:
-                    rec_mem.category = cat_name
-                context["category"] = cat_name
+                context["category"] = cat_name_item
                 break
 
-        # 5. Health Goal Extraction & Replacement
+        # 5. Health Goal Extraction
         if "high protein" in message_lower or "protein rich" in message_lower or "protein" in message_lower:
-            if rec_mem:
-                rec_mem.health_goal = "high_protein"
             context["health_goal"] = "high_protein"
         elif "low calorie" in message_lower or "diet food" in message_lower or "light" in message_lower:
-            if rec_mem:
-                rec_mem.health_goal = "low_calorie"
             context["health_goal"] = "low_calorie"
         elif "healthy" in message_lower or "gym meals" in message_lower or "fitness" in message_lower:
-            if rec_mem:
-                rec_mem.health_goal = "healthy"
             context["health_goal"] = "healthy"
 
-        # 6. Serving Extraction & Replacement
+        # 6. Serving Extraction
         if "family" in message_lower or "party" in message_lower:
-            if rec_mem:
-                rec_mem.serving = "family"
             context["serving"] = "family"
         elif "kids" in message_lower or "kid" in message_lower:
-            if rec_mem:
-                rec_mem.serving = "kids"
             context["serving"] = "kids"
 
-        # 7. Budget Extraction & Replacement
+        # 7. Budget Extraction
         between_match = re.search(r"\bbetween\s*₹?\s*(\d{2,4})\s*(?:and|to)\s*₹?\s*(\d{2,4})\b", message_lower)
         if between_match:
             high = max(int(between_match.group(1)), int(between_match.group(2)))
-            if rec_mem:
-                rec_mem.budget = float(high)
             context["max_budget"] = float(high)
             context["budget"] = float(high)
         else:
             budget_match = re.search(r"\b(?:under|below|less than|around|<=|at|max|budget)\s*₹?\s*(\d{2,4})\b", message_lower)
             if budget_match:
                 b_val = float(budget_match.group(1))
-                if rec_mem:
-                    rec_mem.budget = b_val
                 context["max_budget"] = b_val
                 context["budget"] = b_val
             elif "cheap" in message_lower or "affordable" in message_lower:
-                if rec_mem:
-                    rec_mem.budget = 200.0
                 context["max_budget"] = 200.0
                 context["budget"] = 200.0
 
-        # 8. Meal Type Extraction & Replacement
+        # 8. Meal Type Extraction (EXPLICIT ONLY)
         meal_types = ["breakfast", "lunch", "dinner", "snack", "snacks", "late night"]
         for m in meal_types:
             if m in message_lower:
                 norm_m = "snacks" if m == "snack" else m
-                if rec_mem:
-                    rec_mem.meal_type = norm_m
                 context["meal_type"] = norm_m
                 break
 
-        # Adaptive Default: If meal_type is still missing and no category/cuisine specified, infer from current time
-        if rec_mem and not rec_mem.meal_type and "meal_type" not in context:
-            adaptive_meal = self._get_adaptive_default_meal_type()
-            rec_mem.meal_type = adaptive_meal
-            context["meal_type"] = adaptive_meal
-
-        # 9. Merge Memory into Context
-        if rec_mem:
-            updated_dict = rec_mem.to_dict()
-            for key, val in updated_dict.items():
-                if val is not None and key not in context:
-                    context[key] = val
-                    if key == "budget":
-                        context["max_budget"] = val
-                    if key == "diet":
-                        context["preference"] = val
-
-            print("\n========================================")
-            print("[RECOMMENDATION ENGINE]")
-            print(f"Message: \"{message}\"")
-            print(f"Previous Memory: {prev_memory_dict}")
-            print(f"Updated Memory:  {updated_dict}")
-            print("========================================\n")
+        print("\n========================================")
+        print("LAYER 1: Pure Intent & Constraint Extraction")
+        print(f"Query    : \"{message}\"")
+        print(f"Extracted: {[f'{k}={v}' for k, v in context.items() if v is not None and k not in ['session_id', 'user_id', 'message']]}")
+        print("========================================\n")
 
         return context
 

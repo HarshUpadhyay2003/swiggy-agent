@@ -81,6 +81,7 @@ class CatalogAdapter:
             "cuisine_type": item.get("cuisine_type", cuisine_str),
             "taste_preference": item.get("taste_preference", ""),
             "category_intelligence": item.get("category_intelligence", {}),
+            "parent_category": item.get("category_intelligence", {}).get("parent_category", ""),
             "secondary_cuisines": restaurant.get("secondary_cuisines", []) if restaurant else [],
             "nutrition": nutrition,
             "health_scores": health_scores,

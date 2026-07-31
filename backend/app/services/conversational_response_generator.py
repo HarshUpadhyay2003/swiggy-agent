@@ -36,6 +36,7 @@ class ConversationalResponseGenerator:
         session_context: Optional[Dict[str, Any]] = None,
         add_followup: bool = True,
         original_response: Optional[str] = None,
+        execution: Optional[Any] = None,
     ) -> str:
         """
         Generate a natural response for the given intent and data.
@@ -51,26 +52,59 @@ class ConversationalResponseGenerator:
         Returns:
             Natural conversational response string
         """
+        is_blocked = bool(execution and getattr(execution, "response_state", None) == "COMPLETED" and getattr(execution, "cached_response", None))
+        cached_used = is_blocked
+        guard_triggered = is_blocked
+        llm_calls = getattr(execution, "llm_calls_count", 0) if execution else 0
+
+        if is_blocked:
+            print("\n========================================")
+            print("LAYER 7: Response Generator")
+            print("Status              : SKIPPED (Blocked by Single Response Guard)")
+            print(f"Generation Count    : 0")
+            print(f"Response Count      : 1")
+            print(f"LLM Invocation Count: {llm_calls}")
+            print(f"Cached Response Used: True")
+            print(f"Guard Triggered     : True")
+            print(f"Response Generated  : \"{execution.cached_response}\"")
+            print("========================================\n")
+            return execution.cached_response
+
         # ISSUE 4 FIX: Ensure conversational formatting NEVER removes business logic actions
         transactional_intents = ["add_to_cart", "remove_from_cart", "checkout_cart", "cart_action", "multi_action", "place_order", "reorder_action"]
         if original_response and intent in transactional_intents:
-            return original_response
+            res = original_response
+        else:
+            try:
+                res = self._generate_with_llm(
+                    intent,
+                    data,
+                    tone,
+                    session_context,
+                    add_followup,
+                    original_response
+                )
+            except Exception:
+                res = self._generate_template_response(intent, data, tone, original_response)
 
-        try:
-            # Try LLM-powered response generation
-            response = self._generate_with_llm(
-                intent,
-                data,
-                tone,
-                session_context,
-                add_followup,
-                original_response
-            )
-            return response
+        if execution:
+            execution.response_state = "COMPLETED"
+            execution.cached_response = res
+            execution.llm_calls_count += 1
+            llm_calls = execution.llm_calls_count
 
-        except Exception as e:
-            # Fallback to template-based generation
-            return self._generate_template_response(intent, data, tone, original_response)
+        print("\n========================================")
+        print("LAYER 7: Response Generator")
+        print("Status              : EXECUTED")
+        print(f"Generation Count    : 1")
+        print(f"Response Count      : 1")
+        print(f"LLM Invocation Count: {llm_calls}")
+        print(f"Cached Response Used: False")
+        print(f"Guard Triggered     : False")
+        print(f"Response Generated  : \"{res}\"")
+        print("========================================\n")
+
+        return res
 
     def _generate_with_llm(
         self,
@@ -125,10 +159,16 @@ Just respond naturally as a helpful food ordering assistant would."""
         """Format business data for LLM prompt."""
         if intent == "food_recommendation" or intent == "healthy_suggestions":
             recs = data.get("recommendations", [])
+            reasoning = data.get("reasoning", "")
+            lines = []
+            if reasoning and ("No " in reasoning or "available under" in reasoning):
+                lines.append(f"Notice: {reasoning}")
             if not recs:
-                return "No recommendations found matching criteria."
-            items = [f"• {r.get('item_name', '')} (₹{r.get('price', 0)})" for r in recs[:3]]
-            return "\n".join(items)
+                return "\n".join(lines) if lines else "No recommendations found matching criteria."
+            for r in recs[:3]:
+                diff_str = f" (+₹{r.get('price_difference')} over budget)" if r.get("price_difference", 0) > 0 else ""
+                lines.append(f"• {r.get('item_name', '')} (₹{r.get('price', 0)}{diff_str})")
+            return "\n".join(lines)
 
         elif intent == "add_to_cart":
             cart = data.get("cart", {})
@@ -287,17 +327,41 @@ Just respond naturally as a helpful food ordering assistant would."""
     def _template_recommendation(self, data: Dict[str, Any], tone: str) -> str:
         """Generate recommendation response."""
         recs = data.get("recommendations", [])
-        if not recs:
-            return "Couldn't find matches for those filters. Try adjusting your preferences!"
+        reasoning = data.get("reasoning", "")
 
-        names = [r.get("item_name", "") for r in recs[:3]]
-        items_str = ", ".join(names)
+        if not recs:
+            if reasoning and "No " in reasoning:
+                return f"{reasoning} Would you like to increase your budget or adjust your preferences?"
+            elif reasoning:
+                return f"We couldn't find items matching those exact criteria. ({reasoning})"
+            return "We couldn't find any dishes matching those exact criteria. Try adjusting your preferences!"
+
+        item_strings = []
+        grounded_reasons = []
+        for r in recs[:3]:
+            diff = r.get("price_difference", 0)
+            item_name = r.get("item_name", "")
+            price = r.get("price", 0)
+            if diff > 0:
+                item_strings.append(f"{item_name} (₹{price}, +₹{diff} over budget)")
+            else:
+                item_strings.append(f"{item_name} (₹{price})")
+
+            rec_reason = r.get("reason", "")
+            if rec_reason and rec_reason != "Matches criteria" and len(grounded_reasons) < 2:
+                grounded_reasons.append(f"{item_name}: {rec_reason}")
+
+        items_str = ", ".join(item_strings)
+        if reasoning and ("No " in reasoning or "available under" in reasoning):
+            return f"{reasoning}\n{items_str}"
+
+        reason_suffix = f" [{'; '.join(grounded_reasons)}]" if grounded_reasons else ""
 
         responses = [
-            f"Check these out: {items_str}. Want to add any?",
-            f"How about: {items_str}? Any of these sound good?",
-            f"I'd recommend: {items_str}. Interested?",
-            f"Try these: {items_str}. Like any of them?",
+            f"Check these out: {items_str}.{reason_suffix} Want to add any?",
+            f"How about: {items_str}?{reason_suffix} Any of these sound good?",
+            f"I'd recommend: {items_str}.{reason_suffix} Interested?",
+            f"Try these: {items_str}.{reason_suffix} Like any of them?",
         ]
         idx = hash(tone) % len(responses)
         return responses[idx]

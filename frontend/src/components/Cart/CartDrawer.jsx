@@ -152,33 +152,6 @@ export function CartDrawer({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* Frequently Added Suggestion */}
-          {items.length > 0 && (
-            <div className="pt-2">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
-                Frequently Added
-              </h4>
-              <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700 p-3 rounded-xl flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0">
-                  <img src={getFoodImage('Sparkling Citrus Water', 3)} alt="Beverage" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
-                    Sparkling Citrus Water
-                  </p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">₹120</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => addToCart({ item_id: 9991, name: 'Sparkling Citrus Water', price: 120 }, 1)}
-                  className="bg-swiggy-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold hover:bg-swiggy-600 transition-colors"
-                >
-                  Add
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Savings Alert Banner */}
           {items.length > 0 && (
             <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 p-3 rounded-xl flex gap-2.5 items-center text-xs text-emerald-800 dark:text-emerald-300">

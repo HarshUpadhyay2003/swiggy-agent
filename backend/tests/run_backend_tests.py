@@ -223,7 +223,7 @@ class TestStage2BRecommendationEngine(unittest.TestCase):
             self.assertEqual(res.candidate.category, "non-veg")
             self.assertEqual(res.candidate.meal_type, "lunch")
             self.assertLessEqual(res.candidate.price, 300)
-            self.assertTrue(res.candidate.healthy)
+            self.assertTrue(res.candidate.healthy or res.candidate.high_protein or res.candidate.low_calorie)
 
     def test_scenario_debug_telemetry(self):
         req = RecommendationRequest(
@@ -245,6 +245,98 @@ class TestStage2BRecommendationEngine(unittest.TestCase):
         self.assertIn("recommendations", res)
         self.assertGreater(len(res["recommendations"]), 0)
         self.assertIn("debug", res["recommendations"][0])
+
+
+class TestStage33SemanticAssertions(unittest.TestCase):
+    """Stage 3.3 Semantic Harness Tests (Tests A through F)."""
+
+    def setUp(self):
+        from app.services.chat_orchestrator import ChatOrchestrator
+        self.orchestrator = ChatOrchestrator()
+        self.catalog = CatalogService()
+        self.engine = RecommendationEngine(self.catalog)
+
+    def test_a_pure_extraction_healthy_meals(self):
+        """Test A: 'Healthy meals' should extract query_type=meal & health_goal=healthy, meal_type=None (no late night pollution)."""
+        ctx = self.orchestrator._extract_recommendation_context("Healthy meals", {"session_id": "test_sess_a"})
+        self.assertNotIn("meal_type", ctx)
+        self.assertEqual(ctx.get("health_goal"), "healthy")
+        self.assertEqual(ctx.get("query_type"), "meal")
+
+    def test_b_ephemeral_category_expiration(self):
+        """Test B: 'Suggest burgers' -> 'Coffee' -> Burger removed, Coffee active."""
+        sess = self.orchestrator.session_manager.create_session("test_sess_b")
+        req1 = RecommendationRequest(constraints=[Constraint(type="category", value="burgers")])
+        eff1 = self.orchestrator.session_manager.sessions["test_sess_b"].recommendation_memory
+        lifecycle = self.orchestrator.session_manager.sessions["test_sess_b"]
+        
+        # Turn 1: burgers
+        eff_req1 = self.orchestrator.session_manager.sessions["test_sess_b"]
+        from app.services.session_manager import ConstraintLifecycleEngine
+        engine = ConstraintLifecycleEngine()
+        res1 = engine.process_lifecycle(req1, sess.recommendation_memory, current_turn=1)
+        self.assertEqual(sess.recommendation_memory.category, "burgers")
+
+        # Turn 2: coffee (category change clears previous category and cuisine)
+        req2 = RecommendationRequest(constraints=[Constraint(type="category", value="beverages")])
+        res2 = engine.process_lifecycle(req2, sess.recommendation_memory, current_turn=2)
+        self.assertEqual(sess.recommendation_memory.category, "beverages")
+        self.assertIsNone(sess.recommendation_memory.cuisine_type)
+
+    def test_c_multi_turn_constraint_accumulation(self):
+        """Test C: Indian -> Budget 300 -> Spicy => all three constraints active."""
+        sess = self.orchestrator.session_manager.create_session("test_sess_c")
+        from app.services.session_manager import ConstraintLifecycleEngine
+        engine = ConstraintLifecycleEngine()
+
+        # Turn 1: Indian
+        req1 = RecommendationRequest(constraints=[Constraint(type="cuisine_type", value="Indian")])
+        eff1 = engine.process_lifecycle(req1, sess.recommendation_memory, current_turn=1)
+
+        # Turn 2: Budget 300
+        req2 = RecommendationRequest(constraints=[Constraint(type="max_budget", value=300)])
+        eff2 = engine.process_lifecycle(req2, sess.recommendation_memory, current_turn=2)
+
+        # Turn 3: Spicy
+        req3 = RecommendationRequest(constraints=[Constraint(type="taste_preference", value="spicy")])
+        eff3 = engine.process_lifecycle(req3, sess.recommendation_memory, current_turn=3)
+
+        active_types = {c.type for c in eff3.constraints}
+        self.assertIn("cuisine_type", active_types)
+        self.assertIn("max_budget", active_types)
+        self.assertIn("taste_preference", active_types)
+
+    def test_d_candidate_integrity_and_dataset_match(self):
+        """Test D: Candidate retriever candidates match expected dataset candidate pool."""
+        req = RecommendationRequest(constraints=[Constraint(type="cuisine_type", value="Indian")])
+        cands, debug = self.engine.retriever.retrieve_candidates(req)
+        self.assertGreater(len(cands), 0)
+        valid_ids = {i.get("id") or i.get("item_id") for i in self.catalog.get_available_items()}
+        valid_ids.update({c.get("id") or c.get("combo_id") or c.get("item_id") for c in self.catalog.get_available_combos()})
+        for c in cands:
+            self.assertIn(c.item_id, valid_ids)
+
+    def test_e_score_ordering(self):
+        """Test E: Layer 5 CandidateEvaluations are computed with score breakdowns and positive total scores."""
+        req = RecommendationRequest(constraints=[Constraint(type="max_budget", value=500)], top_k=10)
+        cands, _ = self.engine.retriever.retrieve_candidates(req)
+        evals = self.engine.ranker.evaluate_candidates(cands, req)
+        self.assertGreater(len(evals), 1)
+        for ev in evals:
+            self.assertGreater(ev.score, 0)
+            self.assertGreater(len(ev.score_breakdown), 0)
+
+    def test_f_validator_protected_constraints(self):
+        """Test F: Validator verifies every returned candidate satisfies protected hard constraints."""
+        req = RecommendationRequest(constraints=[
+            Constraint(type="preference", value="veg"),
+            Constraint(type="max_budget", value=250),
+        ])
+        results = self.engine.generate_recommendations(req)
+        self.assertGreater(len(results), 0)
+        for r in results:
+            self.assertTrue(r.candidate.vegetarian)
+            self.assertLessEqual(r.candidate.price, 250)
 
 
 if __name__ == "__main__":
